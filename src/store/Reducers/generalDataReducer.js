@@ -18,6 +18,7 @@ export default (state = initState, action) => {
                     ...state,
                     countries:action.payload
                 })
+            default:return state;
+             
     }
-    return state;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
+import flightSearch from './Components/flightSearch';
 import signUpCustomer from './Components/signUpCustomer';
 import signIn from './Components/signIn';
 import About from './Components/About';
@@ -21,6 +22,7 @@ class App extends Component{
         <Route path='/About' component={About}/>
         <Route path='/signIn' component={signIn}/>
         <Route path='/flightIndex' component={flightIndex}/>
+        <Route path='/flightSearch' component={flightSearch}/>
       </Switch>
     </div>
     </BrowserRouter>
