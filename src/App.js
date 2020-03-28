@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
-import signUpCustomer from './Components/signnUpCustomer';
+import signUpCustomer from './Components/signUpCustomer';
 import signIn from './Components/signIn';
 import About from './Components/About';
+import flightIndex from './Components/flightIndex';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
+
 
 
 class App extends Component{
@@ -18,6 +20,7 @@ class App extends Component{
         <Route path='/signUpCustomer' component={signUpCustomer}/>
         <Route path='/About' component={About}/>
         <Route path='/signIn' component={signIn}/>
+        <Route path='/flightIndex' component={flightIndex}/>
       </Switch>
     </div>
     </BrowserRouter>
