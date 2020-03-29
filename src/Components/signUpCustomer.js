@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 class signUpCustomer extends Component {
-    state = {
 
-    }
     render() {
         return (
             <div className="container">
@@ -44,16 +42,7 @@ class signUpCustomer extends Component {
             </div>
         );
     }
-    onFocusLbl = (e) => {
-        let labels = document.getElementsByName("label");
-        for (let index = 0; index < labels.length; index++) {
-            if (labels[index]["htmlfor"] === e.target.id) {
-                labels[index].style.position = "absolut";
-                labels[index].style.transform = "translateY(20px)";
-            }
-        }
-
-    }
+   
     changeHandle = (e) => {
         console.log(this);
     }
