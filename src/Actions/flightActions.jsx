@@ -17,16 +17,16 @@ export const getAllFlights = () => {
     }
 }
 
-export const searchFlights = () => {
+export const searchFlights = (fId=null,airlineID=null,origin=null,destionation=null,departure=null,arrival=null) => {
     return (dispatch) => {
         axios.get("https://localhost:44375/api/SearchFlights", {
             params: {
-                id: null,
-                airlineId: null,
-                originCountryId: null,
-                destinationCountryId: null,
-                depTime: null,
-                landTime: null
+                id: fId,
+                airlineId: airlineID,
+                originCountryId: origin,
+                destinationCountryId: destionation,
+                depTime: departure,
+                landTime:arrival
             }
         }).then(resp => {
             console.debug(resp)

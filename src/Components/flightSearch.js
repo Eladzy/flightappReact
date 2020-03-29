@@ -53,7 +53,7 @@ class flightSearch extends Component {
                         </Select>
                         <label > To</label>
                     </div>
-                    <div className="container">
+                    <div className="input-field col 12s 6m">
                         <DatePicker
                             id="departureTimePicker"
                             options={{
@@ -142,7 +142,7 @@ class flightSearch extends Component {
                                 yearRange: 10
                             }}
                         />
-                        <label>Departs on</label>
+                        <label htmlFor="departureTimePicker">Departs on</label>
                     </div>
                 </form>
             </div>
