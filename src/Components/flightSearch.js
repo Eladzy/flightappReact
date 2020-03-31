@@ -4,7 +4,7 @@ import { getAllFlights, searchFlights } from '../Actions/flightActions';
 import { getAirlines } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { bindActionCreators } from 'redux';
-import { Select, DatePicker } from 'react-materialize'
+import { Select, DatePicker, Button } from 'react-materialize';
 
 
 class flightSearch extends Component {
@@ -13,16 +13,32 @@ class flightSearch extends Component {
         this.props.getAirlines();
         this.props.getCountries();
     }
+
+    onSubmitHandle = (e) => {
+        e.preventDefault();
+
+
+
+        let params = ['' ,document.getElementById("airlineSelect").value,
+            document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
+            document.getElementById("departureTimePicker").value, ''];
+            console.log("handle submit");
+            console.log(document.getElementById("airlineSelect").value);
+            console.log(params);
+        this.props.searchFlights(params)
+    }
+
     render() {
         const countries = this.props.countries;
         const airlines = this.props.airlines;
+        const flights = this.props.flights;
         return (
             //add auto complete  flight id's
             <div className="row" >
-                <form className='white col' action="">
+                <form className='white col' onSubmit={this.onSubmitHandle}>
                     <div className="input-field col 12s 6m">
-                        <Select id="airlineSelect" value={Option.value} onChange={this.value = Option.value}>
-                            <option value={null}></option>
+                        <Select id="airlineSelect"  value={Option.value} >
+                            <option  ></option>
                             {airlines.map(a =>
 
                                 (<option value={a.id} key={a.id}>{a.name}</option>)
@@ -31,10 +47,9 @@ class flightSearch extends Component {
                         <label > Airline company</label>
                     </div>
                     <div className="input-field col 12s 6m">
-                        <Select id="originSelect" value={Option.value} onChange={this.value = Option.value}>
-                            <option value={null}></option>
+                        <Select id="originSelect" value={Option.value} >
+                            <option  ></option>
                             {countries.map(c =>
-
                                 (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
                             )}
                         </Select>
@@ -44,10 +59,9 @@ class flightSearch extends Component {
                         <label > From</label>
                     </div>
                     <div className="input-field col 12s 6m">
-                        <Select id="destinationSelect" value={Option.value} onChange={this.value = Option.value}>
-                            <option value={null}></option>
+                        <Select id="destinationSelect" value={Option.value} >
+                            <option ></option>
                             {countries.map(c =>
-
                                 (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
                             )}
                         </Select>
@@ -144,11 +158,17 @@ class flightSearch extends Component {
                         />
                         <label htmlFor="departureTimePicker">Departs on</label>
                     </div>
+                    <div className="input-field col 12s 6m">
+                        <Button className="blue darken-4" waves="light" style={{ marginTop: "20px" }} >Go</Button>
+                    </div>
                 </form>
             </div>
         );
     }
 }
+
+
+
 const mapStateToProps = (state) => {
     return {
         flights: state.flightR.flights,
@@ -157,12 +177,15 @@ const mapStateToProps = (state) => {
     }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
     return {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
         getAirlines: bindActionCreators(getAirlines, dispatch),
         getCountries: bindActionCreators(getCountries, dispatch),
-        searchFlights: bindActionCreators(searchFlights, dispatch)
+        // searchFlights: bindActionCreators(searchFlights, dispatch),
+        searchFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
+        // getAllFlights:()=>dispatch(getAllFlights())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(flightSearch);

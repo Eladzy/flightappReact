@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "jquery": "^3.4.1",
     "materialize-css": "^1.0.0-rc.2",
+    "qs": "^6.9.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-materialize": "^3.6.1",

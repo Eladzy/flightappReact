@@ -1,5 +1,7 @@
 import React,{ Component } from 'react';
 import { connect } from 'react-redux';
+import {pointerBlue} from '../img/pointerBlueT.png'
+import {airplaneBlue} from '../img/airplaneBlueT.png'
 
 class flight extends Component{
     handleClick=()=>{
