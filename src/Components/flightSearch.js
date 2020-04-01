@@ -15,7 +15,7 @@ class flightSearch extends Component {
     //     flights:[]
     // }
 
-    componentDidMount() {        
+    componentDidMount() {
         this.props.getAllFlights();
         this.props.getAirlines();
         this.props.getCountries();
@@ -26,39 +26,42 @@ class flightSearch extends Component {
 
     onSubmitHandle = (e) => {
         e.preventDefault();
+        console.log(document.getElementById("departureTimePicker").value);
+        let departureDate=new Date(document.getElementById("departureTimePicker").value).toISOString();
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
-            document.getElementById("departureTimePicker").value, ''];
+            departureDate, ''];
         console.log("handle submit");
         console.log(document.getElementById("airlineSelect").value);
         console.log(params);
         this.props.searchedFlights(params)
     }
-   
+
 
     render() {
         const countries = this.props.countries;
         const airlines = this.props.airlines;
-        const flights = this.props.flights;      
-        console.log(this.state)
-        const flightList = flights? flights.map(f => {
+        const flights = this.props.flights;
+        const flightList = flights ? flights.map(f => {
             return (
-                <div className="flight card" key={f.id}>
-                    <img src={airplaneBlueT} style={{ position: "absolute" }, { opacity: "06", }, { top: "20px" }}></img>
-                    <div className="row">
-                        <div className="col 12s 6m">
-                            <h5>{f.origin}</h5> <br />
-                            <span>{f.departureTime}</span>
-                        </div>
-                        <div className="col 12s 6m">
-                            <h5 className="5">{f.airlineName}</h5><br/>
-                            <img src={pointerBlue}></img>
-                        </div>
-                        <div className="col 12s 6m">
-                            <h5>{f.destination}</h5> <br />
-                            <span>{f.arrivalTime}</span>
-                        </div>
+                <div className="card" key={f.id}>
+                    <img src={airplaneBlueT} style={{ position: "absolute" }, { opacity: "06", }, { top: "20px" }}/>
+                    <div className="card-content">
+                        <div className="row">
+                            <div className="col 12s 6m">
+                                <h5>{f.origin}</h5> <br />
+                                <span>{f.departureTime}</span>
+                            </div>
+                            <div className="col 12s 6m">
+                                <h5 className="5">{f.airlineName}</h5><br />
+                                <img src={pointerBlue}/>
+                            </div>
+                            <div className="col 12s 6m">
+                                <h5>{f.destination}</h5> <br />
+                                <span>{f.arrivalTime}</span>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             )
@@ -186,7 +189,7 @@ class flightSearch extends Component {
                                     showClearBtn: false,
                                     showDaysInNextAndPreviousMonths: false,
                                     showMonthAfterYear: false,
-                                    yearRange: 10
+                                    yearRange: 2
                                 }}
                             />
                             <label htmlFor="departureTimePicker">Departs on</label>
