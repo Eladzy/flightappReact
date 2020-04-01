@@ -1,4 +1,4 @@
-import { FETCH_ALL_FLIGHTS} from '../../Actions/flightActions';
+import { FETCH_ALL_FLIGHTS,SEARCH_FLIGHTS} from '../../Actions/flightActions';
 
 let initState={
     flights:[]
@@ -7,11 +7,15 @@ let initState={
 export default(state=initState,action)=>{
     switch(action.type){
         case FETCH_ALL_FLIGHTS:
-            console.log("entered switch")
            return{
                ...state,
                flights:action.payload
            }
+           case SEARCH_FLIGHTS:
+               return{
+                   ...state,
+                   flights:action.payload
+               }
             default:
                 return state;
     }

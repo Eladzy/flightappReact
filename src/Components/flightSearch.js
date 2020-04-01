@@ -6,14 +6,22 @@ import { getCountries } from '../Actions/countriesActions';
 import { bindActionCreators } from 'redux';
 import { Select, DatePicker, Button } from 'react-materialize';
 import { pointerBlue } from '../img/pointerBlueT.png'
-import { airplaneBlue } from '../img/airplaneBlueT.png'
+import { airplaneBlueT } from '../img/airplaneBlueT.png'
 
 
 class flightSearch extends Component {
-    componentDidMount() {
+
+    // state={
+    //     flights:[]
+    // }
+
+    componentDidMount() {        
         this.props.getAllFlights();
         this.props.getAirlines();
         this.props.getCountries();
+        // this.setState({
+        //     flights:[...this.props.flights]
+        // });
     }
 
     onSubmitHandle = (e) => {
@@ -24,16 +32,38 @@ class flightSearch extends Component {
         console.log("handle submit");
         console.log(document.getElementById("airlineSelect").value);
         console.log(params);
-        this.props.searchFlights(params)       
+        this.props.searchedFlights(params)
     }
-
-
+   
 
     render() {
         const countries = this.props.countries;
         const airlines = this.props.airlines;
-        const flights = this.props.flights;       
-        
+        const flights = this.props.flights;      
+        console.log(this.state)
+        const flightList = flights? flights.map(f => {
+            return (
+                <div className="flight card" key={f.id}>
+                    <img src={airplaneBlueT} style={{ position: "absolute" }, { opacity: "06", }, { top: "20px" }}></img>
+                    <div className="row">
+                        <div className="col 12s 6m">
+                            <h5>{f.origin}</h5> <br />
+                            <span>{f.departureTime}</span>
+                        </div>
+                        <div className="col 12s 6m">
+                            <h5 className="5">{f.airlineName}</h5><br/>
+                            <img src={pointerBlue}></img>
+                        </div>
+                        <div className="col 12s 6m">
+                            <h5>{f.destination}</h5> <br />
+                            <span>{f.arrivalTime}</span>
+                        </div>
+
+                    </div>
+                </div>
+            )
+        }) : (<p>None Found</p>)
+
         return (
             //add auto complete  flight id's
             <div className="container">
@@ -166,29 +196,19 @@ class flightSearch extends Component {
                         </div>
                     </form>
                 </div>
-
+                <div className="row"> {flightList}</div>
             </div>
         );
     }
 }
 
-const populateFlights=()=>{
-    const flights=this.props.flights.length;
-    const flightList=flight.length?flights.map(f=>{
-        return(
-            <div className="flight card" key={f.id}>
-
-            </div>
-        )
-    }):<P>None Found</P>
-}
 
 const mapStateToProps = (state) => {
     return {
         flights: state.flightR.flights,
         airlines: state.generalDataR.airlines,
         countries: state.generalDataR.countries,
-        searchedFlights:state.flightR.flights
+
     }
 }
 
