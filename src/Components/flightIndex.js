@@ -16,7 +16,7 @@ class flightIndex extends Component {
         const flightList = flights.length ? (flights.map(flight => {
             return (
                 <div className="col s12 m4" >
-                    <div className="card medium  waves-effect waves-block waves-light z-depth-2" key={flight.id}>
+                    <div className="card medium  z-depth-4" key={flight.id}>
                         <div className="card-image hoverable activator sticky-action">
                             <img className="activator" src={is} />
                         </div>

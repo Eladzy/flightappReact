@@ -24,7 +24,7 @@ class Navbar extends Component {
                             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
                             <li><NavLink to='/signIn'>Sign in</NavLink></li>
                         </ul>
-                        <a className="sidenav-trigger right hide-on-med-and-up" data-target="mobile-links"><i class="material-icons">menu</i></a>
+                        <a className="sidenav-trigger right hide-on-med-and-up" data-target="mobile-links"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
                 <ul className="sidenav" id="mobile-links">

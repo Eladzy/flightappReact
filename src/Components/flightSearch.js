@@ -24,14 +24,14 @@ class flightSearch extends Component {
         console.log("handle submit");
         console.log(document.getElementById("airlineSelect").value);
         console.log(params);
-        this.props.searchFlights(params)
+        this.props.searchFlights(params)       
     }
 
     render() {
         const countries = this.props.countries;
         const airlines = this.props.airlines;
-        const flights = this.props.flights;
-        const searchedFlight = this.props.searchFlights
+        const flights = this.props.flights;       
+        
         return (
             //add auto complete  flight id's
             <div className="container">
@@ -176,7 +176,8 @@ const mapStateToProps = (state) => {
     return {
         flights: state.flightR.flights,
         airlines: state.generalDataR.airlines,
-        countries: state.generalDataR.countries
+        countries: state.generalDataR.countries,
+        searchedFlights:state.flightR.flights
     }
 }
 
@@ -186,7 +187,7 @@ const mapDispatchToProps = (dispatch) => {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
         getAirlines: bindActionCreators(getAirlines, dispatch),
         getCountries: bindActionCreators(getCountries, dispatch),
-        searchFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
+        searchedFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(flightSearch);
