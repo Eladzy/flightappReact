@@ -27,6 +27,8 @@ class flightSearch extends Component {
         this.props.searchFlights(params)       
     }
 
+
+
     render() {
         const countries = this.props.countries;
         const airlines = this.props.airlines;
@@ -170,7 +172,16 @@ class flightSearch extends Component {
     }
 }
 
+const populateFlights=()=>{
+    const flights=this.props.flights.length;
+    const flightList=flight.length?flights.map(f=>{
+        return(
+            <div className="flight card" key={f.id}>
 
+            </div>
+        )
+    }):<P>None Found</P>
+}
 
 const mapStateToProps = (state) => {
     return {
