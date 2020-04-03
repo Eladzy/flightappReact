@@ -5,16 +5,14 @@ import { getAirlines } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { bindActionCreators } from 'redux';
 import { Select, DatePicker, Button } from 'react-materialize';
-import { pointerBlue } from '../img/pointerBlueT.png'
-import { airplaneBlueT } from '../img/airplaneBlueT.png'
+import  pointerBlue  from '../img/pointerBlueT.png'
+import  airplaneBlueT  from '../img/airplaneBlueT.png'
+import Moment from 'react-moment';
 
 
 class flightSearch extends Component {
 
-    // state={
-    //     flights:[]
-    // }
-
+  
     componentDidMount() {
         this.props.getAllFlights();
         this.props.getAirlines();
@@ -26,11 +24,13 @@ class flightSearch extends Component {
 
     onSubmitHandle = (e) => {
         e.preventDefault();
+        let moment = require('moment');
         console.log(document.getElementById("departureTimePicker").value);
-        let departureDate=new Date(document.getElementById("departureTimePicker").value).toISOString();
+        let departureString=document.getElementById("departureTimePicker").value
+      //  let departureDate = moment(departureString).format("YYYY,MMM,DD");
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
-            departureDate, ''];
+            document.getElementById("departureTimePicker").value, ''];
         console.log("handle submit");
         console.log(document.getElementById("airlineSelect").value);
         console.log(params);
@@ -44,20 +44,20 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card" key={f.id}>
-                    <img src={airplaneBlueT} style={{ position: "absolute" }, { opacity: "06", }, { top: "20px" }}/>
-                    <div className="card-content">
+                <div className="card" style={{overflow:'hidden',padding:'10px',width:'850px'}} key={f.id}>
+                    <img src={airplaneBlueT} style={ {position:'absolute',opacity:'0.4',top:'80px', left: '-100px' }} />
+                    <div className="card-content center">
                         <div className="row">
                             <div className="col 12s 6m">
-                                <h5>{f.origin}</h5> <br />
+                                <h6>{f.origin}</h6> <br />
                                 <span>{f.departureTime}</span>
                             </div>
                             <div className="col 12s 6m">
-                                <h5 className="5">{f.airlineName}</h5><br />
-                                <img src={pointerBlue}/>
+                                <h6>{f.airlineName}</h6><br/>
+                                <img src={pointerBlue} style={{height:'100px'},{width:'200px'}}/> 
                             </div>
                             <div className="col 12s 6m">
-                                <h5>{f.destination}</h5> <br />
+                                <h6>{f.destination}</h6> <br />
                                 <span>{f.arrivalTime}</span>
                             </div>
 

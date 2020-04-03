@@ -20,14 +20,13 @@ export const searchFlights = (params = []) => {
     return (dispatch) => {
         axios.get("https://localhost:44375/api/searchFlight", {
             params: {
-                flightId: params[0],// !== "" ||undefined? params[0] : 'null',
-                airlineId: params[1] ,//!== ""||undefined ? params[1] : 'null',
-                originCountryId:params[2] ,//!== "" ? params[2] : 'null',
-                destinationCountryId:params[3], //!== "" ||undefined? params[3] : 'null',
-                depTime: params[4], //!== "" ||undefined? params[4] : 'null',
-                landTime: params[5] //!== ""||undefined ? params[5] : 'null'
+                flightId: params[0],
+                airlineId: params[1] ,
+                originCountryId:params[2] ,
+                destinationCountryId:params[3], 
+                depTime: params[4], 
+                landTime: params[5] 
             }
-           // paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' })
         }).then(resp => {
             console.log("search query")
             console.log(resp)
@@ -39,12 +38,3 @@ export const searchFlights = (params = []) => {
     }
 }
     
-// fetch("https://localhost:44375/api/SearchFlights", {
-//     params: {
-//         id: params[0] !== ""  ? params[0] : null,
-//         airlineId: params[1] !== "" ? params[1] : null,
-//         originCountryId: params[2] !== "" ? params[2] : null,
-//         destinationCountryId: params[3] !== "" ? params[3] : null,
-//         depTime: params[4] !== "" ? params[4] : null,
-//         landTime: params[5] !== "" ? params[5] : null
-//     }
