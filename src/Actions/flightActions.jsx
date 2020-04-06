@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'qs';
 
 export const FETCH_ALL_FLIGHTS = 'FETCH_ALL_FLIGHTS';
 export const SEARCH_FLIGHTS = 'SEARCH_FLIGHTS';

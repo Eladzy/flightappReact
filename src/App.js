@@ -7,6 +7,7 @@ import signIn from './Components/signIn';
 import About from './Components/About';
 import flightIndex from './Components/flightIndex';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import privateRoute from './Components/privateRoute';
 
 
 
