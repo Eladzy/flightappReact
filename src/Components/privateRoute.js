@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import signIn from './signIn';
 
 const privateRoute = ({ path, component: Component, isLogged, ...rest }) => {
     return (
@@ -8,7 +9,21 @@ const privateRoute = ({ path, component: Component, isLogged, ...rest }) => {
             if (isLogged === true) {
                 return <Component {...props} {...rest}></Component>
             }
+            return <Redirect to={signIn} />
         }} />
     );
 }
-export default connect()(privateRoute);
+
+mapStateToProps = (state) => {
+    return {
+        isLogged: state.authR.isLogged
+    }
+}
+
+const mapDispatchToProps = () => {
+    return{
+        
+    }
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(privateRoute);

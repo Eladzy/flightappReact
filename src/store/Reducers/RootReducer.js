@@ -1,6 +1,7 @@
 import authReducer from "./authReducer";
 import flightReducer from "./FlightReducer";
-import generalDataReducer from './generalDataReducer'
+import generalDataReducer from './generalDataReducer';
+//import errorReducer from './errorReducer';
 import {combineReducers} from 'redux';
 
 
