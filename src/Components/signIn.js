@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 
-class signIn extends Component{
-    componentWillMount(){
+class signIn extends Component {
+    componentWillMount() {
         //islogged===true
         //redirect home
     }

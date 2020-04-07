@@ -1,4 +1,5 @@
-
+import { returnErrors, clearErrors } from './errorActions'
+import { mainUrl, authUrl, getVerfiedUserInfoUrl } from '../consts'
 import axios from 'axios';
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
@@ -9,11 +10,13 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 
-
+//verify token and load user
 export const userLoader = () => (dispatch, getState) => {
     dispatch({
         type: USER_LOADING
-    })
+    });
+
+    axios.get(mainUrl + getVerfiedUserInfoUrl)
 
 }
 

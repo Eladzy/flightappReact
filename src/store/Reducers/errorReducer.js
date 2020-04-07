@@ -3,26 +3,26 @@ import { Switch } from 'react-materialize';
 
 const initState = {
     msg: {},
-    statues: null,
+    status: null,
     id: null
 }
 
 const errorReducer = (state = initState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case GET_ERRORS:
-            return{
-                msg:action.payload.msg,
-                statues:action.payload.statues,
-                id:actions.payload.id
+            return {
+                msg: action.payload.msg,
+                status: action.payload.statues,
+                id: actions.payload.id
             };
-            case CLEAR_ERRORS:
-                return{
-                    msg:{},
-                    statues:null,
-                    id:null
-                }
-            default:
-                return state;
+        case CLEAR_ERRORS:
+            return {
+                msg: {},
+                status: null,
+                id: null
+            }
+        default:
+            return state;
     }
 }
 
