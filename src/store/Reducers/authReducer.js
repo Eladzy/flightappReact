@@ -11,7 +11,7 @@ import {
 } from '../../Actions/authActions';
 
 const initState = {
-    token=localStorage.getItem('token'),
+    // token=localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
     user: null
@@ -33,6 +33,7 @@ const authReducer = (state = initState, action) => {
             };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
+            localStorage.setItem('token', action.payload)
             return {
                 ...state,
                 ...action.payload,
@@ -55,6 +56,7 @@ const authReducer = (state = initState, action) => {
             return state;
     }
 }
+export default authReducer;
 
 
 

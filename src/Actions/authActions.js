@@ -10,6 +10,28 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 
+//login
+export const loginUser = (body = []) => {
+
+    return (dispatch) => {
+        axios.post(mainUrl + authUrl, body)
+            .then(resp => {
+                console.log(resp)
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch(returnErrors(err.response.data, err.response.status));
+                (dispatch)({
+                    type: LOGIN_FAIL
+                });
+            });
+    };
+}
+
+
+
 //verify token and load user
 export const userLoader = () => (dispatch, getState) => {
     dispatch({

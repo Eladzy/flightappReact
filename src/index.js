@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore,applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootreducer from "./store/Reducers/RootReducer";
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { userLoader } from '../src/Actions/authActions'
 
 
-const store=createStore(rootreducer,applyMiddleware(thunk));
+const store = createStore(rootreducer, applyMiddleware(thunk));
+
+store.dispatch(userLoader());
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

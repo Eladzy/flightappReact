@@ -5,29 +5,26 @@ import { getAirlines } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { bindActionCreators } from 'redux';
 import { Select, DatePicker, Button } from 'react-materialize';
-import  pointerBlue  from '../img/pointerBlueT.png'
-import  airplaneBlueT  from '../img/airplaneBlueT.png'
+import pointerBlue from '../img/pointerBlueT.png'
+import airplaneBlueT from '../img/airplaneBlueT.png'
 import Moment from 'react-moment';
 
 
 class flightSearch extends Component {
 
-  
+
     componentDidMount() {
         this.props.getAllFlights();
         this.props.getAirlines();
         this.props.getCountries();
-        // this.setState({
-        //     flights:[...this.props.flights]
-        // });
     }
 
     onSubmitHandle = (e) => {
         e.preventDefault();
         let moment = require('moment');
         console.log(document.getElementById("departureTimePicker").value);
-        let departureString=document.getElementById("departureTimePicker").value
-      //  let departureDate = moment(departureString).format("YYYY,MMM,DD");
+        let departureString = document.getElementById("departureTimePicker").value
+        //  let departureDate = moment(departureString).format("YYYY,MMM,DD");
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
             document.getElementById("departureTimePicker").value, ''];
@@ -44,8 +41,8 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card" style={{overflow:'hidden',padding:'10px',width:'850px'}} key={f.id}>
-                    <img src={airplaneBlueT} style={ {position:'absolute',opacity:'0.4',top:'80px', left: '-100px' }} />
+                <div className="card" style={{ overflow: 'hidden', padding: '10px', width: '850px' }} key={f.id}>
+                    <img src={airplaneBlueT} style={{ position: 'absolute', opacity: '0.4', top: '80px', left: '-100px' }} />
                     <div className="card-content center">
                         <div className="row">
                             <div className="col 12s 6m">
@@ -53,8 +50,8 @@ class flightSearch extends Component {
                                 <span>{f.departureTime}</span>
                             </div>
                             <div className="col 12s 6m">
-                                <h6>{f.airlineName}</h6><br/>
-                                <img src={pointerBlue} style={{height:'100px'},{width:'200px'}}/> 
+                                <h6>{f.airlineName}</h6><br />
+                                <img src={pointerBlue} style={{ height: '100px' }, { width: '200px' }} />
                             </div>
                             <div className="col 12s 6m">
                                 <h6>{f.destination}</h6> <br />
