@@ -1,5 +1,5 @@
 import { returnErrors, clearErrors } from './errorActions'
-import { mainUrl, authUrl, getVerfiedUserInfoUrl } from '../consts'
+import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl } from '../consts'
 import axios from 'axios';
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
@@ -16,13 +16,12 @@ export const loginUser = (body = []) => {
     return (dispatch) => {
         axios.post(mainUrl + authUrl, body)
             .then(resp => {
-                console.log(resp)
                 dispatch({
                     type: LOGIN_SUCCESS,
                     payload: resp.data
                 });
             }).catch(err => {
-                dispatch(returnErrors(err.response.data, err.response.status));
+                dispatch(returnErrors(err.message, 'err.response.status'));
                 (dispatch)({
                     type: LOGIN_FAIL
                 });
@@ -30,18 +29,47 @@ export const loginUser = (body = []) => {
     };
 }
 
+export const registerCustomer = (body = []) => {
+    return (dispatch) => {
+        axios.post(mainUrl + registerCustomerUrl, body)
+            .then(resp => {
+                dispatch({
+                    type: REGISTER_SUCCESS,
+                    payload: resp.data
+                });
+            }).catch(err => {
+                dispatch(returnErrors(err.response.message, 'err.response.status'));
+                (dispatch)({
+                    type: LOGIN_FAIL
 
+                });
+            })
+    };
+}
 
 //verify token and load user
 export const userLoader = () => (dispatch, getState) => {
-    dispatch({
-        type: USER_LOADING
-    });
+    dispatch({ type: USER_LOADING });
+    return (dispatch) => {
+        axios.get(mainUrl + getVerfiedUserInfoUrl).then(resp => {
+            dispatch({
+                type: USER_LOADED,
+                payload: resp.data
+            })
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status))
+        })
+    }
 
-    axios.get(mainUrl + getVerfiedUserInfoUrl)
+
 
 }
 
+export const logOutUser = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+}
 
 
 

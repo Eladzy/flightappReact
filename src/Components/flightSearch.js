@@ -66,8 +66,8 @@ class flightSearch extends Component {
 
         return (
             //add auto complete  flight id's
-            <div className="container">
-                <div className="row" >
+            <div className="container" >
+                <div className="row"  >
                     <form className='white col' onSubmit={this.onSubmitHandle}>
                         <div className="input-field col 12s 6m">
                             <Select id="airlineSelect" value={Option.value} >

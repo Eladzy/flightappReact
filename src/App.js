@@ -5,10 +5,13 @@ import flightSearch from './Components/flightSearch';
 import signUpCustomer from './Components/signUpCustomer';
 import signIn from './Components/signIn';
 import About from './Components/About';
+import logout from './Components/logout';
+import loggedInUserInterface from './Components/loggedInUserInterface';
 import flightIndex from './Components/flightIndex';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import privateRoute from './Components/privateRoute';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import PrivateRoute from './Components/privateRoute';
 import { userLoader } from './Actions/authActions';
+import { connect, useDispatch } from 'react-redux';
 
 
 
@@ -17,8 +20,9 @@ class App extends Component {
 
 
   render() {
+
     return (
-      <BrowserRouter>
+      <Router>
         <div className="App">
           <Navbar />
           <Switch>
@@ -28,9 +32,11 @@ class App extends Component {
             <Route path='/signIn' component={signIn} />
             <Route path='/flightIndex' component={flightIndex} />
             <Route path='/flightSearch' component={flightSearch} />
+            <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
+            <PrivateRoute path='/logout' component={logout} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

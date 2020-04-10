@@ -1,29 +1,40 @@
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { Route, Redirect } from 'react-router-dom';
-// import signIn from './signIn';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Route, Redirect } from 'react-router-dom';
 
-// const privateRoute = ({ path, component: Component, isLogged, ...rest }) => {
-//     return (
-//         <Route path={path}  {...rest} render={props => {
-//             if (isLogged === true) {
-//                 return <Component {...props} {...rest}></Component>
-//             }
-//             return <Redirect to={signIn} />
-//         }} />
-//     );
-// }
 
-// mapStateToProps = (state) => {
-//     return {
-//         //   isLogged: state.authR.isLogged
-//     }
-// }
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+    <Route {...rest}
+        render={
+            function (props) {
+                if (auth.isLoading) {
+                    return (<h2>Loading...</h2>)
+                } else if (!auth.isAuthenticated) {
+                    return <Redirect to="/login" />;
+                } else {
+                    return <Component {...props} />;
+                }
+            }
+        } />
+)
 
-// const mapDispatchToProps = () => {
-//     return {
+const mapStateToProps = (state) => ({
 
-//     }
+    auth: state.authR,
 
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(privateRoute);
+});
+
+export default connect(mapStateToProps)(PrivateRoute);
+
+
+
+
+
+// return (
+            //     <Route path={path}  {...rest} render={props => {
+            //         if (isLogged === true) {
+            //             return <Component {...props} {...rest}></Component>
+            //         }
+            //         return <Redirect to={signIn} />
+            //     }} />
+            // );

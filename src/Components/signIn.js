@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { loginUser } from '../Actions/authActions';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 class signIn extends Component {
 
     constructor(props) {
@@ -16,18 +15,16 @@ class signIn extends Component {
         this.changeHandle = this.changeHandle.bind(this)
     }
 
-    static propTypes = {
-        loginUser: PropTypes.func.isRequired,
-        isAuthenticated: PropTypes.bool
-    };
+    // static propTypes = {
+    //     loginUser: PropTypes.func.isRequired,
+    //     isAuthenticated: PropTypes.bool
+    // };
 
     onSubmit(e) {
         e.preventDefault();
-        // let username = this.state.username;
-        // let password = this.state.password;
         let body = []
-        body[0] = this.state.username;
-        body[1] = this.state.password
+        body[0] = this.state.username || '';
+        body[1] = this.state.password || '';
         this.props.loginUser(body);
         console.log([this.state.username, this.state.password]);
     };
