@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min.js';
-import { logOutUser } from '../Actions/authActions';
 
 class Navbar extends Component {
     componentDidMount() {
@@ -32,7 +31,6 @@ class Navbar extends Component {
                 <nav className='nav-wrapper blue darken-4 '>
                     <div className="container">
                         <a className="brand-logo left">FlightCom</a>
-                        <div>{isAuthenticated ? authLinks : guestLinks}</div>
                         <ul className="right hide-on-med-and-down">
                             <li><Link to='/Home'>Home</Link></li>
                             <li><Link to='/flightSearch'>Search flight</Link></li>
@@ -40,6 +38,7 @@ class Navbar extends Component {
                             <li><NavLink to='/Departures'>Departures/Arrivals</NavLink></li>
                             <li><NavLink to='/About'>About</NavLink></li>
                         </ul>
+                        <div>{isAuthenticated ? authLinks : guestLinks}</div>
 
                         <a className="sidenav-trigger right hide-on-med-and-up" data-target="mobile-links"><i className="material-icons">menu</i></a>
                     </div>

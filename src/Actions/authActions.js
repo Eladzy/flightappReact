@@ -50,15 +50,27 @@ export const registerCustomer = (body = []) => {
 //verify token and load user
 export const userLoader = () => (dispatch, getState) => {
     dispatch({ type: USER_LOADING });
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const token = getState.authR.token;
+    if (token) {
+        config.headers['Authorization'] = `Token ${token}`
+    }
     return (dispatch) => {
-        axios.get(mainUrl + getVerfiedUserInfoUrl).then(resp => {
+        axios.get(mainUrl + getVerfiedUserInfoUrl, config).then(resp => {
             dispatch({
                 type: USER_LOADED,
                 payload: resp.data
             })
         }).catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status))
-        })
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: AUTH_ERROR
+            });
+        });
     }
 
 
@@ -71,6 +83,21 @@ export const logOutUser = () => {
     };
 }
 
+//temp
+export const getUser = () => {
+    if (localStorage.getItem('token')) {
+        return (dispatch) => {
+            axios.get(mainUrl + getVerfiedUserInfoUrl).then(resp => {
+                dispatch({
+                    type: USER_LOADED,
+                    payload: resp.data
+                }).catch(err => console.log(err.data));
+            }
+            )
+        }
+    }
+
+}
 
 
 

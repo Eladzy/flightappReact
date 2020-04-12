@@ -10,13 +10,18 @@ import loggedInUserInterface from './Components/loggedInUserInterface';
 import flightIndex from './Components/flightIndex';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './Components/privateRoute';
-import { userLoader } from './Actions/authActions';
+import { userLoader, getUser } from './Actions/authActions';
 import { connect, useDispatch } from 'react-redux';
 
 
 
 
 class App extends Component {
+  componentDidMount() {
+    if (localStorage.getItem('token')) {
+      this.props.getUser();
+    }
+  }
 
 
   render() {
@@ -41,4 +46,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.authR.user
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLoader: () => dispatch(userLoader),
+    getUser: (componentDidMount) => dispatch(getUser(componentDidMount))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
