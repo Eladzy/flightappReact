@@ -11,16 +11,19 @@ import flightIndex from './Components/flightIndex';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './Components/privateRoute';
 import { userLoader, getUser } from './Actions/authActions';
-import { connect, useDispatch } from 'react-redux';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { store } from './index'
 
 
 
 class App extends Component {
+
   componentDidMount() {
-    if (localStorage.getItem('token')) {
-      this.props.getUser();
-    }
+
+    //store.dispatch(userLoader());
+    store.dispatch(userLoader());
+
   }
 
 
@@ -46,18 +49,17 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.authR.user
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     auth: state.authR
+//   }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userLoader: () => dispatch(userLoader),
-    getUser: (componentDidMount) => dispatch(getUser(componentDidMount))
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     userLoader: bindActionCreators(dispatch, userLoader),
+//     //getUser: () => dispatch(getUser)
+//   }
+// }
+export default App;
+// export default connect(mapStateToProps, mapDispatchToProps)(App);

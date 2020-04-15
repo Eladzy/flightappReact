@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { registerCustomer } from '../Actions/authActions';
+import { registerCustomer, loginUser } from '../Actions/authActions';
 import { Redirect } from 'react-router-dom';
 
 
@@ -41,7 +41,10 @@ class signUpCustomer extends Component {
         body[6] = this.state.creditcard || '';
         body[7] = this.state.email || '';
         if (this.props.registerCustomer(body)) {
-
+            let creds = [];
+            creds[0] = body[0];
+            creds[1] = body[1];
+            return (<Redirect to='/'></Redirect>)
         }
     }
     render() {
@@ -118,7 +121,8 @@ const mapStateToProps = (state) => ({
 
 const mapDistpatchToProps = (dispatch) => {
     return {
-        registerCustomer: (onSubmit) => dispatch(registerCustomer(onSubmit))
+        registerCustomer: (onSubmit) => dispatch(registerCustomer(onSubmit)),
+        loginUser: (onsubmit) => dispatch(loginUser(onsubmit))
     }
 }
 

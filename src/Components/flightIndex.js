@@ -12,7 +12,6 @@ class flightIndex extends Component {
     render() {
 
         const { flights } = this.props;
-        console.log(flights);
         const flightList = flights.length ? (flights.map(flight => {
             return (
                 <div className="col s12 m4" >
@@ -51,12 +50,11 @@ class flightIndex extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log("from map")
     return {
         flights: state.flightR.flights
     }
 }
 
-const mapDispatchToProps = (dispatch) => {return { getAllFlights: bindActionCreators(getAllFlights, dispatch)}}
+const mapDispatchToProps = (dispatch) => { return { getAllFlights: bindActionCreators(getAllFlights, dispatch) } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(flightIndex);

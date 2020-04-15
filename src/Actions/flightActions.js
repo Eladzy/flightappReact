@@ -1,8 +1,21 @@
 import axios from 'axios';
+import { mainUrl, getFlightByIdUrl } from '../consts';
 
 export const FETCH_ALL_FLIGHTS = 'FETCH_ALL_FLIGHTS';
 export const SEARCH_FLIGHTS = 'SEARCH_FLIGHTS';
+export const VIEW_FLIGHT = 'VIEW_FLIGHT';
 
+export const viewFlight = (id) => {
+    return (dispatch) => {
+        axios.get(mainUrl + getFlightByIdUrl + id)
+            .then(resp => {
+                dispatch({
+                    type: VIEW_FLIGHT,
+                    payload: resp.data
+                })
+            })
+    }
+}
 
 export const getAllFlights = () => {
     return (dispatch) => {
@@ -20,11 +33,11 @@ export const searchFlights = (params = []) => {
         axios.get("https://localhost:44375/api/searchFlight", {
             params: {
                 flightId: params[0],
-                airlineId: params[1] ,
-                originCountryId:params[2] ,
-                destinationCountryId:params[3], 
-                depTime: params[4], 
-                landTime: params[5] 
+                airlineId: params[1],
+                originCountryId: params[2],
+                destinationCountryId: params[3],
+                depTime: params[4],
+                landTime: params[5]
             }
         }).then(resp => {
             console.log("search query")
@@ -36,4 +49,4 @@ export const searchFlights = (params = []) => {
         }).catch(err => { console.log(err) });
     }
 }
-    
+

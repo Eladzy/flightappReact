@@ -10,21 +10,23 @@ import {
     REGISTER_FAIL
 } from '../../Actions/authActions';
 
-const initState = {
+let initState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
-    user: null
+    user: {}
 }
 
 const authReducer = (state = initState, action) => {
     switch (action.type) {
         case USER_LOADING:
+            console.log('loading')
             return {
                 ...state,
                 isLoading: true
             };
         case USER_LOADED:
+            console.log('loaded')
             return {
                 ...state,
                 isLoading: false,

@@ -218,7 +218,8 @@ const mapDispatchToProps = (dispatch) => {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
         getAirlines: bindActionCreators(getAirlines, dispatch),
         getCountries: bindActionCreators(getCountries, dispatch),
-        searchedFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
+        // searchedFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
+        searchedFlights: () => dispatch(searchFlights)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(flightSearch);

@@ -49,38 +49,39 @@ export const registerCustomer = (body = []) => {
 
 //verify token and load user
 export const userLoader = () => (dispatch, getState) => {
-    dispatch({ type: USER_LOADING });
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    const token = getState.authR.token;
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`
-    }
-    return (dispatch) => {
-        axios.get(mainUrl + getVerfiedUserInfoUrl, config).then(resp => {
-            dispatch({
-                type: USER_LOADED,
-                payload: resp.data
-            })
-        }).catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch({
-                type: AUTH_ERROR
-            });
+    dispatch({
+        type: USER_LOADING
+    });
+
+    // const token = getState().authR.token;
+
+
+    axios.get(mainUrl + getVerfiedUserInfoUrl, tokenConfig(getState)).then(resp => {
+        dispatch({
+            type: USER_LOADED,
+            payload: resp.data
+        })
+    }).catch(err => {
+        dispatch(returnErrors(err.data));
+        dispatch({
+            type: AUTH_ERROR
         });
-    }
-
-
+    });
 
 }
 
+
+
+
+
 export const logOutUser = () => {
-    return {
-        type: LOGOUT_SUCCESS
-    };
+    return async (dispatch) => {
+        dispatch({
+            type: LOGOUT_SUCCESS,
+
+        })
+
+    }
 }
 
 //temp
@@ -101,6 +102,23 @@ export const getUser = () => {
 
 
 
+export const tokenConfig = (getState) => {
+    // Get token from state
+    const token = getState().authR.token;
+
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    // If token, add to headers config
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+};
 
 
 
@@ -109,6 +127,36 @@ export const getUser = () => {
 
 
 
+
+
+// export const userLoader = () => (dispatch, getState) => {
+//     return async (dispatch) => {
+//         dispatch({
+//             type: USER_LOADING
+//         });
+//         const config = {
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         }
+//         const token = getState.authR.token;
+//         if (token) {
+//             config.headers['Authorization'] = `Token ${token}`
+//         }
+//         return (dispatch) => {
+//             axios.get(mainUrl + getVerfiedUserInfoUrl, tokenConfig(getState)).then(resp => {
+//                 dispatch({
+//                     type: USER_LOADED,
+//                     payload: resp.data
+//                 })
+//             }).catch(err => {
+//                 dispatch(returnErrors(err.response.data, err.response.status));
+//                 dispatch({
+//                     type: AUTH_ERROR
+//                 });
+//             });
+//         }
+//     }
 
 
 

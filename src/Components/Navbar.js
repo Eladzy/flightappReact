@@ -11,21 +11,21 @@ class Navbar extends Component {
     render() {
         const { isAuthenticated, user } = this.props.auth;
         const authLinks = (<ul className="right hide-on-med-and-down">
-            <li><NavLink to='/loggedInUserInterface'>My Account {user}</NavLink></li>
+            <li><NavLink to='/loggedInUserInterface'><strong>{user !== null ? user['username'] : ''}</strong>  Account </NavLink></li>
             <li><NavLink to='/logout' >Sign out</NavLink></li>
         </ul>)
-        const authLinksM = (<ul className="sidenav">
-            <li><NavLink to='/loggedInUserInterface'>My Account {user}</NavLink></li>
+        const authLinksM = <div>
+            <li><NavLink to='/loggedInUserInterface'><strong>{user !== null ? user['username'] : ''}</strong>  Account</NavLink></li>
             <li><NavLink to='/logout' >Sign out</NavLink></li>
-        </ul>)
+        </div>
         const guestLinks = (<ul className="right hide-on-med-and-down">
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
             <li><NavLink to='/signIn'>Sign in</NavLink></li>
         </ul>)
-        const guestLinksM = (<ul className="sidenav">
+        const guestLinksM = (<div>
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
             <li><NavLink to='/signIn'>Sign in</NavLink></li>
-        </ul>)
+        </div>)
         return (
             <div>
                 <nav className='nav-wrapper blue darken-4 '>
@@ -50,8 +50,8 @@ class Navbar extends Component {
                     <li><NavLink to='/flightSearch'>Search flight</NavLink></li>
                     <li><NavLink to='/Departures'>Departures/Arrivals</NavLink></li>
                     <li><NavLink to='/About'>About</NavLink></li>
+                    <div>{isAuthenticated ? authLinksM : guestLinksM}</div>
                 </ul>
-                <div>{isAuthenticated ? authLinksM : guestLinksM}</div>
             </div>
         );
     }

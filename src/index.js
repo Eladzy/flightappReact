@@ -7,10 +7,10 @@ import { createStore, applyMiddleware } from 'redux';
 import rootreducer from "./store/Reducers/RootReducer";
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { userLoader } from '../src/Actions/authActions'
+//import { userLoader } from '../src/Actions/authActions'
 
 
-const store = createStore(rootreducer, applyMiddleware(thunk));
+export const store = createStore(rootreducer, applyMiddleware(thunk));
 
 //store.dispatch(userLoader());
 
