@@ -7,13 +7,12 @@ import signIn from './Components/signIn';
 import About from './Components/About';
 import logout from './Components/logout';
 import loggedInUserInterface from './Components/loggedInUserInterface';
+import Flight from './Components/Flight';
 import flightIndex from './Components/flightIndex';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './Components/privateRoute';
 import { userLoader, getUser } from './Actions/authActions';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { store } from './index'
+import { store } from './index';
 
 
 
@@ -40,6 +39,7 @@ class App extends Component {
             <Route path='/signIn' component={signIn} />
             <Route path='/flightIndex' component={flightIndex} />
             <Route path='/flightSearch' component={flightSearch} />
+            <Route path='/Flight' component={Flight} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
             <PrivateRoute path='/logout' component={logout} />
           </Switch>

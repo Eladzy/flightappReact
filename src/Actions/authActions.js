@@ -1,5 +1,6 @@
-import { returnErrors, clearErrors } from './errorActions'
-import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl } from '../consts'
+import { returnErrors, clearErrors } from './errorActions';
+import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl } from '../consts';
+import { tokenConfig } from './configs'
 import axios from 'axios';
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
@@ -53,9 +54,6 @@ export const userLoader = () => (dispatch, getState) => {
         type: USER_LOADING
     });
 
-    // const token = getState().authR.token;
-
-
     axios.get(mainUrl + getVerfiedUserInfoUrl, tokenConfig(getState)).then(resp => {
         dispatch({
             type: USER_LOADED,
@@ -71,9 +69,6 @@ export const userLoader = () => (dispatch, getState) => {
 }
 
 
-
-
-
 export const logOutUser = () => {
     return async (dispatch) => {
         dispatch({
@@ -84,79 +79,6 @@ export const logOutUser = () => {
     }
 }
 
-//temp
-export const getUser = () => {
-    if (localStorage.getItem('token')) {
-        return (dispatch) => {
-            axios.get(mainUrl + getVerfiedUserInfoUrl).then(resp => {
-                dispatch({
-                    type: USER_LOADED,
-                    payload: resp.data
-                }).catch(err => console.log(err.data));
-            }
-            )
-        }
-    }
-
-}
-
-
-
-export const tokenConfig = (getState) => {
-    // Get token from state
-    const token = getState().authR.token;
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return config;
-};
-
-
-
-
-
-
-
-
-
-
-// export const userLoader = () => (dispatch, getState) => {
-//     return async (dispatch) => {
-//         dispatch({
-//             type: USER_LOADING
-//         });
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
-//         const token = getState.authR.token;
-//         if (token) {
-//             config.headers['Authorization'] = `Token ${token}`
-//         }
-//         return (dispatch) => {
-//             axios.get(mainUrl + getVerfiedUserInfoUrl, tokenConfig(getState)).then(resp => {
-//                 dispatch({
-//                     type: USER_LOADED,
-//                     payload: resp.data
-//                 })
-//             }).catch(err => {
-//                 dispatch(returnErrors(err.response.data, err.response.status));
-//                 dispatch({
-//                     type: AUTH_ERROR
-//                 });
-//             });
-//         }
-//     }
 
 
 
@@ -169,28 +91,12 @@ export const tokenConfig = (getState) => {
 
 
 
-// import axios from 'axios';
-// import sweetAlert from 'sweetalert2';
-// import Swal from 'sweetalert2';
-// import { Icon } from 'react-materialize';
 
 
-// export const LOG_IN = 'LOG_IN';
-// export const loginAction = (username, password) => {
-//     return (dispatch) => {
-//         axios.post("https://localhost:44375/authJwt/authenticate", [username, password])
-//             .then(resp => {
-//                 dispatch = ({
-//                     type: LOG_IN,
-//                     payload: resp.data
-//                 });
-//             }).catch(err => {
-//                 Swal.fire({
-//                     icon: 'error',
-//                     title: 'Failed',
-//                     text:"Username or password are not correct.",
-//                     confirmButtonText:'Got it'
-//                 })
-//             })
-//     }
-// }
+
+
+
+
+
+
+

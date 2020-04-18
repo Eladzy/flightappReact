@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllFlights } from '../Actions/flightActions';
-import is from '../img/is.png'
+import { Redirect } from 'react-router'
+import { getAllFlights, targetFlight, viewFlight } from '../Actions/flightActions';
+import Flight from './Flight';
+import is from '../img/is.png';
 import { bindActionCreators } from 'redux';
 
 class flightIndex extends Component {
 
+    onClickHandle = (id) => {
+
+        this.props.viewFlight(id);
+        console.log(id + " event");
+        console.log(this.props.flight)
+        this.props.history.push('/Flight');
+    }
     componentDidMount() {
         this.props.getAllFlights();
     }
     render() {
 
-        const { flights } = this.props;
+        const { flights } = this.props.flight;
         const flightList = flights.length ? (flights.map(flight => {
             return (
                 <div className="col s12 m4" >
@@ -29,7 +38,7 @@ class flightIndex extends Component {
                         </div>
                     </div>
                     <div className="card-action" style={{ marginBottom: "50px" }}>
-                        <a className="waves-effect waves-light btn-small blue darken-4 z-depth-2">Purchase</a>
+                        <a className="waves-effect waves-light btn-small blue darken-4 z-depth-2" onClick={() => this.onClickHandle(flight.id)}  >Purchase</a>
                     </div>
                 </div>
 
@@ -51,10 +60,17 @@ class flightIndex extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        flights: state.flightR.flights
+        flights: state.flightR.flights,
+        flight: state.flightR
     }
 }
 
-const mapDispatchToProps = (dispatch) => { return { getAllFlights: bindActionCreators(getAllFlights, dispatch) } }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAllFlights: bindActionCreators(getAllFlights, dispatch),
+        //   getAllFlights: () => dispatch(getAllFlights),
+        viewFlight: (id) => dispatch(viewFlight(id))
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(flightIndex);

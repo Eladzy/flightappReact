@@ -21,10 +21,7 @@ class flightSearch extends Component {
 
     onSubmitHandle = (e) => {
         e.preventDefault();
-        let moment = require('moment');
         console.log(document.getElementById("departureTimePicker").value);
-        let departureString = document.getElementById("departureTimePicker").value
-        //  let departureDate = moment(departureString).format("YYYY,MMM,DD");
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
             document.getElementById("departureTimePicker").value, ''];
@@ -218,8 +215,7 @@ const mapDispatchToProps = (dispatch) => {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
         getAirlines: bindActionCreators(getAirlines, dispatch),
         getCountries: bindActionCreators(getCountries, dispatch),
-        // searchedFlights: (onSubmitHandle) => dispatch(searchFlights(onSubmitHandle))
-        searchedFlights: () => dispatch(searchFlights)
+        searchedFlights: (params) => dispatch(searchFlights(params))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(flightSearch);
