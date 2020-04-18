@@ -40,6 +40,9 @@ class Flight extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="card-action">
+                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick() }} disabled={!isAuthenticated}>Purchase <i className="material-icons right">airplanemode_active</i></button>
+                </div>
             </div>
         ) : <div className="center">
                 Loading Flight...
