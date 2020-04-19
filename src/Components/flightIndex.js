@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router'
-import { getAllFlights, targetFlight, viewFlight } from '../Actions/flightActions';
-import Flight from './Flight';
+import { getAllFlights, viewFlight } from '../Actions/flightActions';
 import is from '../img/is.png';
 import { bindActionCreators } from 'redux';
 
@@ -12,7 +10,7 @@ class flightIndex extends Component {
 
         this.props.viewFlight(id);
         console.log(id + " event");
-        console.log(this.props.flight)
+        // console.log(this.props.flight)
         this.props.history.push('/Flight');
     }
     componentDidMount() {

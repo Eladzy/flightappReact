@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { tokenConfig } from './configs'
 import { mainUrl, getFlightByIdUrl, purchaseUrl } from '../consts';
-
 export const FETCH_ALL_FLIGHTS = 'FETCH_ALL_FLIGHTS';
 export const SEARCH_FLIGHTS = 'SEARCH_FLIGHTS';
 export const VIEW_FLIGHT = 'VIEW_FLIGHT';
-export const PURCHASING_FLIGHT = 'PURCHASING_FLIGHT';
-export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
-export const PURCHASE_FAILED = 'PURCHASE_FAILED';
 export const TARGET_FLIGHT = 'TARGET_FLIGHT';
 
 export const viewFlight = (id) => {
@@ -60,23 +56,7 @@ export const searchFlights = (params = []) => {
     }
 }
 
-export const purchaseTicket = (dispatch, id) => {
-    dispatch({ type: PURCHASING_FLIGHT });
 
-    axios.post(mainUrl + purchaseUrl, id, tokenConfig)
-        .then(resp => {
-            dispatch({
-                type: PURCHASE_SUCCESS,
-                payload: resp.data
-            });
-        }).catch(err => {
-            console.log(err);
-            dispatch({
-                type: PURCHASE_FAILED
-            });
-        });
-
-}
 
 
 export const targetFlight = (id) => {

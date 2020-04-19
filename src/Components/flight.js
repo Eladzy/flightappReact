@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { purchaseTicket, viewFlight } from '../Actions/flightActions';
+import { Link, Route } from 'react-router-dom';
+import { purchaseTicket } from '../Actions/ticketActions';
 import pointerBlue from '../img/pointerBlueT.png';
 import airplaneBlueT from '../img/airplaneBlueT.png';
+import Swal from 'sweetalert2';
 
 
 class Flight extends Component {
-    componentDidMount() {
 
-    }
-    handleClick = (e) => {
+
+    handleClick = (id) => {
         console.log("check token and purchase method")
-        // this.props.handlePurchase(this.props.flight.id)
+        this.props.isAuthenticated === true ? this.props.purchaseTicket(id) : Swal.fire({
+            title: 'Log in needed',
+            text: 'You need to sign in order to complete your purchase',
+            footer: (<Route to='/signIn'>Sign in</Route>)
+        })
     }
 
     render() {
@@ -41,7 +46,7 @@ class Flight extends Component {
                     </div>
                 </div>
                 <div className="card-action">
-                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick() }} disabled={!isAuthenticated}>Purchase <i className="material-icons right">airplanemode_active</i></button>
+                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick(flight.id) }} disabled={!isAuthenticated}>Purchase <i className="material-icons right">airplanemode_active</i></button>
                 </div>
             </div>
         ) : <div className="center">
@@ -61,26 +66,13 @@ const mapStateToProps = (state) => {
         targetFlightId: state.flightR.targetFlightId,
         flight: state.flightR.flight,
         auth: state.authR,
+        isAuthenticated: state.authR.isAuthenticated
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        //targetFlight: bindActionCreators(viewFlight, dispatch)
-        // viewFlight: () => dispatch(viewFlight)
+        purchaseTicket: (id) => dispatch(purchaseTicket(id))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Flight);
 
-{/* <div className="flight">
-    <h4 className='center'>
-        {flight.id}
-    </h4>
-    <p className="flow-text">
-        Takes off at {flight.departureTime}
-                     from {flight.origin}
-                     and arrives to {flight.destination}
-                     at {flight.landingTime}</p>
-    <div className="center">
-        <button className="btn blue darken-4 z-depth-2" disabled={!isAuthenticated} onClick={() => { this.handleClick() }} >Purchase </button>
-    </div>
-</div> */}
