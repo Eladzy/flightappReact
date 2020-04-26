@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CustomerMenu from './CustomerMenu';
 import { connect } from 'react-redux';
 import { getMyFlights } from '../Actions/flightActions';
 import { Redirect } from 'react-router-dom';
@@ -30,9 +29,9 @@ const mapStateToProps = (state) => {
       flight: state.flightR
    }
 }
-const mapDispatchToProps = (dispatch) => {
-   return {
-      getMyFlights: (id) => dispatch(getMyFlights(id))
-   }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(loggedInUserInterface)
+// const mapDispatchToProps = (dispatch) => {
+//    return {
+//       getMyFlights: (id) => dispatch(getMyFlights(id))
+//    }
+// }
+export default connect(mapStateToProps)(loggedInUserInterface)

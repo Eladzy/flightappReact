@@ -20,12 +20,8 @@ import { store } from './index';
 class App extends Component {
 
   componentDidMount() {
-
-    //store.dispatch(userLoader());
     store.dispatch(userLoader());
-
   }
-
 
   render() {
 

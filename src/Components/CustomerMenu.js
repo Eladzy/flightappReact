@@ -19,7 +19,7 @@ class CustomerMenu extends Component {
                     <td>{flight.departureTime}</td>
                     <td>{flight.destination}</td>
                     <td>{flight.arrivalTime}</td>
-                    <td><button className="blue darken-4" waves="light"><i class="material-icons">backspace</i></button></td>
+                    <td><button ><i class="material-icons">backspace</i></button></td>
                 </tr>
             )
         }) : '';
