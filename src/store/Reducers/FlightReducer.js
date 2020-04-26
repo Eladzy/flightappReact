@@ -1,8 +1,9 @@
-import { FETCH_ALL_FLIGHTS, SEARCH_FLIGHTS, TARGET_FLIGHT, VIEW_FLIGHT } from '../../Actions/flightActions';
+import { FETCH_ALL_FLIGHTS, SEARCH_FLIGHTS, TARGET_FLIGHT, VIEW_FLIGHT, GET_MY_FLIGHTS } from '../../Actions/flightActions';
 
 let initState = {
     flights: [],
     targetFlightId: null,
+    userFlights: [],
     flight: {}
 }
 
@@ -29,6 +30,11 @@ export default (state = initState, action) => {
                 ...state,
                 flight: action.payload,
 
+            }
+        case GET_MY_FLIGHTS:
+            return {
+                ...state,
+                userFlights: action.payload
             }
         default:
             return state;

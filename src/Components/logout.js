@@ -37,9 +37,9 @@ class logout extends Component {
 
         if (!this.props.isAuthenticated) {
 
-            return <Redirect to='/SignIn'></Redirect>
+            return (<Redirect to='/SignIn'></Redirect>)
         }
-        return (<Redirect to='/'></Redirect>)
+        else { return (<Redirect to='/'></Redirect>) }
     }
 }
 const mapStateToProps = (state) => ({

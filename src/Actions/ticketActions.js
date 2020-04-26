@@ -5,11 +5,11 @@ export const PURCHASING_FLIGHT = 'PURCHASING_FLIGHT';
 export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
 export const PURCHASE_FAILED = 'PURCHASE_FAILED';
 
+
 export const purchaseTicket = (id) => (dispatch, getState) => {
     dispatch({ type: PURCHASING_FLIGHT });
-    const bodyParams = JSON.stringify({ id });
+    // const bodyParams = JSON.stringify({ id });
     let config = tokenConfig(getState);
-    // config.body['flightId'] = bodyParams
     axios.post(mainUrl + purchaseUrl, id, config)
         .then(resp => {
             dispatch({

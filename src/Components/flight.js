@@ -20,9 +20,8 @@ class Flight extends Component {
     }
 
     render() {
-        const { flightR, targetFlightId, flight } = this.props;
+        const { flight } = this.props;
         const { isAuthenticated } = this.props.auth;
-        //  this.props.viewFlight(this.props.targetFlightId);
         console.log(flight);
         const Flight = flight ? (
             <div className="container center">
@@ -46,7 +45,7 @@ class Flight extends Component {
                     </div>
                 </div>
                 <div className="card-action">
-                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick(flight.id) }} disabled={!isAuthenticated}>Purchase <i className="material-icons right">airplanemode_active</i></button>
+                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick(flight.id) }} disabled={!isAuthenticated && flight.vacancy < 1}>Purchase <i className="material-icons right">airplanemode_active</i></button>
                 </div>
             </div>
         ) : <div className="center">
@@ -63,7 +62,6 @@ class Flight extends Component {
 const mapStateToProps = (state) => {
     return {
         flightR: state.flightR,
-        targetFlightId: state.flightR.targetFlightId,
         flight: state.flightR.flight,
         auth: state.authR,
         isAuthenticated: state.authR.isAuthenticated

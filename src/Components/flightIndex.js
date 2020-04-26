@@ -10,7 +10,6 @@ class flightIndex extends Component {
 
         this.props.viewFlight(id);
         console.log(id + " event");
-        // console.log(this.props.flight)
         this.props.history.push('/Flight');
     }
     componentDidMount() {

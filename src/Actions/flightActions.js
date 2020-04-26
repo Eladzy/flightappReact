@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { tokenConfig } from './configs'
-import { mainUrl, getFlightByIdUrl, purchaseUrl } from '../consts';
+import { mainUrl, getFlightByIdUrl, customerFlightsUrl } from '../consts';
 export const FETCH_ALL_FLIGHTS = 'FETCH_ALL_FLIGHTS';
 export const SEARCH_FLIGHTS = 'SEARCH_FLIGHTS';
 export const VIEW_FLIGHT = 'VIEW_FLIGHT';
 export const TARGET_FLIGHT = 'TARGET_FLIGHT';
+export const LOAD_MY_FLIGHTS = 'LOAD_MY_FLIGHTS';
+export const GET_MY_FLIGHTS = 'GET_MY_FLIGHTS';
+
 
 export const viewFlight = (id) => {
     return (dispatch) => {
@@ -56,6 +59,20 @@ export const searchFlights = (params = []) => {
     }
 }
 
+
+export const getMyFlights = (userId) => (dispatch, getState) => {
+    let config = tokenConfig(getState)
+    // config.headers["id"] = userId
+    // dispatch({ type: LOAD_MY_FLIGHTS })
+    axios.post(mainUrl + customerFlightsUrl, userId, config)
+        .then(resp => {
+            dispatch({
+                type: GET_MY_FLIGHTS,
+                payload: resp.data
+            })
+        }).catch(err => { console.log(err) })
+
+}
 
 
 

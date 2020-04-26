@@ -1,21 +1,38 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
+import CustomerMenu from './CustomerMenu';
+import { connect } from 'react-redux';
+import { getMyFlights } from '../Actions/flightActions';
+import { Redirect } from 'react-router-dom';
+class loggedInUserInterface extends Component {
 
+   render() {
+      const { user, isAuthenticated } = this.props.auth;
+      //  const { getMyFlights } = this.props
+      console.log(user);
+      if (isAuthenticated) {
+         switch (user.roles) {
+            case 'Customer':
+               console.log('custmer');
+               // self.props.getMyFlights(user.id);
+               return (<Redirect to='/CustomerMenu'></Redirect>);
+            case 'AirLine':
+            case 'Administrator':
+            default:
+               return (<h2>Forbidden</h2>)
+         }
+      }
 
-class loggedInUserInterface extends Component{
-render(){
- const{user}=this.props
- console.log(user);
- return(
-    <div className="container">
-        <h5 className='center'>Hello {user.Firstname} {user.lastName}</h5>
-        <div className="left">
-            //edit user form to put inside a collapsable
-            <form className="white">
-                
-            </form>
-        </div>
-    </div>
- );
+   }
 }
+const mapStateToProps = (state) => {
+   return {
+      auth: state.authR,
+      flight: state.flightR
+   }
 }
-export default loggedInUserInterface;
+const mapDispatchToProps = (dispatch) => {
+   return {
+      getMyFlights: (id) => dispatch(getMyFlights(id))
+   }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(loggedInUserInterface)

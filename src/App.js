@@ -6,12 +6,13 @@ import signUpCustomer from './Components/signUpCustomer';
 import signIn from './Components/signIn';
 import About from './Components/About';
 import logout from './Components/logout';
+import CustomerMenu from './Components/CustomerMenu';
 import loggedInUserInterface from './Components/loggedInUserInterface';
 import Flight from './Components/Flight';
 import flightIndex from './Components/flightIndex';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './Components/privateRoute';
-import { userLoader, getUser } from './Actions/authActions';
+import { userLoader } from './Actions/authActions';
 import { store } from './index';
 
 
@@ -41,6 +42,7 @@ class App extends Component {
             <Route path='/flightSearch' component={flightSearch} />
             <Route path='/Flight' component={Flight} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
+            <Route path='/CustomerMenu' component={CustomerMenu} />
             <PrivateRoute path='/logout' component={logout} />
           </Switch>
         </div>
@@ -49,17 +51,6 @@ class App extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     auth: state.authR
-//   }
-// }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     userLoader: bindActionCreators(dispatch, userLoader),
-//     //getUser: () => dispatch(getUser)
-//   }
-// }
 export default App;
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
+
