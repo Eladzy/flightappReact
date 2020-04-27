@@ -5,3 +5,4 @@ export const registerCustomerUrl = "api/registerCustomer/";
 export const getFlightByIdUrl = "api/getflightbyid";
 export const purchaseUrl = 'api/customer/purchase';
 export const customerFlightsUrl = "api/customer/getmyflightsjson";
+export const customerDetailsUrl = "api/customer/getCustomerDetails";

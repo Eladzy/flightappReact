@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMyFlights } from '../Actions/flightActions'
-
+import { getMyFlights } from '../Actions/flightActions';
+import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
+import { getCustomerDetails } from '../Actions/customerActions';
 class CustomerMenu extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +13,7 @@ class CustomerMenu extends Component {
     componentDidMount() {
 
         this.props.getMyFlights(this.state.user.id);
+        this.props.getCUstomerDetails(this.state.user.id);
     }
 
     render() {
@@ -34,13 +36,23 @@ class CustomerMenu extends Component {
             <div className="container">
                 <h5 className='center'>Hello {user.username} </h5>
 
-                {/* <div className="left">
-                    //edit user form to put inside a collapsable
-                    <form className="white">
-                    //edit info
-                    </form>
+                <div className="left">
+                    <Collapsible accordion>
+                        <CollapsibleItem expanded={false}
+                            header="Edit My Details"
+                            icon={<Icon>add_box</Icon>}
+                            node="div">
+                            <form action="" className="white">
 
-                </div> */}
+                            </form>
+                        </CollapsibleItem>
+                        <CollapsibleItem expanded={false}
+                            header="Change My Password"
+                            icon={<Icon>add_box</Icon>}
+                            node="div">
+                        </CollapsibleItem>
+                    </Collapsible>
+                </div>
                 <div className="center">
                     <table className="centered responsive higlighted">
                         <thead>
@@ -73,7 +85,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getMyFlights: (id) => dispatch(getMyFlights(id))
+        getMyFlights: (id) => dispatch(getMyFlights(id)),
+        getCustomerDetails: (id) => dispatch(getCUstomerDetails(id))
     }
 }
 
