@@ -62,7 +62,7 @@ export const searchFlights = (params = []) => {
 
 export const getMyFlights = (userId) => (dispatch, getState) => {
     let config = tokenConfig(getState)
-
+    dispatch({ type: LOAD_MY_FLIGHTS })
     axios.post(mainUrl + customerFlightsUrl, userId, config)
         .then(resp => {
             dispatch({

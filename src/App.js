@@ -38,7 +38,7 @@ class App extends Component {
             <Route path='/flightSearch' component={flightSearch} />
             <Route path='/Flight' component={Flight} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
-            <Route path='/CustomerMenu' component={CustomerMenu} />
+            <PrivateRoute path='/CustomerMenu' component={CustomerMenu} />
             <PrivateRoute path='/logout' component={logout} />
           </Switch>
         </div>
