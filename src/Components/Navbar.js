@@ -20,7 +20,7 @@ class Navbar extends Component {
         </div>
         const guestLinks = (<ul className="right hide-on-med-and-down">
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
-            <li><NavLink to='/signIn'>Sign in</NavLink></li>
+            <li><NavLink to='/SignIn'>Sign in</NavLink></li>
         </ul>)
         const guestLinksM = (<div>
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>

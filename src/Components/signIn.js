@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { loginUser } from '../Actions/authActions';
 import PropTypes from 'prop-types';
-class signIn extends Component {
+class SignIn extends Component {
 
     constructor(props) {
         super(props)
@@ -70,4 +70,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(signIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

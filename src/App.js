@@ -3,7 +3,7 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import flightSearch from './Components/flightSearch';
 import signUpCustomer from './Components/signUpCustomer';
-import signIn from './Components/signIn';
+import SignIn from './Components/SignIn';
 import About from './Components/About';
 import logout from './Components/logout';
 import CustomerMenu from './Components/CustomerMenu';
@@ -33,7 +33,7 @@ class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/signUpCustomer' component={signUpCustomer} />
             <Route path='/About' component={About} />
-            <Route path='/signIn' component={signIn} />
+            <Route path='/signIn' component={SignIn} />
             <Route path='/flightIndex' component={flightIndex} />
             <Route path='/flightSearch' component={flightSearch} />
             <Route path='/Flight' component={Flight} />

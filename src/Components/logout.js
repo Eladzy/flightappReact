@@ -4,7 +4,6 @@ import { logOutUser } from '../Actions/authActions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { bindActionCreators } from 'redux';
 import { store } from '../index';
 class logout extends Component {
 
@@ -26,10 +25,7 @@ class logout extends Component {
                 Swal.fire(
                     'Logged out!',
                     'You will be redirected to home page'
-                )//.then(res => { this.props.logOutUser(res) });
-
-
-                // localStorage.removeItem('token')//todo return later
+                )
             }
         })
     }

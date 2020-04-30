@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { mainUrl, customerDetailsUrl } from '../consts';
 import { tokenConfig } from './configs';
-export const GET_CUSTOMER_DETAILS;
+export const GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS';
 
 export const getCustomerDetails = (id) => (dispatch, getState) => {
-    axios.post(mainUrl + customerDetailsUrl, id, config(getState))
+    axios.post(mainUrl + customerDetailsUrl, id, tokenConfig(getState))
         .then(resp => {
             dispatch({
                 type: GET_CUSTOMER_DETAILS,

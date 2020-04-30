@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMyFlights } from '../Actions/flightActions';
 import { Redirect } from 'react-router-dom';
 class loggedInUserInterface extends Component {
 
