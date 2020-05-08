@@ -38,10 +38,11 @@ export const registerCustomer = (body = []) => {
                     type: REGISTER_SUCCESS,
                     payload: resp.data
                 });
+
             }).catch(err => {
-                dispatch(returnErrors(err.response.message, 'err.response.status'));
+                console.log(err);
                 (dispatch)({
-                    type: LOGIN_FAIL
+                    type: REGISTER_FAIL
 
                 });
             })

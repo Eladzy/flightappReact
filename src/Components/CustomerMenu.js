@@ -2,16 +2,37 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getMyFlights } from '../Actions/flightActions';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
-import { getCustomerDetails } from '../Actions/customerActions';
+import { getCustomerDetails, updateMyDetails } from '../Actions/customerActions';
 class CustomerMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: this.props.auth.user
+            user: this.props.auth.user,
+            password: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            address: '',
+
         }
-        onsubmit = (e) => {
-            e.preventDefault();
-        }
+
+    }
+
+    changeHandle = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+
+    }
+    onSubmit = (e) => {
+        e.preventDefault();
+        let body = []
+        body[0] = this.state.user.id;
+        body[1] = this.state.firstName || '';
+        body[2] = this.state.lastName || '';
+        body[3] = this.state.phone || '';
+        body[4] = this.state.address || '';
+        this.props.updateMyDetails(body);
+        this.props.history.push('/')
+
     }
     componentDidMount() {
 
@@ -21,7 +42,13 @@ class CustomerMenu extends Component {
 
     render() {
         const { user } = this.props.auth;
+        const { password } = this.state.password;
+        const { firstName } = this.state.firstName;
+        const { lastName } = this.state.lastName;
+        const { address } = this.state.address;
+        const { phone } = this.state.phone;
         const userFlights = this.props.flightR.userFlights;
+        console.log(user)
         const flightList = userFlights.length ? userFlights.map(flight => {
             return (
                 <tr>
@@ -61,29 +88,25 @@ class CustomerMenu extends Component {
                             header="Edit My Details"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <form action="" className="white">
+                            <form onSubmit={this.onSubmit} className="white">
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="fname">First Name</label>
-                                    <input type="text" id="fname" name="firstName" onChange={this.changeHandle} />
+                                    <input type="text" id="fname" name="firstName" value={firstName} onChange={this.changeHandle} />
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="lname">Last Name</label>
-                                    <input type="text" id="lname" name="lastName" onChange={this.changeHandle} />
-                                </div>
-                                <div className="input-field col 12s 6m">
-                                    <label htmlFor="uname">User Name</label>
-                                    <input type="text" id="uname" name="username" onChange={this.changeHandle} />
+                                    <input type="text" id="lname" name="lastName" value={lastName} onChange={this.changeHandle} />
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="phone">Phone Number</label>
-                                    <input type="text" id="phone" name='phone' onChange={this.changeHandle} />
+                                    <input type="text" id="phone" name='phone' value={phone} onChange={this.changeHandle} />
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="address">Address</label>
-                                    <input type="text" id="address" name='address' onChange={this.changeHandle} />
+                                    <input type="text" id="address" name='address' value={address} onChange={this.changeHandle} />
                                 </div>
                                 <div className="input-field col 12s 6m">
-                                    <button className="btn blue darken-4 z-depth-2">Submit</button>
+                                    <button className="btn blue darken-4 z-depth-2" >Submit</button>
                                 </div>
                             </form>
                         </CollapsibleItem>
@@ -127,7 +150,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getMyFlights: (id) => dispatch(getMyFlights(id)),
-        getCustomerDetails: (id) => dispatch(getCustomerDetails(id))
+        getCustomerDetails: (id) => dispatch(getCustomerDetails(id)),
+        updateMyDetails: (userData) => dispatch(updateMyDetails(userData))
     }
 }
 

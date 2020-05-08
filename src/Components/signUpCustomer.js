@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { registerCustomer, loginUser } from '../Actions/authActions';
+import { userNameAvailableCheck } from '../Actions/customerActions';
 import { Redirect } from 'react-router-dom';
 
 
@@ -9,8 +10,13 @@ class signUpCustomer extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            formValid: false,
+            formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '', email: '' },
+            emailValid: false,
+            passwordValid: false,
             username: '',
             password: '',
+            cpassword: '',
             firstName: '',
             lastName: '',
             address: '',
@@ -23,11 +29,54 @@ class signUpCustomer extends Component {
     }
     changeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        // const { name, value } = e.target;
-        // switch (name) {
-        //     case:
+        let formErrors = this.state.formErrors
+        switch (e.target.name) {
+            case 'username':
 
-        // }
+                let pattern = /^\S+\w{ 4, 10 } \S{ 1,}/;
+                if (pattern.test(String(e.target.value).toLowerCase())) {
+                    formErrors['username'] = '';
+                    if (!userNameAvailableCheck(e.target.value)) {
+                        formErrors['username'] = 'Username already in use';
+                    }
+                }
+                else {
+                    formErrors['username'] = 'Username must be atleast 4 characters without special characters';
+                }
+                break;
+            case 'firstName':
+            case 'lastName':
+                let pattern = /^\S+\D{ 2, 10 }/;
+                formErrors[e.target.name] = '';
+                if (!pattern.test(String(e.target.value).toLowerCase())) {
+                    formErrors[e.target.name] = 'Must use atleast 2 characters';
+                }
+                break;
+            case 'password':
+                let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                formErrors['password'] = ''
+                if (pattern.test(String(e.target.value))) {
+                    formErrors[e.target.name] = 'Minimum eight characters, at least one letter and one number';
+                }
+                break;
+            case 'phone':
+                let pattern = /^[0-9]{10,}*$/;
+                formErrors['phone'] = '';
+                if (!pattern.test(String(e.target.value))) {
+                    formErrors['phone'] = '10 digits are required';
+                }
+                break;
+            case 'creditcard':
+                let pattern = /^[0-9]{16,}*$/;
+                formErrors['creditcard'] = '';
+                if (!pattern.test(String(e.target.value))) {
+                    formErrors['creditcard'] = '16 digits are required';
+                }
+                break;
+            default:
+                break;
+        }
+        //validate()
     }
     onSubmit = (e) => {
         e.preventDefault();
@@ -41,15 +90,22 @@ class signUpCustomer extends Component {
         body[6] = this.state.creditcard || '';
         body[7] = this.state.email || '';
         if (this.props.registerCustomer(body)) {
-            let creds = [];
-            creds[0] = body[0];
-            creds[1] = body[1];
-            return (<Redirect to='/'></Redirect>)
+            this.props.history.push('/signIn')
         }
+        // let creds = [];
+        // creds[0] = body[0];
+        // creds[1] = body[1];
+        // this.props.loginUser(creds);
+
+
     }
     render() {
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/"></Redirect>
+        }
         const { username } = this.state.username;
         const { password } = this.state.password;
+        const { cpassword } = this.state.cpassword;
         const { firstName } = this.state.firstName;
         const { lastName } = this.state.lastName;
         const { address } = this.state.address;
@@ -65,6 +121,7 @@ class signUpCustomer extends Component {
                         <div className="input-field col 12s 6m">
                             <label htmlFor="fname">First Name</label>
                             <input type="text" id="fname" name="firstName" onChange={this.changeHandle} value={firstName} />
+                            <span className="helper-text" data-error="Username unavailable" ></span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="lname">Last Name</label>
@@ -80,15 +137,17 @@ class signUpCustomer extends Component {
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="cpwd">Confirm Password</label>
-                            <input type="password" id="cpwd" name="checkPwd" onChange={this.changeHandle} />
+                            <input type="password" id="cpwd" name="checkPwd" onChange={this.changeHandle} value={cpassword} />
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name='email' onChange={this.changeHandle} value={email} />
+                            <input type="email" className='validate' id="email" name='email' onChange={this.changeHandle} value={email} />
+                            <span className="helper-text" data-error="Wrong email format" ></span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="cemail">Confirm Email</label>
-                            <input type="email" id="cemail" onChange={this.changeHandle} />
+                            <input type="email" className='validate' id="cemail" onChange={this.changeHandle} />
+                            <span className="helper-text" data-error="Wrong email format" ></span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="phone">Phone Number</label>
@@ -103,7 +162,7 @@ class signUpCustomer extends Component {
                             <input type="text" id="cred" name='creditcard' value={creditcard} onChange={this.changeHandle} />
                         </div>
                         <div className="input-field col 12s 6m">
-                            <button className="btn blue darken-4 z-depth-2">Sign up</button>
+                            <button className="btn blue darken-4 z-depth-2" >Sign up</button>
                         </div>
                     </row>
                 </form>
