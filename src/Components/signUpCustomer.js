@@ -12,6 +12,7 @@ class signUpCustomer extends Component {
         this.state = {
             formValid: false,
             formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '', email: '' },
+            usernameValid: false,
             emailValid: false,
             passwordValid: false,
             username: '',
@@ -27,16 +28,40 @@ class signUpCustomer extends Component {
         this.changeHandle = this.changeHandle.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+    formValidate = () => {
+        //ifvalid email ifvalid password      
+        if (!userNameAvailableCheck()) {
+            this.setState({
+                formValid: false,
+                usernameValid: false
+            })
+            return;
+        }
+        let formErrors = this.state.formErrors;
+        for (const userInput in formErrors) {
+            if (formErrors[userInput] !== '') {
+                this.setState({
+                    formValid: false
+                })
+                return;
+            }
+        }
+        this.setState({
+            formValid: true
+        })
+
+    }
     changeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        let formErrors = this.state.formErrors
+        let formErrors = this.state.formErrors;
+        let pattern;
         switch (e.target.name) {
             case 'username':
 
-                let pattern = /^\S+\w{ 4, 10 } \S{ 1,}/;
+                pattern = /^([a-zA-z0-9_]){2,10}$/;
                 if (pattern.test(String(e.target.value).toLowerCase())) {
                     formErrors['username'] = '';
-                    if (!userNameAvailableCheck(e.target.value)) {
+                    if (!this.state.usernameValid) {
                         formErrors['username'] = 'Username already in use';
                     }
                 }
@@ -46,28 +71,28 @@ class signUpCustomer extends Component {
                 break;
             case 'firstName':
             case 'lastName':
-                let pattern = /^\S+\D{ 2, 10 }/;
+                pattern = /^([a-zA-Z]){2,10}$/;
                 formErrors[e.target.name] = '';
                 if (!pattern.test(String(e.target.value).toLowerCase())) {
                     formErrors[e.target.name] = 'Must use atleast 2 characters';
                 }
                 break;
             case 'password':
-                let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
                 formErrors['password'] = ''
                 if (pattern.test(String(e.target.value))) {
-                    formErrors[e.target.name] = 'Minimum eight characters, at least one letter and one number';
+                    formErrors[e.target.name] = 'Minimum eight characters combination of characters and digits';
                 }
                 break;
             case 'phone':
-                let pattern = /^[0-9]{10,}*$/;
+                pattern = /^[0-9]{10,10}$/;
                 formErrors['phone'] = '';
                 if (!pattern.test(String(e.target.value))) {
                     formErrors['phone'] = '10 digits are required';
                 }
                 break;
             case 'creditcard':
-                let pattern = /^[0-9]{16,}*$/;
+                pattern = /^[0-9]{16,16}$/;
                 formErrors['creditcard'] = '';
                 if (!pattern.test(String(e.target.value))) {
                     formErrors['creditcard'] = '16 digits are required';
@@ -76,27 +101,29 @@ class signUpCustomer extends Component {
             default:
                 break;
         }
-        //validate()
+        this.setState({
+            formErrors: formErrors
+        });
+        this.formValidate();
     }
     onSubmit = (e) => {
         e.preventDefault();
-        let body = []
-        body[0] = this.state.username || '';
-        body[1] = this.state.password || '';
-        body[2] = this.state.firstName || '';
-        body[3] = this.state.lastName || '';
-        body[4] = this.state.address || '';
-        body[5] = this.state.phone || '';
-        body[6] = this.state.creditcard || '';
-        body[7] = this.state.email || '';
-        if (this.props.registerCustomer(body)) {
-            this.props.history.push('/signIn')
+        if (this.state.formValid) {
+            let body = []
+            body[0] = this.state.username || '';
+            body[1] = this.state.password || '';
+            body[2] = this.state.firstName || '';
+            body[3] = this.state.lastName || '';
+            body[4] = this.state.address || '';
+            body[5] = this.state.phone || '';
+            body[6] = this.state.creditcard || '';
+            body[7] = this.state.email || '';
+            if (this.props.registerCustomer(body)) {
+                this.props.history.push('/signIn')
+            }
         }
-        // let creds = [];
-        // creds[0] = body[0];
-        // creds[1] = body[1];
-        // this.props.loginUser(creds);
 
+        //else swal.fire
 
     }
     render() {

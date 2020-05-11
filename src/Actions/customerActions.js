@@ -28,7 +28,11 @@ export const updateMyDetails = (body = []) => (dispatch, getState) => {
 }
 
 export const userNameAvailableCheck = (username) => {
-    axios.get(mainUrl + checkUsernameUrl, username)
+    axios.get(mainUrl + checkUsernameUrl, {
+        params: {
+            username: username
+        }
+    })
         .then(resp => {
             return resp;
         }).catch(err => { console.log(err) });
