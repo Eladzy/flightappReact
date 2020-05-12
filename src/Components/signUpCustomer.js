@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { registerCustomer, loginUser } from '../Actions/authActions';
 import { userNameAvailableCheck } from '../Actions/customerActions';
 import { Redirect } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 
 class signUpCustomer extends Component {
 
@@ -11,7 +11,7 @@ class signUpCustomer extends Component {
         super(props)
         this.state = {
             formValid: false,
-            formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '', email: '' },
+            formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '', email: '', creditcard: '' },
             usernameValid: false,
             emailValid: false,
             passwordValid: false,
@@ -58,15 +58,22 @@ class signUpCustomer extends Component {
         switch (e.target.name) {
             case 'username':
 
-                pattern = /^([a-zA-z0-9_]){2,10}$/;
-                if (pattern.test(String(e.target.value).toLowerCase())) {
-                    formErrors['username'] = '';
-                    if (!this.state.usernameValid) {
+                pattern = /^([a-zA-z])([a-zA-z0-9_]){2,9}$/;
+
+                formErrors['username'] = '';
+                let isAvailable = userNameAvailableCheck(e.target.value)
+                if (pattern.test(String(e.target.value))) {
+                    if (isAvailable == false) {
                         formErrors['username'] = 'Username already in use';
+                        this.setState({ usernameValid: false });
+                    }
+                    else {
+                        formErrors['username'] = '';
+                        this.setState({ usernameValid: true });
                     }
                 }
                 else {
-                    formErrors['username'] = 'Username must be atleast 4 characters without special characters';
+                    formErrors['username'] = 'Username must be at least 4 and up to 10 characters without special characters';
                 }
                 break;
             case 'firstName':
@@ -74,7 +81,7 @@ class signUpCustomer extends Component {
                 pattern = /^([a-zA-Z]){2,10}$/;
                 formErrors[e.target.name] = '';
                 if (!pattern.test(String(e.target.value).toLowerCase())) {
-                    formErrors[e.target.name] = 'Must use atleast 2 characters';
+                    formErrors[e.target.name] = 'Must use at least 2 characters';
                 }
                 break;
             case 'password':
@@ -104,10 +111,10 @@ class signUpCustomer extends Component {
         this.setState({
             formErrors: formErrors
         });
-        this.formValidate();
     }
     onSubmit = (e) => {
         e.preventDefault();
+        this.formValidate();
         if (this.state.formValid) {
             let body = []
             body[0] = this.state.username || '';
@@ -121,6 +128,9 @@ class signUpCustomer extends Component {
             if (this.props.registerCustomer(body)) {
                 this.props.history.push('/signIn')
             }
+        }
+        else {
+
         }
 
         //else swal.fire
@@ -148,19 +158,22 @@ class signUpCustomer extends Component {
                         <div className="input-field col 12s 6m">
                             <label htmlFor="fname">First Name</label>
                             <input type="text" id="fname" name="firstName" onChange={this.changeHandle} value={firstName} />
-                            <span className="helper-text" data-error="Username unavailable" ></span>
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.firstName}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="lname">Last Name</label>
                             <input type="text" id="lname" name="lastName" onChange={this.changeHandle} value={lastName} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.lastName}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="uname">User Name</label>
                             <input type="text" id="uname" name="username" onChange={this.changeHandle} value={username} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.username}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="pwd">Password</label>
                             <input type="password" id="pwd" name="password" onChange={this.changeHandle} value={password} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.password}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="cpwd">Confirm Password</label>
@@ -179,14 +192,17 @@ class signUpCustomer extends Component {
                         <div className="input-field col 12s 6m">
                             <label htmlFor="phone">Phone Number</label>
                             <input type="text" id="phone" name='phone' onChange={this.changeHandle} value={phone} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.phone}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="address">Address</label>
                             <input type="text" id="address" name='address' value={address} onChange={this.changeHandle} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.address}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <label htmlFor="cred">Credit Card</label>
                             <input type="text" id="cred" name='creditcard' value={creditcard} onChange={this.changeHandle} />
+                            <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.creditcard}</span>
                         </div>
                         <div className="input-field col 12s 6m">
                             <button className="btn blue darken-4 z-depth-2" >Sign up</button>

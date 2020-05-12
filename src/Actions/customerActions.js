@@ -34,6 +34,6 @@ export const userNameAvailableCheck = (username) => {
         }
     })
         .then(resp => {
-            return resp;
+            return resp.data;
         }).catch(err => { console.log(err) });
 }
