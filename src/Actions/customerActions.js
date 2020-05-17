@@ -27,13 +27,24 @@ export const updateMyDetails = (body = []) => (dispatch, getState) => {
         }).catch(err => { console.log(err) });
 }
 
-export const userNameAvailableCheck = (username) => {
-    axios.get(mainUrl + checkUsernameUrl, {
-        params: {
-            username: username
-        }
-    })
-        .then(resp => {
-            return resp.data;
-        }).catch(err => { console.log(err) });
+// export async function userNameAvailableCheck(username) {
+//     await axios.get(mainUrl + checkUsernameUrl, {
+//         params: {
+//             username: username
+//         }
+//     })
+//         .then(resp => {
+//             return (Boolean([resp.data]));
+//         }).catch(err => { console.log(err); return 'error'; });
+// }
+export async function userNameAvailableCheck(username) {
+    try {
+        const response = await axios.get(mainUrl + checkUsernameUrl, { params: { username: username } }).data;
+        return Boolean([response]);
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 }

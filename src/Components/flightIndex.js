@@ -65,7 +65,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
-        //   getAllFlights: () => dispatch(getAllFlights),
         viewFlight: (id) => dispatch(viewFlight(id))
     }
 }

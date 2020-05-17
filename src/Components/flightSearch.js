@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllFlights, searchFlights } from '../Actions/flightActions';
+import { getAllFlights, searchFlights, viewFlight } from '../Actions/flightActions';
 import { getAirlines } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { bindActionCreators } from 'redux';
@@ -17,6 +17,13 @@ class flightSearch extends Component {
         this.props.getAllFlights();
         this.props.getAirlines();
         this.props.getCountries();
+    }
+
+    onClickHandle = (id) => {
+
+        this.props.viewFlight(id);
+        console.log(id + " event");
+        this.props.history.push('/Flight');
     }
 
     onSubmitHandle = (e) => {
@@ -38,7 +45,7 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card" style={{ overflow: 'hidden', padding: '10px', width: '850px' }} key={f.id}>
+                <div className="card" onClick={() => { this.onClickHandle(f.id) }} style={{ overflow: 'hidden', padding: '10px', width: '850px', pointerEvents: 'auto' }} key={f.id}>
                     <img src={airplaneBlueT} style={{ position: 'absolute', opacity: '0.4', top: '80px', left: '-100px' }} />
                     <div className="card-content center">
                         <div className="row">
@@ -215,6 +222,7 @@ const mapDispatchToProps = (dispatch) => {
         getAllFlights: bindActionCreators(getAllFlights, dispatch),
         getAirlines: bindActionCreators(getAirlines, dispatch),
         getCountries: bindActionCreators(getCountries, dispatch),
+        viewFlight: (id) => dispatch(viewFlight(id)),
         searchedFlights: (params) => dispatch(searchFlights(params))
     }
 }

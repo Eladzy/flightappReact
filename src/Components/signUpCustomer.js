@@ -13,7 +13,7 @@ class signUpCustomer extends Component {
             formValid: false,
             formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '', email: '', creditcard: '' },
             usernameValid: false,
-            emailValid: false,
+            emailValid: true,//temp
             passwordValid: false,
             username: '',
             password: '',
@@ -27,16 +27,18 @@ class signUpCustomer extends Component {
         }
         this.changeHandle = this.changeHandle.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.userNameAvailableCheck = userNameAvailableCheck.bind(this)
+
     }
     formValidate = () => {
         //ifvalid email ifvalid password      
-        if (!userNameAvailableCheck()) {
-            this.setState({
-                formValid: false,
-                usernameValid: false
-            })
-            return;
-        }
+        // if (!userNameAvailableCheck()) {
+        //     this.setState({
+        //         formValid: false,
+        //         usernameValid: false
+        //     })
+        //     return;
+        // }
         let formErrors = this.state.formErrors;
         for (const userInput in formErrors) {
             if (formErrors[userInput] !== '') {
@@ -61,7 +63,8 @@ class signUpCustomer extends Component {
                 pattern = /^([a-zA-z])([a-zA-z0-9_]){2,9}$/;
 
                 formErrors['username'] = '';
-                let isAvailable = userNameAvailableCheck(e.target.value)
+                const isAvailable = this.userNameAvailableCheck(e.target.value);
+                console.log(isAvailable);
                 if (pattern.test(String(e.target.value))) {
                     if (isAvailable == false) {
                         formErrors['username'] = 'Username already in use';
@@ -87,10 +90,21 @@ class signUpCustomer extends Component {
             case 'password':
                 pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
                 formErrors['password'] = ''
-                if (pattern.test(String(e.target.value))) {
+                if (!pattern.test(String(e.target.value))) {
                     formErrors[e.target.name] = 'Minimum eight characters combination of characters and digits';
                 }
                 break;
+            case 'checkPwd':
+                if (e.target.value == this.state.password) {
+                    this.setState({
+                        passwordValid: true
+                    })
+                }
+                else {
+                    this.setState({
+                        passwordValid: false
+                    })
+                }
             case 'phone':
                 pattern = /^[0-9]{10,10}$/;
                 formErrors['phone'] = '';
@@ -105,12 +119,15 @@ class signUpCustomer extends Component {
                     formErrors['creditcard'] = '16 digits are required';
                 }
                 break;
+
             default:
                 break;
         }
+
         this.setState({
             formErrors: formErrors
         });
+        this.formValidate();
     }
     onSubmit = (e) => {
         e.preventDefault();
@@ -132,7 +149,7 @@ class signUpCustomer extends Component {
         else {
 
         }
-
+        console.log('error ' + this.state.formErrors)
         //else swal.fire
 
     }
@@ -205,7 +222,7 @@ class signUpCustomer extends Component {
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.creditcard}</span>
                         </div>
                         <div className="input-field col 12s 6m">
-                            <button className="btn blue darken-4 z-depth-2" >Sign up</button>
+                            <button className="btn blue darken-4 z-depth-2" disabled={!this.state.formValid} >Sign up</button>
                         </div>
                     </row>
                 </form>
