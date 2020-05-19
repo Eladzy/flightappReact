@@ -8,7 +8,6 @@ export const PURCHASE_FAILED = 'PURCHASE_FAILED';
 
 export const purchaseTicket = (id) => (dispatch, getState) => {
     dispatch({ type: PURCHASING_FLIGHT });
-    // const bodyParams = JSON.stringify({ id });
     let config = tokenConfig(getState);
     axios.post(mainUrl + purchaseUrl, id, config)
         .then(resp => {

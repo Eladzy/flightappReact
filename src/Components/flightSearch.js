@@ -45,7 +45,7 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card" onClick={() => { this.onClickHandle(f.id) }} style={{ overflow: 'hidden', padding: '10px', width: '850px', pointerEvents: 'auto' }} key={f.id}>
+                <div className="card" onClick={() => { this.onClickHandle(f.id) }} style={{ overflow: 'hidden', padding: '10px', width: '850px', cursor: 'pointer' }} key={f.id}>
                     <img src={airplaneBlueT} style={{ position: 'absolute', opacity: '0.4', top: '80px', left: '-100px' }} />
                     <div className="card-content center">
                         <div className="row">

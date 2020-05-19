@@ -8,11 +8,13 @@ class CustomerMenu extends Component {
         super(props);
         this.state = {
             user: this.props.auth.user,
+            formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '' },
             password: '',
             firstName: '',
             lastName: '',
             phone: '',
             address: '',
+            detailsFormValid: false
 
         }
 
@@ -20,9 +22,67 @@ class CustomerMenu extends Component {
 
     changeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        let formErrors = this.state.formErrors;
+        let pattern;
+        switch (e.target.name) {
+            case 'firstName':
+            case 'lastName':
+                pattern = /^([a-zA-Z ]){2,10}$/;
+                formErrors[e.target.name] = '';
+                if (!pattern.test(String(e.target.value).toLowerCase()) && e.target.value !== '') {
+                    formErrors[e.target.name] = 'Must use at least 2 characters';
+                }
+                break;
+            // case 'password':
+            //     pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+            //     formErrors['password'] = ''
+            //     if (!pattern.test(String(e.target.value)) || e.target.value !== '') {
+            //         formErrors[e.target.name] = 'Minimum eight characters combination of characters and digits';
+            //     }
+            //     break;
+            // case 'checkPwd':
+            //     if (e.target.value == this.state.password) {
+            //         this.setState({
+            //             passwordValid: true
+            //         })
+            //     }
+            //     else {
+            //         this.setState({
+            //             passwordValid: false
+            //         })
+            //     }
+            case 'phone':
+                pattern = /^[0-9]{10,10}$/;
+                formErrors['phone'] = '';
+                if (!pattern.test(String(e.target.value)) && e.target.value !== '') {
+                    formErrors['phone'] = '10 digits are required';
+                }
+                break;
+            default:
+                break;
+        }
 
+        this.setState({
+            formErrors: formErrors
+        });
+        this.isFormValid();
+    }
+    isFormValid = () => {
+        let formErrors = this.state.formErrors;
+        for (const input in formErrors) {
+            if (input !== '') {
+                this.setState({
+                    detailsFormValid: false
+                })
+                return;
+            }
+        }
+        this.setState({
+            detailsFormValid: true
+        })
     }
     onSubmit = (e) => {
+
         e.preventDefault();
         let body = []
         body[0] = this.state.user.id;
@@ -31,6 +91,7 @@ class CustomerMenu extends Component {
         body[3] = this.state.phone || '';
         body[4] = this.state.address || '';
         this.props.updateMyDetails(body);
+
         this.props.history.push('/')
 
     }
@@ -88,25 +149,29 @@ class CustomerMenu extends Component {
                             header="Edit My Details"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <form onSubmit={this.onSubmit} className="white">
+                            <form action={this.onSubmit} className="white">
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="fname">First Name</label>
                                     <input type="text" id="fname" name="firstName" value={firstName} onChange={this.changeHandle} />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.firstName}</span>
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="lname">Last Name</label>
                                     <input type="text" id="lname" name="lastName" value={lastName} onChange={this.changeHandle} />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.lastName}</span>
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="phone">Phone Number</label>
                                     <input type="text" id="phone" name='phone' value={phone} onChange={this.changeHandle} />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.phone}</span>
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="address">Address</label>
                                     <input type="text" id="address" name='address' value={address} onChange={this.changeHandle} />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.address}</span>
                                 </div>
                                 <div className="input-field col 12s 6m">
-                                    <button className="btn blue darken-4 z-depth-2" >Submit</button>
+                                    <button className="btn blue darken-4 z-depth-2" disabled={!this.state.detailsFormValid} >Submit</button>
                                 </div>
                             </form>
                         </CollapsibleItem>

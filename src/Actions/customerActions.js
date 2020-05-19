@@ -3,7 +3,7 @@ import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl } from
 import { tokenConfig } from './configs';
 export const GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS';
 export const UPDATE_MY_DETAILS = 'UPDATE_MY_DETAILS';
-
+export const CANCEL_TICKET = 'CANCEL_TICKET';
 
 export const getCustomerDetails = (id) => (dispatch, getState) => {
     axios.post(mainUrl + customerDetailsUrl, id, tokenConfig(getState))
@@ -27,16 +27,7 @@ export const updateMyDetails = (body = []) => (dispatch, getState) => {
         }).catch(err => { console.log(err) });
 }
 
-// export async function userNameAvailableCheck(username) {
-//     await axios.get(mainUrl + checkUsernameUrl, {
-//         params: {
-//             username: username
-//         }
-//     })
-//         .then(resp => {
-//             return (Boolean([resp.data]));
-//         }).catch(err => { console.log(err); return 'error'; });
-// }
+
 export async function userNameAvailableCheck(username) {
     try {
         const response = await axios.get(mainUrl + checkUsernameUrl, { params: { username: username } }).data;
@@ -46,5 +37,10 @@ export async function userNameAvailableCheck(username) {
     catch (err) {
         console.log(err);
     }
-
 }
+
+
+// export const cancelTicket = (ticket) => (dispatch, getState) => {
+//     axios.delete()
+//         .then()
+// }

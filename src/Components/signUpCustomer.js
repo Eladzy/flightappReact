@@ -31,14 +31,7 @@ class signUpCustomer extends Component {
 
     }
     formValidate = () => {
-        //ifvalid email ifvalid password      
-        // if (!userNameAvailableCheck()) {
-        //     this.setState({
-        //         formValid: false,
-        //         usernameValid: false
-        //     })
-        //     return;
-        // }
+
         let formErrors = this.state.formErrors;
         for (const userInput in formErrors) {
             if (formErrors[userInput] !== '') {
