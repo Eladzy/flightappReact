@@ -8,18 +8,49 @@ class CustomerMenu extends Component {
         super(props);
         this.state = {
             user: this.props.auth.user,
-            formErrors: { username: '', password: '', firstName: '', lastName: '', address: '', phone: '' },
+            formErrors: { username: '', firstName: '', lastName: '', address: '', phone: '' },
             password: '',
+            passwordErrorMsg: '',
+            newPwd: '',
             firstName: '',
             lastName: '',
             phone: '',
             address: '',
+            passwordValid: false,
             detailsFormValid: false
 
         }
 
     }
-
+    pwdChangeHandle = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+        let errorMsg = this.state.passwordErrorMsg;
+        let pattern;
+        switch (e.target.name) {
+            case 'newPwd':
+                pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+                errorMsg = '';
+                if (!pattern.test(String(e.target.value))) {
+                    errorMsg = 'Minimum eight characters combination of characters and digits';
+                }
+            //     break;
+            // case 'pa':
+            //     if (e.target.value == this.state.password) {
+            //         this.setState({
+            //             passwordValid: true
+            //         })
+            //     }
+            //     else {
+            //         this.setState({
+            //             passwordValid: false
+            //         })
+            //     }
+            //     break;
+            default:
+                break;
+        }
+        this.setState({ passwordErrorMsg: errorMsg });
+    }
     changeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         let formErrors = this.state.formErrors;
@@ -33,24 +64,7 @@ class CustomerMenu extends Component {
                     formErrors[e.target.name] = 'Must use at least 2 characters';
                 }
                 break;
-            // case 'password':
-            //     pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
-            //     formErrors['password'] = ''
-            //     if (!pattern.test(String(e.target.value)) || e.target.value !== '') {
-            //         formErrors[e.target.name] = 'Minimum eight characters combination of characters and digits';
-            //     }
-            //     break;
-            // case 'checkPwd':
-            //     if (e.target.value == this.state.password) {
-            //         this.setState({
-            //             passwordValid: true
-            //         })
-            //     }
-            //     else {
-            //         this.setState({
-            //             passwordValid: false
-            //         })
-            //     }
+
             case 'phone':
                 pattern = /^[0-9]{10,10}$/;
                 formErrors['phone'] = '';
@@ -69,8 +83,8 @@ class CustomerMenu extends Component {
     }
     isFormValid = () => {
         let formErrors = this.state.formErrors;
-        for (const input in formErrors) {
-            if (input !== '') {
+        for (const error in formErrors) {
+            if (formErrors[error] !== '') {
                 this.setState({
                     detailsFormValid: false
                 })
@@ -104,6 +118,7 @@ class CustomerMenu extends Component {
     render() {
         const { user } = this.props.auth;
         const { password } = this.state.password;
+        const { newPwd } = this.state.newPwd;
         const { firstName } = this.state.firstName;
         const { lastName } = this.state.lastName;
         const { address } = this.state.address;
@@ -149,7 +164,7 @@ class CustomerMenu extends Component {
                             header="Edit My Details"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <form action={this.onSubmit} className="white">
+                            <form onSubmit={this.onSubmit} className="white">
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="fname">First Name</label>
                                     <input type="text" id="fname" name="firstName" value={firstName} onChange={this.changeHandle} />
@@ -179,6 +194,19 @@ class CustomerMenu extends Component {
                             header="Change My Password"
                             icon={<Icon>add_box</Icon>}
                             node="div">
+                            <form className="white">
+                                <div className="input-field col 12s 6m">
+                                    <label htmlFor="password">Current password</label>
+                                    <input type="password" id="password" name="password" value={password} onChange={this.pwdChangeHandle} />
+
+                                </div>
+                                <div className="input-field col 12s 6m">
+                                    <label htmlFor="fname">New password</label>
+                                    <input type="password" id="pwdcheck" name="newPwd" value={newPwd} onChange={this.pwdChangeHandle} />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.passwordErrorMsg}</span>
+                                </div>
+
+                            </form>
                         </CollapsibleItem>
                     </Collapsible>
                 </div>

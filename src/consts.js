@@ -8,3 +8,4 @@ export const customerFlightsUrl = "api/customer/getmyflightsjson";
 export const customerDetailsUrl = "api/customer/getCustomerDetails";
 export const updateCustomerUrl = "api/customer/updateDetails";
 export const checkUsernameUrl = "api/checkCustomerUsername/";
+export const customerPwdChangeUrl = "api/customer/changePassword";

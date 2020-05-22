@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl } from '../consts';
+import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl, customerPwdChangeUrl } from '../consts';
 import { tokenConfig } from './configs';
 export const GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS';
 export const UPDATE_MY_DETAILS = 'UPDATE_MY_DETAILS';
@@ -38,7 +38,11 @@ export async function userNameAvailableCheck(username) {
         console.log(err);
     }
 }
+export const changeCustomerPassword = (passwords = []) => (dispatch, getState) => {
+    const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig).data;
 
+
+}
 
 // export const cancelTicket = (ticket) => (dispatch, getState) => {
 //     axios.delete()
