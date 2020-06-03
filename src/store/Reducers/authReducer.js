@@ -35,8 +35,9 @@ const authReducer = (state = initState, action) => {
                 isAuthenticated: true,
                 user: action.payload
             };
-        case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
+        // break;//for now
+        case LOGIN_SUCCESS:
             localStorage.setItem('token', action.payload)
             return {
                 ...state,

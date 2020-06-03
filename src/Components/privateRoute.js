@@ -30,11 +30,3 @@ export default connect(mapStateToProps)(PrivateRoute);
 
 
 
-// return (
-            //     <Route path={path}  {...rest} render={props => {
-            //         if (isLogged === true) {
-            //             return <Component {...props} {...rest}></Component>
-            //         }
-            //         return <Redirect to={signIn} />
-            //     }} />
-            // );

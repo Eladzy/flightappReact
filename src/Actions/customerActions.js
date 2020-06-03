@@ -28,15 +28,18 @@ export const updateMyDetails = (body = []) => (dispatch, getState) => {
 }
 
 
-export async function userNameAvailableCheck(username) {
-    try {
-        const response = await axios.get(mainUrl + checkUsernameUrl, { params: { username: username } }).data;
-        return Boolean([response]);
+export function userNameAvailableCheck(username) {
 
-    }
-    catch (err) {
-        console.log(err);
-    }
+    axios.get(mainUrl + checkUsernameUrl, { params: { username: username } })
+        .then(resp => { return Boolean([resp.data]); }).catch(err => (console.log(err)))
+    // try {
+    //     const response = await axios.get(mainUrl + checkUsernameUrl, { params: { username: username } }).data;
+    //     return Boolean([response]);
+
+    // }
+    // catch (err) {
+    //     console.log(err);
+    // }
 }
 export const changeCustomerPassword = (passwords = []) => (dispatch, getState) => {
     const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig).data;

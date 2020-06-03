@@ -38,7 +38,20 @@ export const registerCustomer = (body = []) => {
                     type: REGISTER_SUCCESS,
                     payload: resp.data
                 });
-
+                if (resp.data === true) {
+                    axios.post(mainUrl + authUrl, body)
+                        .then(resp => {
+                            dispatch({
+                                type: LOGIN_SUCCESS,
+                                payload: resp.data
+                            });
+                        }).catch(err => {
+                            dispatch(returnErrors(err.message, 'err.response.status'));
+                            (dispatch)({
+                                type: LOGIN_FAIL
+                            });
+                        });
+                }
             }).catch(err => {
                 console.log(err);
                 (dispatch)({

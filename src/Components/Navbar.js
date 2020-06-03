@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { userLoader } from '../Actions/authActions'//temp?
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 class Navbar extends Component {
@@ -8,6 +9,9 @@ class Navbar extends Component {
         let sidenav = document.querySelectorAll('#mobile-links');
         M.Sidenav.init(sidenav, {});
     }
+    // componentWillUpdate() {
+    //     this.props.userLoader();
+    // }
     render() {
         const { isAuthenticated, user } = this.props.auth;
         const authLinks = (<ul className="right hide-on-med-and-down">
@@ -59,5 +63,7 @@ class Navbar extends Component {
 const mapStateToProps = (state) => ({
     auth: state.authR
 });
-
+// const mapDispatchTopProps = (dispatch) => ({
+//     userLoader: () => dispatch(userLoader)
+// });
 export default connect(mapStateToProps)(Navbar);

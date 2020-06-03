@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getMyFlights } from '../Actions/flightActions';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
-import { getCustomerDetails, updateMyDetails } from '../Actions/customerActions';
-class CustomerMenu extends Component {
+import { getCustomerDetails, updateMyDetails, changeCustomerPassword } from '../Actions/customerActions';
+
+export class CustomerMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,19 +34,7 @@ class CustomerMenu extends Component {
                 if (!pattern.test(String(e.target.value))) {
                     errorMsg = 'Minimum eight characters combination of characters and digits';
                 }
-            //     break;
-            // case 'pa':
-            //     if (e.target.value == this.state.password) {
-            //         this.setState({
-            //             passwordValid: true
-            //         })
-            //     }
-            //     else {
-            //         this.setState({
-            //             passwordValid: false
-            //         })
-            //     }
-            //     break;
+                break;
             default:
                 break;
         }
@@ -106,7 +95,10 @@ class CustomerMenu extends Component {
         body[4] = this.state.address || '';
         this.props.updateMyDetails(body);
 
-        this.props.history.push('/')
+        this.props.getCustomerDetails(this.state.user.id);
+        setTimeout(15000);///fixx
+        this.setState({ state: this.state });//fixx
+
 
     }
     componentDidMount() {
@@ -197,12 +189,12 @@ class CustomerMenu extends Component {
                             <form className="white">
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="password">Current password</label>
-                                    <input type="password" id="password" name="password" value={password} onChange={this.pwdChangeHandle} />
+                                    <input type="password" id="password" name="password" value={password} onChange={this.pwdChangeHandle} required />
 
                                 </div>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="fname">New password</label>
-                                    <input type="password" id="pwdcheck" name="newPwd" value={newPwd} onChange={this.pwdChangeHandle} />
+                                    <input type="password" id="pwdcheck" name="newPwd" value={newPwd} onChange={this.pwdChangeHandle} required />
                                     <span className="helper-text" style={{ color: 'red' }}  >{this.state.passwordErrorMsg}</span>
                                 </div>
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { loginUser } from '../Actions/authActions';
+import { loginUser, userLoader } from '../Actions/authActions';
 import PropTypes from 'prop-types';
 class SignIn extends Component {
 
@@ -19,14 +19,23 @@ class SignIn extends Component {
     //     loginUser: PropTypes.func.isRequired,
     //     isAuthenticated: PropTypes.bool
     // };
-
+    componentDidUpdate() {
+        if (this.props.isAuthenticated) {
+            this.props.userLoader();
+            console.log([this.state.username, this.state.password]);
+        }
+    }
     onSubmit(e) {
         e.preventDefault();
         let body = []
         body[0] = this.state.username || '';
         body[1] = this.state.password || '';
         this.props.loginUser(body);
-        console.log([this.state.username, this.state.password]);
+        if (this.props.isAuthenticated) {//does not happen
+            this.props.userLoader();
+            this.props.history.push('/')
+            console.log([this.state.username, this.state.password]);
+        }
     };
 
     changeHandle = (e) => {
@@ -35,6 +44,7 @@ class SignIn extends Component {
 
     render() {
         if (this.props.isAuthenticated) {
+
             return <Redirect to="/"></Redirect>
         }
         const { username } = this.state.username;
@@ -66,7 +76,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginUser: (onSubmit) => dispatch(loginUser(onSubmit))
+        loginUser: (onSubmit) => dispatch(loginUser(onSubmit)),
+        userLoader: () => dispatch(loginUser)
     }
 }
 
