@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 export const GET_AIRLINES = 'GET_AIRLINES';
+export const REGISETR_PENDING = 'REGISTER_PENDING';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 
 export const getAirlines = () => {
     return (dispatch) => {
@@ -11,4 +13,8 @@ export const getAirlines = () => {
             })
         }).catch(err => { console.error(err) });
     }
+}
+
+export const registerAirline = (userData = []) => {
+
 }

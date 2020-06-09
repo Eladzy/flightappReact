@@ -96,7 +96,7 @@ export class CustomerMenu extends Component {
         this.props.updateMyDetails(body);
 
         this.props.getCustomerDetails(this.state.user.id);
-        setTimeout(15000);///fixx
+        // setTimeout(15000);///fixx
         this.setState({ state: this.state });//fixx
 
 
