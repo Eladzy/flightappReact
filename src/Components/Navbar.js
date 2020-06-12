@@ -9,9 +9,6 @@ class Navbar extends Component {
         let sidenav = document.querySelectorAll('#mobile-links');
         M.Sidenav.init(sidenav, {});
     }
-    // componentWillUpdate() {
-    //     this.props.userLoader();
-    // }
     render() {
         const { isAuthenticated, user } = this.props.auth;
         const authLinks = (<ul className="right hide-on-med-and-down">

@@ -57,7 +57,7 @@ class signUpCustomer extends Component {
                 formErrors['username'] = '';
                 let isAvailable = new Boolean;
                 isAvailable = userNameAvailableCheck(e.target.value);
-                setTimeout(3000)
+                //setTimeout(3000)
                 console.log(isAvailable);
                 if (pattern.test(String(e.target.value))) {
                     if (isAvailable === false) {

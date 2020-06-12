@@ -1,5 +1,5 @@
 import { returnErrors, clearErrors } from './errorActions';
-import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl } from '../consts';
+import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl, registerAirlineUrl } from '../consts';
 import { tokenConfig } from './configs'
 import axios from 'axios';
 export const USER_LOADING = "USER_LOADING";
@@ -62,6 +62,38 @@ export const registerCustomer = (body = []) => {
     };
 }
 
+export const registerAirline = (body = []) => {
+    return (dispatch) => {
+        axios.post(mainUrl + registerAirlineUrl, body)
+            .then(resp => {
+                dispatch({
+                    type: REGISTER_SUCCESS,
+                    payload: resp.data
+                });
+                if (resp.data === true) {
+                    axios.post(mainUrl + authUrl, body)
+                        .then(resp => {
+                            dispatch({
+                                type: LOGIN_SUCCESS,
+                                payload: resp.data
+                            });
+                        }).catch(err => {
+                            dispatch(returnErrors(err.message, 'err.response.status'));
+                            (dispatch)({
+                                type: LOGIN_FAIL
+                            });
+                        });
+                }
+            }).catch(err => {
+                console.log(err);
+                (dispatch)({
+                    type: REGISTER_FAIL
+
+                });
+            })
+    };
+}
+
 //verify token and load user
 export const userLoader = () => (dispatch, getState) => {
     dispatch({
@@ -92,6 +124,7 @@ export const logOutUser = () => {
 
     }
 }
+
 
 
 

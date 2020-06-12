@@ -3,6 +3,8 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import flightSearch from './Components/flightSearch';
 import signUpCustomer from './Components/signUpCustomer';
+import SignUpAirline from './Components/SignUpAirline';
+import SignUpMain from './Components/SignUpMain';
 import SignIn from './Components/SignIn';
 import About from './Components/About';
 import logout from './Components/logout';
@@ -37,6 +39,8 @@ class App extends Component {
             <Route path='/flightIndex' component={flightIndex} />
             <Route path='/flightSearch' component={flightSearch} />
             <Route path='/Flight' component={Flight} />
+            <Route path='/SingUpMain' component={SignUpMain} />
+            <Route path='/SingUpAirline' component={SignUpAirline} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
             <PrivateRoute path='/CustomerMenu' component={CustomerMenu} />
             <PrivateRoute path='/logout' component={logout} />

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { store } from '../index';
+
+
 class logout extends Component {
 
 

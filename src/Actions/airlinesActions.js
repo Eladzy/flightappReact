@@ -15,6 +15,3 @@ export const getAirlines = () => {
     }
 }
 
-export const registerAirline = (userData = []) => {
-
-}
