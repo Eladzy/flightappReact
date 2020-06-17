@@ -13,7 +13,7 @@
     "qs": "^6.9.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-materialize": "^3.6.1",
+    "react-materialize": "^3.9.2",
     "react-moment": "^0.9.7",
     "react-prop-types": "^0.4.0",
     "react-redux": "^7.2.0",

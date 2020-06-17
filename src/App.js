@@ -17,6 +17,8 @@ import PrivateRoute from './Components/privateRoute';
 import { userLoader } from './Actions/authActions';
 import { store } from './index';
 
+import './App.css';
+
 
 
 class App extends Component {
@@ -39,8 +41,8 @@ class App extends Component {
             <Route path='/flightIndex' component={flightIndex} />
             <Route path='/flightSearch' component={flightSearch} />
             <Route path='/Flight' component={Flight} />
-            <Route path='/SingUpMain' component={SignUpMain} />
-            <Route path='/SingUpAirline' component={SignUpAirline} />
+            <Route path='/SignUpMain' component={SignUpMain} />
+            <Route path='/SignUpAirline' component={SignUpAirline} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
             <PrivateRoute path='/CustomerMenu' component={CustomerMenu} />
             <PrivateRoute path='/logout' component={logout} />

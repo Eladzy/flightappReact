@@ -11,15 +11,11 @@ class loggedInUserInterface extends Component {
          isAuthenticated: this.props.auth.isAuthenticated
       }
    }
-   // componentDidUpdate() {
-   //    this.props.userLoader();
-   // }
+   componentWillMount() {
+      this.props.userLoader();
+   }
    render() {
-      // const { user, isAuthenticated } = this.props.auth;
-      // if (this.state.isAuthenticated && this.state.user === null) {
-      //    this.props.userLoader();
-      //    this.forceUpdate();
-      // }
+
       console.log(this.state.user);
       if (this.state.isAuthenticated) {
          switch (this.state.user.roles) {
@@ -43,7 +39,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
    return {
-      userLoader: () => dispatch(userLoader)
+      userLoader: () => dispatch(userLoader())
    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(loggedInUserInterface)

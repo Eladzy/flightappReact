@@ -8,7 +8,9 @@ class Navbar extends Component {
     componentDidMount() {
         let sidenav = document.querySelectorAll('#mobile-links');
         M.Sidenav.init(sidenav, {});
+
     }
+
     render() {
         const { isAuthenticated, user } = this.props.auth;
         const authLinks = (<ul className="right hide-on-med-and-down">
@@ -21,6 +23,7 @@ class Navbar extends Component {
         </div>
         const guestLinks = (<ul className="right hide-on-med-and-down">
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
+            <li><NavLink to='/signUpMain'>SignupM</NavLink></li>
             <li><NavLink to='/SignIn'>Sign in</NavLink></li>
         </ul>)
         const guestLinksM = (<div>
@@ -61,6 +64,6 @@ const mapStateToProps = (state) => ({
     auth: state.authR
 });
 // const mapDispatchTopProps = (dispatch) => ({
-//     userLoader: () => dispatch(userLoader)
+//     userLoader: () => dispatch(userLoader())
 // });
 export default connect(mapStateToProps)(Navbar);

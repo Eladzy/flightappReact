@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { registerAirline } from '../Actions/authActions';
+import { bindActionCreators } from 'redux';
 import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 import { getCountries } from '../Actions/countriesActions';
@@ -9,7 +10,6 @@ class SignUpAirline extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: this.props.auth.user,
             formErrors: { username: '', name: '', country: '', password: '', cPassword: '', email: '' },
             usernameValid: false,
             username: '',
@@ -135,54 +135,51 @@ class SignUpAirline extends Component {
         const { country } = this.state.country;
         const countries = this.props.countries;
         return (
-            <div className="container center" style={{ height: "400px" }, { width: "400px" }}>
+            <div className="container center " >
                 <form onSubmit={this.onSubmit} className="white">
                     <row>
                         <h5 style={{ color: '#9e9e9e' }}>Sign Up</h5>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="name">Company name</label>
                             <input type="text" id="cname" name="name" onChange={this.changeHandle} value={name} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.name}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="uname">User Name</label>
                             <input type="text" id="uname" name="username" onChange={this.changeHandle} value={username} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.username}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="pwd">Password</label>
                             <input type="password" id="pwd" name="password" onChange={this.changeHandle} value={password} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.password}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="cpwd">Confirm Password</label>
                             <input type="password" id="cpwd" name="cpassword" onChange={this.changeHandle} value={cpassword} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.cpassword}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="email">Email</label>
-                            <input type="email" className='validate' id="email" name='email' onChange={this.changeHandle} value={email} required />
+                            <input type="email" className='validate inputForm' id="email" name='email' onChange={this.changeHandle} value={email} required />
                             <span className="helper-text" data-error="Wrong email format" ></span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="country">Country</label>
-                            <Select id="country" value={Option.value} onChange={this.changeHandle}>
+                            <Select id="country" name="country" value={Option.value} onChange={this.changeHandle}>
                                 <option  ></option>
                                 {countries.map(c =>
                                     (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
                                 )}
                             </Select>
                             <div className="container">
-
                             </div>
-
                         </div>
                         <div className="input-field col 12s 6m">
                             <button className="btn blue darken-4 z-depth-2" disabled={!this.state.formValid} >Sign up</button>
                         </div>
                     </row>
                 </form>
-
             </div>
         );
     }
@@ -197,7 +194,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
 
         registerAirline: (onSubmit) => dispatch(registerAirline(onSubmit)),
-        getCountries: () => dispatch(getCountries)
+        // getCountries: bindActionCreators(getCountries, dispatch),
+        getCountries: () => dispatch(getCountries()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpAirline);

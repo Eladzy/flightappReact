@@ -45,8 +45,8 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card" onClick={() => { this.onClickHandle(f.id) }} style={{ overflow: 'hidden', padding: '10px', width: '850px', cursor: 'pointer' }} key={f.id}>
-                    <img src={airplaneBlueT} style={{ position: 'absolute', opacity: '0.4', top: '80px', left: '-100px' }} />
+                <div className="card flightCard" onClick={() => { this.onClickHandle(f.id) }} key={f.id}>
+                    <img src={airplaneBlueT} className='apBlue ' />
                     <div className="card-content center">
                         <div className="row">
                             <div className="col 12s 6m">
@@ -55,7 +55,7 @@ class flightSearch extends Component {
                             </div>
                             <div className="col 12s 6m">
                                 <h6>{f.airlineName}</h6><br />
-                                <img src={pointerBlue} style={{ height: '100px' }, { width: '200px' }} />
+                                <img src={pointerBlue} className='pointerBlue' />
                             </div>
                             <div className="col 12s 6m">
                                 <h6>{f.destination}</h6> <br />
@@ -69,7 +69,6 @@ class flightSearch extends Component {
         }) : (<p>None Found</p>)
 
         return (
-            //add auto complete  flight id's
             <div className="container" >
                 <div className="row"  >
                     <form className='white col' onSubmit={this.onSubmitHandle}>

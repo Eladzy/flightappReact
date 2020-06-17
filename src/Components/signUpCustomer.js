@@ -163,61 +163,61 @@ class signUpCustomer extends Component {
         const { email } = this.state.email;
         return (
 
-            <div className="container center" style={{ height: "400px" }, { width: "400px" }}>
+            <div className="container center " >
                 <form onSubmit={this.onSubmit} className="white">
                     <row>
                         <h5 style={{ color: '#9e9e9e' }}>Sign Up</h5>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="fname">First Name</label>
                             <input type="text" id="fname" name="firstName" onChange={this.changeHandle} value={firstName} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.firstName}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="lname">Last Name</label>
                             <input type="text" id="lname" name="lastName" onChange={this.changeHandle} value={lastName} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.lastName}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="uname">User Name</label>
                             <input type="text" id="uname" name="username" onChange={this.changeHandle} value={username} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.username}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="pwd">Password</label>
                             <input type="password" id="pwd" name="password" onChange={this.changeHandle} value={password} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.password}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="cpwd">Confirm Password</label>
                             <input type="password" id="cpwd" name="cpassword" onChange={this.changeHandle} value={cpassword} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.cpassword}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="email">Email</label>
                             <input type="email" className='validate' id="email" name='email' onChange={this.changeHandle} value={email} required />
                             <span className="helper-text" data-error="Wrong email format" ></span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="cemail">Confirm Email</label>
                             <input type="email" className='validate' id="cemail" onChange={this.changeHandle} required />
                             <span className="helper-text" data-error="Wrong email format" ></span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="phone">Phone Number</label>
                             <input type="text" id="phone" name='phone' onChange={this.changeHandle} value={phone} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.phone}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="address">Address</label>
                             <input type="text" id="address" name='address' value={address} onChange={this.changeHandle} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.address}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="cred">Credit Card</label>
                             <input type="text" id="cred" name='creditcard' value={creditcard} onChange={this.changeHandle} required />
                             <span className="helper-text" style={{ color: 'red' }}  >{this.state.formErrors.creditcard}</span>
                         </div>
-                        <div className="input-field col 12s 6m">
+                        <div className="input-field col 12s 6m inputForm">
                             <button className="btn blue darken-4 z-depth-2" disabled={!this.state.formValid} >Sign up</button>
                         </div>
                     </row>

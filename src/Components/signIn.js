@@ -19,12 +19,7 @@ class SignIn extends Component {
     //     loginUser: PropTypes.func.isRequired,
     //     isAuthenticated: PropTypes.bool
     // };
-    componentDidUpdate() {
-        if (this.props.isAuthenticated) {
-            this.props.userLoader();
-            console.log([this.state.username, this.state.password]);
-        }
-    }
+   
     onSubmit(e) {
         e.preventDefault();
         let body = []
@@ -77,7 +72,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (onSubmit) => dispatch(loginUser(onSubmit)),
-        userLoader: () => dispatch(loginUser)
+        userLoader: () => dispatch(userLoader())
     }
 }
 
