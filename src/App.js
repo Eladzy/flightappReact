@@ -9,6 +9,7 @@ import SignIn from './Components/SignIn';
 import About from './Components/About';
 import logout from './Components/logout';
 import CustomerMenu from './Components/CustomerMenu';
+import AirlineMenu from './Components/AirlineMenu';
 import loggedInUserInterface from './Components/loggedInUserInterface';
 import Flight from './Components/Flight';
 import flightIndex from './Components/flightIndex';
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path='/SignUpAirline' component={SignUpAirline} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
             <PrivateRoute path='/CustomerMenu' component={CustomerMenu} />
+            <PrivateRoute path='/AirlineMenu' component={AirlineMenu} />
             <PrivateRoute path='/logout' component={logout} />
           </Switch>
         </div>
