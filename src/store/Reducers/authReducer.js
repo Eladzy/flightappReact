@@ -9,7 +9,7 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL
 } from '../../Actions/authActions';
-import { GET_CUSTOMER_DETAILS } from '../../Actions/customerActions';
+import { GET_USER_DETAILS } from '../../Actions/customerActions';
 
 let initState = {
     token: localStorage.getItem('token'),
@@ -27,7 +27,7 @@ const authReducer = (state = initState, action) => {
                 isLoading: true
             };
         case USER_LOADED:
-        case GET_CUSTOMER_DETAILS:
+        case GET_USER_DETAILS:
             console.log('loaded')
             return {
                 ...state,

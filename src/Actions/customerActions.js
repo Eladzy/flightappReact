@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl, customerPwdChangeUrl } from '../consts';
 import { tokenConfig } from './configs';
-export const GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS';
+export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const UPDATE_MY_DETAILS = 'UPDATE_MY_DETAILS';
 export const CANCEL_TICKET = 'CANCEL_TICKET';
 
@@ -9,7 +9,7 @@ export const getCustomerDetails = (id) => (dispatch, getState) => {
     axios.post(mainUrl + customerDetailsUrl, id, tokenConfig(getState))
         .then(resp => {
             dispatch({
-                type: GET_CUSTOMER_DETAILS,
+                type: GET_USER_DETAILS,
                 payload: resp.data
 
             })

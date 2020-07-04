@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { userLoader } from '../Actions/authActions'
-import { CustomerMenu } from './CustomerMenu';
+import CustomerMenu from './CustomerMenu';
+import AirlineMenu from './AirlineMenu';
 class loggedInUserInterface extends Component {
    constructor(props) {
       super(props);
@@ -22,11 +23,15 @@ class loggedInUserInterface extends Component {
             case 'Customer':
                console.log('custmer');
                return (<Redirect to='/CustomerMenu'></Redirect>);
+               break;
             case 'AirLine':
+               console.log('airline');
+               return (<AirlineMenu />);
+               break;
             case 'Administrator':
             default:
                //  return (<h2>Forbidden</h2>)
-               return (<CustomerMenu />)
+               return (<Redirect to='/home'></Redirect>);
          }
       }
 

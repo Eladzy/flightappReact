@@ -23,6 +23,11 @@ export class CustomerMenu extends Component {
         }
 
     }
+    componentDidMount() {
+
+        this.props.getMyFlights(this.state.user.id);
+        this.props.getCustomerDetails(this.state.user.id);
+    }
     pwdChangeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         let errorMsg = this.state.passwordErrorMsg;
@@ -101,11 +106,7 @@ export class CustomerMenu extends Component {
 
 
     }
-    componentDidMount() {
 
-        this.props.getMyFlights(this.state.user.id);
-        this.props.getCustomerDetails(this.state.user.id);
-    }
 
     render() {
         const { user } = this.props.auth;

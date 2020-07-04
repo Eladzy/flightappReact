@@ -75,7 +75,7 @@ export const getMyFlights = (userId) => (dispatch, getState) => {
 
 export const getCompanyFlights = (userId) => (dispatch, getState) => {
     let config = tokenConfig(getState)
-
+    //remove user id
     axios.post(mainUrl + airlineFlightsUrl, userId, config)
         .then(resp => {
             dispatch({

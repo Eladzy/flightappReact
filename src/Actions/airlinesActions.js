@@ -1,5 +1,7 @@
-import axios from 'axios'
-
+import axios from 'axios';
+import { airlineDetailsUrl, mainUrl } from '../consts';
+import { tokenConfig } from './configs';
+export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const GET_AIRLINES = 'GET_AIRLINES';
 export const REGISETR_PENDING = 'REGISTER_PENDING';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -15,3 +17,15 @@ export const getAirlines = () => {
     }
 }
 
+export const getAirlineDetails = (id) => (dispatch, getState) => {
+
+    axios.post(mainUrl + airlineDetailsUrl, id, tokenConfig(getState))
+        .then(resp => {
+            dispatch({
+                type: GET_USER_DETAILS,
+                payload: resp.data
+
+            })
+        }).catch(err => { console.log(err) });
+
+}

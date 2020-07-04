@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCompanyFlights } from '../Actions/flightActions';
+import { getAirlineDetails } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
 
@@ -9,21 +10,27 @@ class AirlineMenu extends Component {
         super(props);
         this.state = {
             user: this.props.auth.user,
-            flights: this.props.getCompanyFlights(user.id),
-            countries: this.props.getCountries()
+            //flights: this.props.flights,
+            countries: this.props.countries
 
         }
     }
-
+    componentDidMount() {
+        this.props.getCountries()
+        this.props.getAirlineDetails(this.state.user.id);
+        this.props.getCompanyFlights();
+    }
     render() {
-        const flightList = this.flights.length ? this.flights.map(flight => {
+        const { user } = this.props.auth;
+        const { countries } = this.state.countries
+        const flightList = this.props.userFlights.length ? this.flights.map(flight => {
             return (
                 <tr>
                     <td>{flight.id}</td>
                     <td>{flight.airlineName}</td>
                     <td>{countries.Id[flight.origin].Country_Name}</td>
                     <td>{flight.departureTime}</td>
-                    <td>{countries[Id[flight.destination]].Country_Name}</td>
+                    <td>{countries.Id[flight.destination].Country_Name}</td>
                     <td>{flight.arrivalTime}</td>
                     <td><button className='white'><i className="material-icons">backspace</i></button></td>
                     <td><button className='white'><i className="material-icons">edit</i></button></td>
@@ -74,14 +81,17 @@ class AirlineMenu extends Component {
 
 }
 const mapStateToProps = (state) => ({
-    flights: state.flightsR.flights,
+
+    userFlights: state.flightR.userFlights,
     countries: state.generalDataR.countries,
     auth: state.authR
+
 });
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCompanyFlights: (id) => dispatch(getCompanyFlights(id)),
-        getCountries: () => dispatch(getCountries())
+        getCompanyFlights: () => dispatch(getCompanyFlights()),
+        getCountries: () => dispatch(getCountries()),
+        getAirlineDetails: (id) => dispatch(getAirlineDetails(id))
     }
 
 }
