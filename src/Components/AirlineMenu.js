@@ -10,33 +10,45 @@ class AirlineMenu extends Component {
         super(props);
         this.state = {
             user: this.props.auth.user,
-            //flights: this.props.flights,
-            countries: this.props.countries
+            //  userFlights: [],
+            countries: []
 
         }
     }
     componentDidMount() {
-        this.props.getCountries()
         this.props.getAirlineDetails(this.state.user.id);
         this.props.getCompanyFlights();
+        this.props.getCountries();
+        this.setState({
+            user: this.props.user,
+            flights: this.props.userFlights,
+            countries: this.props.countries
+        })
+
+    }
+    getCountry(countryCode) {
+        let country = this.state.countries.find(country => country.Id == countryCode);
+        return country.Country_Name;
     }
     render() {
         const { user } = this.props.auth;
-        const { countries } = this.state.countries
-        const flightList = this.props.userFlights.length ? this.flights.map(flight => {
+        const countries = this.props.countries;
+        const flights = this.props.userFlights;
+        const flightList = flights.length ? flights.map(flight => {
             return (
+
                 <tr>
-                    <td>{flight.id}</td>
-                    <td>{flight.airlineName}</td>
-                    <td>{countries.Id[flight.origin].Country_Name}</td>
-                    <td>{flight.departureTime}</td>
-                    <td>{countries.Id[flight.destination].Country_Name}</td>
-                    <td>{flight.arrivalTime}</td>
+                    <td>{flight.Id}</td>
+                    <td>{user.name}</td>
+                    <td>{this.getCountry()}</td>
+                    <td>{flight.Departure_Time}</td>
+                    <td>{() => countries.find(country => country.Id == flight.Destination_Country_Code).Country_Name}</td>
+                    <td>{flight.Landing_Time}</td>
                     <td><button className='white'><i className="material-icons">backspace</i></button></td>
                     <td><button className='white'><i className="material-icons">edit</i></button></td>
                 </tr>
             )
-        }) : '';
+        }) : <h5>Nothing to show</h5>;
         return (
             <div className='container'>
                 <h5 className='center'>Hello {user.name}</h5>
@@ -89,7 +101,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCompanyFlights: () => dispatch(getCompanyFlights()),
+        getCompanyFlights: (id) => dispatch(getCompanyFlights(id)),
         getCountries: () => dispatch(getCountries()),
         getAirlineDetails: (id) => dispatch(getAirlineDetails(id))
     }

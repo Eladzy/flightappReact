@@ -42,7 +42,7 @@ export function userNameAvailableCheck(username) {
     // }
 }
 export const changeCustomerPassword = (passwords = []) => (dispatch, getState) => {
-    const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig).data;
+    const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig(getState)).data;
 
 
 }

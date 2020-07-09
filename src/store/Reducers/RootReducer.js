@@ -1,4 +1,4 @@
-import authReducer from "./authReducer";
+import authReducer from './authReducer';
 import flightReducer from "./FlightReducer";
 import generalDataReducer from './generalDataReducer';
 import ticketReducer from "./ticketReducer";

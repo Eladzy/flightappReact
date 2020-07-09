@@ -12,6 +12,7 @@ export class CustomerMenu extends Component {
             formErrors: { username: '', firstName: '', lastName: '', address: '', phone: '' },
             password: '',
             passwordErrorMsg: '',
+            newPasswordErrorMsg: '',
             newPwd: '',
             firstName: '',
             lastName: '',
@@ -31,19 +32,28 @@ export class CustomerMenu extends Component {
     pwdChangeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         let errorMsg = this.state.passwordErrorMsg;
+        let newPwdErrorMsg = this.state.newPasswordErrorMsg
         let pattern;
         switch (e.target.name) {
-            case 'newPwd':
+            case 'password':
                 pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
                 errorMsg = '';
                 if (!pattern.test(String(e.target.value))) {
                     errorMsg = 'Minimum eight characters combination of characters and digits';
                 }
                 break;
+            case 'newPwd':
+                pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+                newPwdErrorMsg = '';
+                if (!pattern.test(String(e.target.value))) {
+                    newPwdErrorMsg = 'Minimum eight characters combination of characters and digits';
+                }
+                break;
             default:
                 break;
         }
-        this.setState({ passwordErrorMsg: errorMsg });
+        this.setState({ passwordErrorMsg: errorMsg, newPasswordErrorMsg: newPwdErrorMsg });
+        this.isPwdFormValid();
     }
     changeHandle = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -89,6 +99,17 @@ export class CustomerMenu extends Component {
             detailsFormValid: true
         })
     }
+    isPwdFormValid = () => {
+        if (this.state.passwordErrorMsg === '' && this.state.newPasswordErrorMsg === '') {
+            this.setState({
+                passwordValid: true
+            });
+            return;
+        }
+        this.setState({
+            passwordValid: false
+        });
+    }
     onSubmit = (e) => {
 
         e.preventDefault();
@@ -105,6 +126,13 @@ export class CustomerMenu extends Component {
         this.setState({ state: this.state });//fixx
 
 
+    }
+    onPwdSubmit = (e) => {
+        e.preventDefault();
+        let passwords = []
+        passwords[0] = this.state.password;
+        passwords[1] = this.state.newPwd;
+        this.props.changeCustomerPassword(passwords);
     }
 
 
@@ -187,7 +215,7 @@ export class CustomerMenu extends Component {
                             header="Change My Password"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <form className="white">
+                            <form className="white" onSubmit={this.onPwdSubmit}>
                                 <div className="input-field col 12s 6m">
                                     <label htmlFor="password">Current password</label>
                                     <input type="password" id="password" name="password" value={password} onChange={this.pwdChangeHandle} required />
@@ -198,7 +226,9 @@ export class CustomerMenu extends Component {
                                     <input type="password" id="pwdcheck" name="newPwd" value={newPwd} onChange={this.pwdChangeHandle} required />
                                     <span className="helper-text" style={{ color: 'red' }}  >{this.state.passwordErrorMsg}</span>
                                 </div>
-
+                                <div className="input-field col 12s 6m">
+                                    <button className="btn blue darken-4 z-depth-2" disabled={!this.state.passwordValid} >Submit</button>
+                                </div>
                             </form>
                         </CollapsibleItem>
                     </Collapsible>
@@ -237,7 +267,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getMyFlights: (id) => dispatch(getMyFlights(id)),
         getCustomerDetails: (id) => dispatch(getCustomerDetails(id)),
-        updateMyDetails: (userData) => dispatch(updateMyDetails(userData))
+        updateMyDetails: (userData) => dispatch(updateMyDetails(userData)),
+        changeCustomerPassword: (passwords) => dispatch(changeCustomerPassword(passwords))
     }
 }
 

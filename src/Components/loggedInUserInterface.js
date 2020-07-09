@@ -23,14 +23,11 @@ class loggedInUserInterface extends Component {
             case 'Customer':
                console.log('custmer');
                return (<Redirect to='/CustomerMenu'></Redirect>);
-               break;
             case 'AirLine':
                console.log('airline');
-               return (<AirlineMenu />);
-               break;
+               return (<Redirect to='/AirlineMenu'></Redirect>);
             case 'Administrator':
             default:
-               //  return (<h2>Forbidden</h2>)
                return (<Redirect to='/home'></Redirect>);
          }
       }
