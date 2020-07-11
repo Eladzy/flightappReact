@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl, customerPwdChangeUrl } from '../consts';
+import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl, customerPwdChangeUrl, customeCancelTicketUrl } from '../consts';
 import { tokenConfig } from './configs';
 export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const UPDATE_MY_DETAILS = 'UPDATE_MY_DETAILS';
@@ -43,11 +43,14 @@ export function userNameAvailableCheck(username) {
 }
 export const changeCustomerPassword = (passwords = []) => (dispatch, getState) => {
     const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig(getState)).data;
-
-
 }
 
-// export const cancelTicket = (ticket) => (dispatch, getState) => {
-//     axios.delete()
-//         .then()
-// }
+export const cancelTicket = (flightId) => (dispatch, getState) => {
+    axios.delete(mainUrl + customeCancelTicketUrl, flightId, tokenConfig(getState))
+        .then(resp => {
+            dispatch({
+                type: CANCEL_TICKET,
+                payload: resp.data
+            })
+        }).catch(err => { console.log(err) });
+}
