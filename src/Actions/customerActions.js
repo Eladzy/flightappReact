@@ -46,11 +46,13 @@ export const changeCustomerPassword = (passwords = []) => (dispatch, getState) =
 }
 
 export const cancelTicket = (flightId) => (dispatch, getState) => {
-    axios.delete(mainUrl + customeCancelTicketUrl, flightId, tokenConfig(getState))
+    axios.post(mainUrl + customeCancelTicketUrl, flightId, tokenConfig(getState))
         .then(resp => {
             dispatch({
                 type: CANCEL_TICKET,
                 payload: resp.data
             })
         }).catch(err => { console.log(err) });
+
+
 }

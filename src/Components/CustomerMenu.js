@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getMyFlights } from '../Actions/flightActions';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
-import { getCustomerDetails, updateMyDetails, changeCustomerPassword } from '../Actions/customerActions';
+import { getCustomerDetails, updateMyDetails, changeCustomerPassword, cancelTicket } from '../Actions/customerActions';
 
 export class CustomerMenu extends Component {
     constructor(props) {
@@ -33,17 +33,15 @@ export class CustomerMenu extends Component {
         this.setState({ [e.target.name]: e.target.value });
         let errorMsg = this.state.passwordErrorMsg;
         let newPwdErrorMsg = this.state.newPasswordErrorMsg
-        let pattern;
+        let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;;
         switch (e.target.name) {
             case 'password':
-                pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
                 errorMsg = '';
                 if (!pattern.test(String(e.target.value))) {
                     errorMsg = 'Minimum eight characters combination of characters and digits';
                 }
                 break;
             case 'newPwd':
-                pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
                 newPwdErrorMsg = '';
                 if (!pattern.test(String(e.target.value))) {
                     newPwdErrorMsg = 'Minimum eight characters combination of characters and digits';
@@ -134,7 +132,10 @@ export class CustomerMenu extends Component {
         passwords[1] = this.state.newPwd;
         this.props.changeCustomerPassword(passwords);
     }
-
+    cancelTicketHandle = (flightId) => {
+        //popup are you sure
+        this.props.cancelTicket(flightId);
+    }
 
     render() {
         const { user } = this.props.auth;
@@ -155,7 +156,7 @@ export class CustomerMenu extends Component {
                     <td>{flight.departureTime}</td>
                     <td>{flight.destination}</td>
                     <td>{flight.arrivalTime}</td>
-                    <td><button className='white'><i className="material-icons">backspace</i></button></td>
+                    <td><button className='white' onClick={() => this.cancelTicketHandle(flight.id)}><i className="material-icons">backspace</i></button></td>
                 </tr>
             )
         }) : '';
@@ -268,7 +269,8 @@ const mapDispatchToProps = (dispatch) => {
         getMyFlights: (id) => dispatch(getMyFlights(id)),
         getCustomerDetails: (id) => dispatch(getCustomerDetails(id)),
         updateMyDetails: (userData) => dispatch(updateMyDetails(userData)),
-        changeCustomerPassword: (passwords) => dispatch(changeCustomerPassword(passwords))
+        changeCustomerPassword: (passwords) => dispatch(changeCustomerPassword(passwords)),
+        cancelTicket: (flightId) => dispatch(cancelTicket(flightId))
     }
 }
 
