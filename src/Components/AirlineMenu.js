@@ -11,7 +11,6 @@ class AirlineMenu extends Component {
         this.state = {
             user: this.props.auth.user,
             //  userFlights: [],
-            countries: []
 
         }
     }
@@ -27,12 +26,12 @@ class AirlineMenu extends Component {
 
     }
     getCountry(countryCode) {
-        let country = this.state.countries.find(country => country.Id == countryCode);
+        let country = this.props.countries.find(country => country.Id == countryCode);
         return country.Country_Name;
     }
     render() {
         const { user } = this.props.auth;
-        const countries = this.props.countries;
+        // const { countries } = this.props.countries;
         const flights = this.props.userFlights;
         const flightList = flights.length ? flights.map(flight => {
             return (
@@ -40,9 +39,9 @@ class AirlineMenu extends Component {
                 <tr>
                     <td>{flight.Id}</td>
                     <td>{user.name}</td>
-                    <td>{this.getCountry()}</td>
+                    <td>{this.getCountry(flight.Destination_Country_Code)}</td>
                     <td>{flight.Departure_Time}</td>
-                    <td>{() => countries.find(country => country.Id == flight.Destination_Country_Code).Country_Name}</td>
+                    <td>{this.getCountry(flight.Origin_Country_Code)}</td>
                     <td>{flight.Landing_Time}</td>
                     <td><button className='white'><i className="material-icons">backspace</i></button></td>
                     <td><button className='white'><i className="material-icons">edit</i></button></td>
@@ -108,3 +107,4 @@ const mapDispatchToProps = (dispatch) => {
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AirlineMenu);
+//{() => countries.find(country => country.Id == flight.Destination_Country_Code).Country_Name}
