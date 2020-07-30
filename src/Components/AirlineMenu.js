@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCompanyFlights } from '../Actions/flightActions';
-import { getAirlineDetails } from '../Actions/airlinesActions';
+import { getAirlineDetails, changeAirlinePassword } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
-import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
+import { Collapsible, CollapsibleItem, Icon, Select } from 'react-materialize';
+import Moment from 'react-moment';
 
 class AirlineMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: this.props.auth.user,
-            //  userFlights: [],
-
+            password: '',
+            newPwd: '',
+            passwordErrorMsg: '',
+            newPasswordErrorMsg: '',
+            passwordValid: false,
+            flightFormErrors: { origin: '', destination: '', departure: '', arrival: '' },
+            origin: '',
+            destination: '',
+            departure: '',
+            arrival: ''
         }
     }
     componentDidMount() {
@@ -25,13 +34,63 @@ class AirlineMenu extends Component {
         })
 
     }
+
+
     getCountry(countryCode) {
         let country = this.props.countries.find(country => country.Id == countryCode);
         return country.Country_Name;
     }
+
+    pwdChangeHandle = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+        let errorMsg = this.state.passwordErrorMsg;
+        let newPwdErrorMsg = this.state.newPasswordErrorMsg
+        let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;;
+        switch (e.target.name) {
+            case 'password':
+                errorMsg = '';
+                if (!pattern.test(String(e.target.value))) {
+                    errorMsg = 'Minimum eight characters combination of characters and digits';
+                }
+                break;
+            case 'newPwd':
+                newPwdErrorMsg = '';
+                if (!pattern.test(String(e.target.value))) {
+                    newPwdErrorMsg = 'Minimum eight characters combination of characters and digits';
+                }
+                break;
+            default:
+                break;
+        }
+        this.setState({ passwordErrorMsg: errorMsg, newPasswordErrorMsg: newPwdErrorMsg });
+        this.isPwdFormValid();
+    }
+
+    onPwdSubmit = (e) => {
+        e.preventDefault();
+        let passwords = []
+        passwords[0] = this.state.password;
+        passwords[1] = this.state.newPwd;
+        this.props.changeAirlinePassword(passwords);
+    }
+
+    isPwdFormValid = () => {
+        if (this.state.passwordErrorMsg === '' && this.state.newPasswordErrorMsg === '') {
+            this.setState({
+                passwordValid: true
+            });
+            return;
+        }
+        this.setState({
+            passwordValid: false
+        });
+    }
+
     render() {
         const { user } = this.props.auth;
-        // const { countries } = this.props.countries;
+        const countries = this.props.countries;
+        const { password } = this.state.password;
+        const { newPwd } = this.state.newPwd;
         const flights = this.props.userFlights;
         const flightList = flights.length ? flights.map(flight => {
             return (
@@ -65,6 +124,59 @@ class AirlineMenu extends Component {
                             <row>
                                 {user.country}
                             </row>
+                        </CollapsibleItem>
+                        <CollapsibleItem expanded={false}
+                            header="Change My Password"
+                            icon={<Icon>add_box</Icon>}
+                            node="div">
+                            <form className="white" onSubmit={this.onPwdSubmit}>
+                                <div className="input-field col 12s 6m">
+                                    <label htmlFor="password">Current password</label>
+                                    <input type="password" id="password" name="password" value={password} onChange={this.pwdChangeHandle} required />
+
+                                </div>
+                                <div className="input-field col 12s 6m">
+                                    <label htmlFor="fname">New password</label>
+                                    <input type="password" id="pwdcheck" name="newPwd" value={newPwd} onChange={this.pwdChangeHandle} required />
+                                    <span className="helper-text" style={{ color: 'red' }}  >{this.state.passwordErrorMsg}</span>
+                                </div>
+                                <div className="input-field col 12s 6m">
+                                    <button className="btn blue darken-4 z-depth-2" disabled={!this.state.passwordValid} >Submit</button>
+                                </div>
+                            </form>
+                        </CollapsibleItem>
+                        <CollapsibleItem expanded={false}
+                            header="Submit flight"
+                            icon={<Icon>add_box</Icon>}
+                            node="div">
+                            <form className='white'>
+
+
+                                <div className="input-field col 12s 6m">
+                                    <Select id="originSelect" value={Option.value} >
+                                        <option  ></option>
+                                        {countries.map(c =>
+                                            (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
+                                        )}
+                                    </Select>
+                                    <div className="container">
+
+                                    </div>
+                                    <label > Origin</label>
+                                </div>
+
+
+                                <div className="input-field ">
+
+                                    <Select id="destinationSelect" value={Option.value} >
+                                        <option ></option>
+                                        {countries.map(c =>
+                                            (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
+                                        )}
+                                    </Select>
+                                    <label >destination</label>
+                                </div>
+                            </form>
                         </CollapsibleItem>
                     </Collapsible>
                 </div>
@@ -102,9 +214,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getCompanyFlights: (id) => dispatch(getCompanyFlights(id)),
         getCountries: () => dispatch(getCountries()),
-        getAirlineDetails: (id) => dispatch(getAirlineDetails(id))
+        getAirlineDetails: (id) => dispatch(getAirlineDetails(id)),
+        changeAirlinePassword: (passwords) => dispatch(changeAirlinePassword(passwords))
     }
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AirlineMenu);
-//{() => countries.find(country => country.Id == flight.Destination_Country_Code).Country_Name}

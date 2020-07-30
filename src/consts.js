@@ -13,3 +13,4 @@ export const checkUsernameUrl = "api/checkCustomerUsername/";
 export const customerPwdChangeUrl = "api/customer/changePassword";
 export const airlineFlightsUrl = "api/airline/getflights";
 export const customeCancelTicketUrl = "api/customer/cancelticket";
+export const airlinePwdChange = "api/airline/changemypassword";
