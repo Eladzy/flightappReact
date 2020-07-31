@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCompanyFlights } from '../Actions/flightActions';
 import { getAirlineDetails, changeAirlinePassword } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
-import { Collapsible, CollapsibleItem, Icon, Select } from 'react-materialize';
+import { Collapsible, CollapsibleItem, Icon, Select, DatePicker, TimePicker, DatePickerOptions } from 'react-materialize';
 import Moment from 'react-moment';
 
 class AirlineMenu extends Component {
@@ -85,8 +85,11 @@ class AirlineMenu extends Component {
             passwordValid: false
         });
     }
-
+    getminimalDate = (date = new Date) => {
+        return date.setDate(date.getDate() + 5);
+    }
     render() {
+        const minimalDate = this.getminimalDate();
         const { user } = this.props.auth;
         const countries = this.props.countries;
         const { password } = this.state.password;
@@ -175,6 +178,241 @@ class AirlineMenu extends Component {
                                         )}
                                     </Select>
                                     <label >destination</label>
+                                </div>
+                                <div className="input-field">
+                                    <DatePicker
+                                        id="DatePicker-5"
+                                        options={{
+                                            autoClose: false,
+                                            container: null,
+                                            defaultDate: null,
+                                            disableDayFn: null,
+                                            disableWeekends: false,
+                                            events: [],
+                                            firstDay: 0,
+                                            format: 'mmm dd, yyyy',
+                                            i18n: {
+                                                cancel: 'Cancel',
+                                                clear: 'Clear',
+                                                done: 'Ok',
+                                                months: [
+                                                    'January',
+                                                    'February',
+                                                    'March',
+                                                    'April',
+                                                    'May',
+                                                    'June',
+                                                    'July',
+                                                    'August',
+                                                    'September',
+                                                    'October',
+                                                    'November',
+                                                    'December'
+                                                ],
+                                                monthsShort: [
+                                                    'Jan',
+                                                    'Feb',
+                                                    'Mar',
+                                                    'Apr',
+                                                    'May',
+                                                    'Jun',
+                                                    'Jul',
+                                                    'Aug',
+                                                    'Sep',
+                                                    'Oct',
+                                                    'Nov',
+                                                    'Dec'
+                                                ],
+                                                nextMonth: '›',
+                                                previousMonth: '‹',
+                                                weekdays: [
+                                                    'Sunday',
+                                                    'Monday',
+                                                    'Tuesday',
+                                                    'Wednesday',
+                                                    'Thursday',
+                                                    'Friday',
+                                                    'Saturday'
+                                                ],
+                                                weekdaysAbbrev: [
+                                                    'S',
+                                                    'M',
+                                                    'T',
+                                                    'W',
+                                                    'T',
+                                                    'F',
+                                                    'S'
+                                                ],
+                                                weekdaysShort: [
+                                                    'Sun',
+                                                    'Mon',
+                                                    'Tue',
+                                                    'Wed',
+                                                    'Thu',
+                                                    'Fri',
+                                                    'Sat'
+                                                ]
+                                            },
+                                            isRTL: false,
+                                            maxDate: null,
+                                            minDate: null,
+                                            onClose: null,
+                                            onDraw: null,
+                                            onOpen: null,
+                                            onSelect: null,
+                                            parse: null,
+                                            setDefaultDate: false,
+                                            showClearBtn: false,
+                                            showDaysInNextAndPreviousMonths: false,
+                                            showMonthAfterYear: false,
+                                            yearRange: 1
+                                        }}
+                                    />
+                                    <label>Departure Date</label>
+                                </div>
+                                <div className="input-field">
+                                    <TimePicker
+                                        id="TimePicker-13"
+                                        options={{
+                                            autoClose: false,
+                                            container: null,
+                                            defaultTime: 'now',
+                                            duration: 350,
+                                            fromNow: 0,
+                                            i18n: {
+                                                cancel: 'Cancel',
+                                                clear: 'Clear',
+                                                done: 'Ok'
+                                            },
+                                            onCloseEnd: null,
+                                            onCloseStart: null,
+                                            onOpenEnd: null,
+                                            onOpenStart: null,
+                                            onSelect: null,
+                                            showClearBtn: false,
+                                            twelveHour: true,
+                                            vibrate: true
+                                        }}
+                                    />
+                                    <label>Departure time</label>
+                                </div>
+                                <div className="input-field">
+                                    <DatePicker
+                                        id="DatePicker-5"
+                                        options={{
+                                            autoClose: false,
+                                            container: null,
+                                            defaultDate: null,
+                                            disableDayFn: null,
+                                            disableWeekends: false,
+                                            events: [],
+                                            firstDay: 0,
+                                            format: 'mmm dd, yyyy',
+                                            i18n: {
+                                                cancel: 'Cancel',
+                                                clear: 'Clear',
+                                                done: 'Ok',
+                                                months: [
+                                                    'January',
+                                                    'February',
+                                                    'March',
+                                                    'April',
+                                                    'May',
+                                                    'June',
+                                                    'July',
+                                                    'August',
+                                                    'September',
+                                                    'October',
+                                                    'November',
+                                                    'December'
+                                                ],
+                                                monthsShort: [
+                                                    'Jan',
+                                                    'Feb',
+                                                    'Mar',
+                                                    'Apr',
+                                                    'May',
+                                                    'Jun',
+                                                    'Jul',
+                                                    'Aug',
+                                                    'Sep',
+                                                    'Oct',
+                                                    'Nov',
+                                                    'Dec'
+                                                ],
+                                                nextMonth: '›',
+                                                previousMonth: '‹',
+                                                weekdays: [
+                                                    'Sunday',
+                                                    'Monday',
+                                                    'Tuesday',
+                                                    'Wednesday',
+                                                    'Thursday',
+                                                    'Friday',
+                                                    'Saturday'
+                                                ],
+                                                weekdaysAbbrev: [
+                                                    'S',
+                                                    'M',
+                                                    'T',
+                                                    'W',
+                                                    'T',
+                                                    'F',
+                                                    'S'
+                                                ],
+                                                weekdaysShort: [
+                                                    'Sun',
+                                                    'Mon',
+                                                    'Tue',
+                                                    'Wed',
+                                                    'Thu',
+                                                    'Fri',
+                                                    'Sat'
+                                                ]
+                                            },
+                                            isRTL: false,
+                                            maxDate: null,
+                                            minDate: null,
+                                            onClose: null,
+                                            onDraw: null,
+                                            onOpen: null,
+                                            onSelect: null,
+                                            parse: null,
+                                            setDefaultDate: false,
+                                            showClearBtn: false,
+                                            showDaysInNextAndPreviousMonths: false,
+                                            showMonthAfterYear: false,
+                                            yearRange: 1
+                                        }}
+                                    />
+                                    <label>Arrival Date</label>
+                                </div>
+
+                                <div className="input-field">
+                                    <TimePicker
+                                        id="TimePicker-13"
+                                        options={{
+                                            autoClose: false,
+                                            container: null,
+                                            defaultTime: 'now',
+                                            duration: 350,
+                                            fromNow: 0,
+                                            i18n: {
+                                                cancel: 'Cancel',
+                                                clear: 'Clear',
+                                                done: 'Ok'
+                                            },
+                                            onCloseEnd: null,
+                                            onCloseStart: null,
+                                            onOpenEnd: null,
+                                            onOpenStart: null,
+                                            onSelect: null,
+                                            showClearBtn: false,
+                                            twelveHour: true,
+                                            vibrate: true
+                                        }}
+                                    />
+                                    <label>Arrival time</label>
                                 </div>
                             </form>
                         </CollapsibleItem>

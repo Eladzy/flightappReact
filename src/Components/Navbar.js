@@ -13,7 +13,7 @@ class Navbar extends Component {
 
     render() {
         const { isAuthenticated, user } = this.props.auth;
-        const authLinks = (<ul className="right hide-on-med-and-down">
+        const authLinks = (<ul className="right hide-on-med-and-down ulNav">
             <li><NavLink to='/loggedInUserInterface'><strong>{user !== null ? user['username'] : ''}</strong>  Account </NavLink></li>
             <li><NavLink to='/logout' >Sign out</NavLink></li>
         </ul>)
@@ -21,7 +21,7 @@ class Navbar extends Component {
             <li><NavLink to='/loggedInUserInterface'><strong>{user !== null ? user['username'] : ''}</strong>  Account</NavLink></li>
             <li><NavLink to='/logout' >Sign out</NavLink></li>
         </div>
-        const guestLinks = (<ul className="right hide-on-med-and-down">
+        const guestLinks = (<ul className="right hide-on-med-and-down ulNav">
             <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
             <li><NavLink to='/signUpMain'>SignupM</NavLink></li>
             <li><NavLink to='/SignIn'>Sign in</NavLink></li>
@@ -35,7 +35,7 @@ class Navbar extends Component {
                 <nav className='nav-wrapper blue darken-4 '>
                     <div className="container">
                         <a className="brand-logo left">FlightCom</a>
-                        <ul className="right hide-on-med-and-down">
+                        <ul className="right hide-on-med-and-down ">
                             <li><Link to='/Home'>Home</Link></li>
                             <li><Link to='/flightSearch'>Search flight</Link></li>
                             <li><Link to='/flightIndex'>Deals</Link></li>
