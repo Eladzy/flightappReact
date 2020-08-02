@@ -33,7 +33,7 @@ export class CustomerMenu extends Component {
         this.setState({ [e.target.name]: e.target.value });
         let errorMsg = this.state.passwordErrorMsg;
         let newPwdErrorMsg = this.state.newPasswordErrorMsg
-        let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;;
+        let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
         switch (e.target.name) {
             case 'password':
                 errorMsg = '';

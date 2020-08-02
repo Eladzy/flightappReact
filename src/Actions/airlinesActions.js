@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { airlineDetailsUrl, mainUrl, airlinePwdChange } from '../consts';
+import { airlineDetailsUrl, mainUrl, airlinePwdChange, submitFlightUrl } from '../consts';
 import { tokenConfig } from './configs';
 export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const GET_AIRLINES = 'GET_AIRLINES';
 export const REGISETR_PENDING = 'REGISTER_PENDING';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const CREATE_NEW_FLIGHT = ' CREATE_NEW_FLIGHT';
 
 
 export const getAirlines = () => {
@@ -34,4 +35,14 @@ export const getAirlineDetails = (id) => (dispatch, getState) => {
 export const changeAirlinePassword = (passwords = []) => (dispatch, getState) => {
     const response = axios.put(mainUrl + airlinePwdChange, passwords, tokenConfig(getState)).data
 
+}
+
+export const createNewFlight = (flight = {}) => (dispatch, getState) => {
+    axios.post(mainUrl + submitFlightUrl, flight, tokenConfig(getState))
+        .then(resp => {
+            dispatch({
+                type: CREATE_NEW_FLIGHT,
+                payload: resp.data
+            })
+        }).catch(err => { console.log(err) });
 }

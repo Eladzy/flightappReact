@@ -31,10 +31,7 @@ class flightSearch extends Component {
         console.log(document.getElementById("departureTimePicker").value);
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
-            document.getElementById("departureTimePicker").value, ''];
-        console.log("handle submit");
-        console.log(document.getElementById("airlineSelect").value);
-        console.log(params);
+            document.getElementById("departureTimePicker").value, ''];     
         this.props.searchedFlights(params)
     }
 

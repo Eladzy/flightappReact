@@ -1,4 +1,5 @@
 import { FETCH_ALL_FLIGHTS, SEARCH_FLIGHTS, TARGET_FLIGHT, VIEW_FLIGHT, GET_MY_FLIGHTS } from '../../Actions/flightActions';
+import { CREATE_NEW_FLIGHT } from '../../Actions/airlinesActions';
 
 let initState = {
     flights: [],
@@ -26,6 +27,7 @@ export default (state = initState, action) => {
                 targetFlightId: action.payload
             }
         case VIEW_FLIGHT:
+        case CREATE_NEW_FLIGHT:
             return {
                 ...state,
                 flight: action.payload,

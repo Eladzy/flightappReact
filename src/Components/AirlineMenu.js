@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCompanyFlights } from '../Actions/flightActions';
-import { getAirlineDetails, changeAirlinePassword } from '../Actions/airlinesActions';
+import { getAirlineDetails, changeAirlinePassword, createNewFlight } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { Collapsible, CollapsibleItem, Icon, Select, DatePicker, TimePicker, DatePickerOptions } from 'react-materialize';
 import Moment from 'react-moment';
@@ -16,11 +16,19 @@ class AirlineMenu extends Component {
             passwordErrorMsg: '',
             newPasswordErrorMsg: '',
             passwordValid: false,
-            flightFormErrors: { origin: '', destination: '', departure: '', arrival: '' },
-            origin: '',
-            destination: '',
-            departure: '',
-            arrival: ''
+            flightFormErrors: {
+                originSelect: '', destinationSelect: '', departureDatePicker: '',
+                departureTimePicker: '',
+                arrivalDatePicker: '', arrivalTimePicker: ''
+            },
+            originSelect: '',
+            destinationSelect: '',
+            departureDatePicker: '',
+            departureTimePicker: '',
+            arrivalDatePicker: '',
+            arrivalTimePicker: '',
+            departureDateTime: '',
+            landingDateTime: ''
         }
     }
     componentDidMount() {
@@ -88,12 +96,77 @@ class AirlineMenu extends Component {
     getminimalDate = (date = new Date) => {
         return date.setDate(date.getDate() + 5);
     }
+
+    onFlightSubmitChange = (e) => {
+        console.log(e.target.name);
+        let target = e.target
+        console.log(target);
+        this.setState({ [target.name]: target.value })
+        let pattern = /d{1,3}/;
+        let formErrors = this.state.flightFormErrors;
+        switch (target.name) {
+            case "originSelect":
+            case "destinationSelect":
+                pattern = /d{1,3}/;
+                if (!pattern.test(String(e.target.name))) {
+                    formErrors[target.name] = "Please pick a country from the list";
+                }
+                else {
+                    formErrors[target.name] = '';
+                }
+                break;
+            // case "departureDatePicker":
+            // case "arrivalDatePicker":
+            //     console.log(e.target.value);
+            //     break;
+            // case "departureTimePicker":
+            // case "arrivalTimePicker":
+            //     console.log(e.target.value);
+            //     break;
+
+            default:
+                break;
+        }
+        this.setState({ flightFormErrors: formErrors });
+    }
+    getFlightDate = () => {
+        let dateResult = [];
+        dateResult[0] = document.getElementById("DatePicker-2").value + ',' + document.getElementById("TimePicker-13").value;
+        dateResult[1] = document.getElementById("DatePicker-3").value + ',' + document.getElementById("TimePicker-14").value;
+        return dateResult;
+
+    }
+
+    onFlightSubmit = (e) => {
+        e.preventDefault();
+        let dateResult = this.getFlightDate()
+        let flight = {
+            AirLine_Id: this.props.auth.user.id,
+            Origin_Country_Code: this.state.originSelect,
+            Destination_Country_Code: this.state.destinationSelect,
+            Departure_Time: dateResult[0],
+            Landing_Time: dateResult[1],
+            Remaining_Tickets: 250//temp
+        }
+        //remember to validate
+
+        console.log(flight);
+        console.log(Date.parse(dateResult[0]));
+        this.props.createNewFlight(flight);
+    }
+
     render() {
         const minimalDate = this.getminimalDate();
         const { user } = this.props.auth;
         const countries = this.props.countries;
         const { password } = this.state.password;
         const { newPwd } = this.state.newPwd;
+        const { originSelect } = this.state.originSelect;
+        const { destinationSelect } = this.state.destinationSelect;
+        const { departureDatePicker } = this.state.departureDatePicker;
+        const { departureTimePicker } = this.state.departureTimePicker;
+        const { arrivalDatePicker } = this.state.arrivalDatePicker;
+        const { arrivalTimePicker } = this.state.arrivalTimePicker;
         const flights = this.props.userFlights;
         const flightList = flights.length ? flights.map(flight => {
             return (
@@ -152,36 +225,34 @@ class AirlineMenu extends Component {
                             header="Submit flight"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <form className='white'>
+                            <form className='white' onSubmit={this.onFlightSubmit}>
 
 
-                                <div className="input-field col 12s 6m">
-                                    <Select id="originSelect" value={Option.value} >
+                                <div className="input-field" >
+                                    <label htmlFor="originSelect" > Origin</label>
+                                    <Select name="originSelect" id="originSelectAl" value={Option.value} onChange={this.onFlightSubmitChange} required>
                                         <option  ></option>
                                         {countries.map(c =>
                                             (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
                                         )}
                                     </Select>
-                                    <div className="container">
-
-                                    </div>
-                                    <label > Origin</label>
                                 </div>
 
 
-                                <div className="input-field ">
+                                <div className="input-field " >
 
-                                    <Select id="destinationSelect" value={Option.value} >
+                                    <label htmlFor="destinationSelect" >destination</label>
+                                    <Select name="destinationSelect" id="destinationSelectAl" value={Option.value} onChange={this.onFlightSubmitChange} required>
                                         <option ></option>
                                         {countries.map(c =>
                                             (<option value={c.Id} key={c.Id}>{c.Country_Name}</option>)
                                         )}
                                     </Select>
-                                    <label >destination</label>
                                 </div>
                                 <div className="input-field">
-                                    <DatePicker
-                                        id="DatePicker-5"
+                                    <label htmlFor="departureDatePicker">Departure Date</label>
+                                    <DatePicker name="departureDatePicker"
+                                        id="DatePicker-2"
                                         options={{
                                             autoClose: false,
                                             container: null,
@@ -267,11 +338,13 @@ class AirlineMenu extends Component {
                                             showMonthAfterYear: false,
                                             yearRange: 1
                                         }}
-                                    />
-                                    <label>Departure Date</label>
+                                        //   onChange={this.onFlightSubmitChange}
+                                        required />
+
                                 </div>
                                 <div className="input-field">
-                                    <TimePicker
+                                    <label htmlFor="departureTimePicker">Departure time</label>
+                                    <TimePicker name="departureTimePicker"
                                         id="TimePicker-13"
                                         options={{
                                             autoClose: false,
@@ -293,12 +366,15 @@ class AirlineMenu extends Component {
                                             twelveHour: true,
                                             vibrate: true
                                         }}
-                                    />
-                                    <label>Departure time</label>
+
+                                        required />
+
                                 </div>
                                 <div className="input-field">
+                                    <label htmlFor="arrivalDatePicker">Arrival Date</label>
                                     <DatePicker
-                                        id="DatePicker-5"
+                                        id="DatePicker-3"
+                                        name="arrivalDatePicker"
                                         options={{
                                             autoClose: false,
                                             container: null,
@@ -378,19 +454,21 @@ class AirlineMenu extends Component {
                                             onOpen: null,
                                             onSelect: null,
                                             parse: null,
-                                            setDefaultDate: false,
+                                            setDefaultDate: arrivalDatePicker,
                                             showClearBtn: false,
                                             showDaysInNextAndPreviousMonths: false,
                                             showMonthAfterYear: false,
                                             yearRange: 1
                                         }}
-                                    />
-                                    <label>Arrival Date</label>
+                                        // onChange={this.onFlightSubmitChange}
+                                        required />
                                 </div>
 
                                 <div className="input-field">
+                                    <label htmlFor="arrivalTimePicker">Arrival time</label>
                                     <TimePicker
-                                        id="TimePicker-13"
+                                        name="arrivalTimePicker"
+                                        id="TimePicker-14"
                                         options={{
                                             autoClose: false,
                                             container: null,
@@ -411,8 +489,11 @@ class AirlineMenu extends Component {
                                             twelveHour: true,
                                             vibrate: true
                                         }}
-                                    />
-                                    <label>Arrival time</label>
+                                        //  onChange={this.onFlightSubmitChange}
+                                        required />
+                                    <div className="input-field col 12s 6m">
+                                        <button className="btn blue darken-4 z-depth-2"  >Submit</button>
+                                    </div>
                                 </div>
                             </form>
                         </CollapsibleItem>
@@ -453,7 +534,8 @@ const mapDispatchToProps = (dispatch) => {
         getCompanyFlights: (id) => dispatch(getCompanyFlights(id)),
         getCountries: () => dispatch(getCountries()),
         getAirlineDetails: (id) => dispatch(getAirlineDetails(id)),
-        changeAirlinePassword: (passwords) => dispatch(changeAirlinePassword(passwords))
+        changeAirlinePassword: (passwords) => dispatch(changeAirlinePassword(passwords)),
+        createNewFlight: (flight) => dispatch(createNewFlight(flight))
     }
 
 }
