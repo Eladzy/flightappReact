@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import FlightEditModal from './FlightEditModal';
 import { connect } from 'react-redux';
 import { getCompanyFlights } from '../Actions/flightActions';
 import { getAirlineDetails, changeAirlinePassword, createNewFlight } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
-import { Collapsible, CollapsibleItem, Icon, Select, DatePicker, TimePicker, DatePickerOptions } from 'react-materialize';
+import { Collapsible, CollapsibleItem, Icon, Select, DatePicker, TimePicker, DatePickerOptions, Modal, Button } from 'react-materialize';
 import Moment from 'react-moment';
 
 class AirlineMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: this.props.auth.user,
+            //user: this.props.auth.user,
             password: '',
             newPwd: '',
             passwordErrorMsg: '',
@@ -19,7 +20,7 @@ class AirlineMenu extends Component {
             flightFormErrors: {
                 originSelect: '', destinationSelect: '', departureDatePicker: '',
                 departureTimePicker: '',
-                arrivalDatePicker: '', arrivalTimePicker: ''
+                arrivalDatePicker: '', arrivalTimePicker: '', vacancy: ''
             },
             originSelect: '',
             destinationSelect: '',
@@ -28,13 +29,15 @@ class AirlineMenu extends Component {
             arrivalDatePicker: '',
             arrivalTimePicker: '',
             departureDateTime: '',
-            landingDateTime: ''
+            landingDateTime: '',
+            vacancy: ''
+
         }
     }
     componentDidMount() {
-        this.props.getAirlineDetails(this.state.user.id);
-        this.props.getCompanyFlights();
+        this.props.getAirlineDetails(this.props.auth.user.id);
         this.props.getCountries();
+        this.props.getCompanyFlights();
         this.setState({
             user: this.props.user,
             flights: this.props.userFlights,
@@ -108,21 +111,23 @@ class AirlineMenu extends Component {
             case "originSelect":
             case "destinationSelect":
                 pattern = /d{1,3}/;
-                if (!pattern.test(String(e.target.name))) {
+                if (!pattern.test(String(e.target.value))) {
                     formErrors[target.name] = "Please pick a country from the list";
                 }
                 else {
                     formErrors[target.name] = '';
                 }
                 break;
-            // case "departureDatePicker":
-            // case "arrivalDatePicker":
-            //     console.log(e.target.value);
-            //     break;
-            // case "departureTimePicker":
-            // case "arrivalTimePicker":
-            //     console.log(e.target.value);
-            //     break;
+            case "vacancy":
+                pattern = /^[0-9]{1,3}$/;
+                formErrors[target.name] = '';
+                if (!pattern.test(String(e.target.value))) {
+                    formErrors[target.name] = "Please pick a number of available tickets";
+                }
+                else {
+                    formErrors[target.name] = '';
+                }
+                break;
 
             default:
                 break;
@@ -146,14 +151,13 @@ class AirlineMenu extends Component {
             Destination_Country_Code: this.state.destinationSelect,
             Departure_Time: dateResult[0],
             Landing_Time: dateResult[1],
-            Remaining_Tickets: 250//temp
+            Remaining_Tickets: this.state.vacancy
         }
         //remember to validate
-
-        console.log(flight);
-        console.log(Date.parse(dateResult[0]));
         this.props.createNewFlight(flight);
     }
+
+
 
     render() {
         const minimalDate = this.getminimalDate();
@@ -161,25 +165,26 @@ class AirlineMenu extends Component {
         const countries = this.props.countries;
         const { password } = this.state.password;
         const { newPwd } = this.state.newPwd;
-        const { originSelect } = this.state.originSelect;
-        const { destinationSelect } = this.state.destinationSelect;
-        const { departureDatePicker } = this.state.departureDatePicker;
-        const { departureTimePicker } = this.state.departureTimePicker;
         const { arrivalDatePicker } = this.state.arrivalDatePicker;
-        const { arrivalTimePicker } = this.state.arrivalTimePicker;
+        const { vacancy } = this.state.vacancy;
         const flights = this.props.userFlights;
         const flightList = flights.length ? flights.map(flight => {
             return (
 
-                <tr>
+                <tr key={flight.Id}>
                     <td>{flight.Id}</td>
                     <td>{user.name}</td>
                     <td>{this.getCountry(flight.Destination_Country_Code)}</td>
                     <td>{flight.Departure_Time}</td>
                     <td>{this.getCountry(flight.Origin_Country_Code)}</td>
                     <td>{flight.Landing_Time}</td>
+                    <td><Modal
+                        header='Modal Header'
+                        trigger={<button className='white'><i className="material-icons">edit</i></button>}>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                        <FlightEditModal countries={this.props.countries} flight={flight} />
+                    </Modal></td>
                     <td><button className='white'><i className="material-icons">backspace</i></button></td>
-                    <td><button className='white'><i className="material-icons">edit</i></button></td>
                 </tr>
             )
         }) : <h5>Nothing to show</h5>;
@@ -192,14 +197,10 @@ class AirlineMenu extends Component {
                             header="My Details"
                             icon={<Icon>add_box</Icon>}
                             node="div">
-                            <row>
-                                {user.username} {user.name}
-                            </row>
+                            {user.name}
                             <br />
-
-                            <row>
-                                {user.country}
-                            </row>
+                            <br />
+                            {user.countryName}
                         </CollapsibleItem>
                         <CollapsibleItem expanded={false}
                             header="Change My Password"
@@ -338,10 +339,9 @@ class AirlineMenu extends Component {
                                             showMonthAfterYear: false,
                                             yearRange: 1
                                         }}
-                                        //   onChange={this.onFlightSubmitChange}
                                         required />
-
                                 </div>
+
                                 <div className="input-field">
                                     <label htmlFor="departureTimePicker">Departure time</label>
                                     <TimePicker name="departureTimePicker"
@@ -491,10 +491,18 @@ class AirlineMenu extends Component {
                                         }}
                                         //  onChange={this.onFlightSubmitChange}
                                         required />
-                                    <div className="input-field col 12s 6m">
-                                        <button className="btn blue darken-4 z-depth-2"  >Submit</button>
-                                    </div>
                                 </div>
+                                <div className="input-field col 12s 6m">
+
+                                    <div className="input-field col 12s 6m">
+                                        <label htmlFor="phone">Remaining tickets</label>
+                                        <input type="text" id="vacancy" name='vacancy' onChange={this.onFlightSubmitChange} required />
+                                        <span className="helper-text" style={{ color: 'red' }}  >{this.state.flightFormErrors.vacancy}</span>
+                                    </div>
+
+                                    <button className="btn blue darken-4 z-depth-2"  >Submit</button>
+                                </div>
+
                             </form>
                         </CollapsibleItem>
                     </Collapsible>
@@ -517,6 +525,7 @@ class AirlineMenu extends Component {
                         </thead>
                     </table>
                 </div>
+
             </div>
         )
     }
@@ -540,3 +549,4 @@ const mapDispatchToProps = (dispatch) => {
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AirlineMenu);
+// <td><button className='white'><i className="material-icons">edit</i></button></td>

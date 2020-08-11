@@ -10,6 +10,7 @@
     "jquery": "^3.4.1",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.31",
     "qs": "^6.9.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

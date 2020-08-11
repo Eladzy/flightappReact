@@ -1,53 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { purchaseTicket } from '../Actions/ticketActions';
-import pointerBlue from '../img/pointerBlueT.png';
-import airplaneBlueT from '../img/airplaneBlueT.png';
+import FlightTemplate from './FlightTemplate';
 import Swal from 'sweetalert2';
 
 
 class Flight extends Component {
 
-
     handleClick = (id) => {
         console.log("check token and purchase method")
-        this.props.isAuthenticated === true ? this.props.purchaseTicket(id) : Swal.fire({
+        this.props.isAuthenticated === true && this.props.auth.user.roles == 'Customer' ? this.props.purchaseTicket(id) : Swal.fire({
             title: 'Log in needed',
             text: 'You need to sign in order to complete your purchase',
-            footer: (<Route to='/signIn'>Sign in</Route>)
+
         })
     }
+
 
     render() {
         const { flight } = this.props;
         const { isAuthenticated } = this.props.auth;
         console.log(flight);
         const Flight = flight ? (
-            <div className="container center">
-                <div className="card" style={{ overflow: 'hidden', padding: '10px', width: '850px' }} key={flight.id}>
-                    <img src={airplaneBlueT} style={{ position: 'absolute', opacity: '0.4', top: '80px', left: '-100px' }} />
-                    <div className="card-content center">
-                        <div className="row">
-                            <div className="col 12s 6m">
-                                <h6>{flight.origin}</h6> <br />
-                                <span>{flight.departureTime}</span>
-                            </div>
-                            <div className="col 12s 6m">
-                                <h6>{flight.airlineName}</h6><br />
-                                <img src={pointerBlue} style={{ height: '100px' }, { width: '200px' }} />
-                            </div>
-                            <div className="col 12s 6m">
-                                <h6>{flight.destination}</h6> <br />
-                                <span>{flight.arrivalTime}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className='container'>
+                <FlightTemplate flight={flight} />
                 <div className="card-action">
-                    <button className="btn waves-effect waves-light blue darken-4" onClick={() => { this.handleClick(flight.id) }} disabled={!isAuthenticated && flight.vacancy < 1}>Purchase <i className="material-icons right">airplanemode_active</i></button>
+                    <button className="btn waves-effect waves-light blue darken-4 center" onClick={() => { this.handleClick(flight.id) }}>Purchase <i className="material-icons right">airplanemode_active</i></button>
                 </div>
-            </div>
+            </div >
         ) : <div className="center">
                 Loading Flight...
         </div>

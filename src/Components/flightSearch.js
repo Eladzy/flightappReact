@@ -8,7 +8,7 @@ import { Select, DatePicker, Button } from 'react-materialize';
 import pointerBlue from '../img/pointerBlueT.png'
 import airplaneBlueT from '../img/airplaneBlueT.png'
 import Moment from 'react-moment';
-
+import FlightTemplate from './FlightTemplate';
 
 class flightSearch extends Component {
 
@@ -31,7 +31,7 @@ class flightSearch extends Component {
         console.log(document.getElementById("departureTimePicker").value);
         let params = ['', document.getElementById("airlineSelect").value,
             document.getElementById("originSelect").value, document.getElementById("destinationSelect").value,
-            document.getElementById("departureTimePicker").value, ''];     
+            document.getElementById("departureTimePicker").value, ''];
         this.props.searchedFlights(params)
     }
 
@@ -42,26 +42,7 @@ class flightSearch extends Component {
         const flights = this.props.flights;
         const flightList = flights ? flights.map(f => {
             return (
-                <div className="card flightCard" onClick={() => { this.onClickHandle(f.id) }} key={f.id}>
-                    <img src={airplaneBlueT} className='apBlue ' />
-                    <div className="card-content center">
-                        <div className="row">
-                            <div className="col 12s 6m">
-                                <h6>{f.origin}</h6> <br />
-                                <span>{f.departureTime}</span>
-                            </div>
-                            <div className="col 12s 6m">
-                                <h6>{f.airlineName}</h6><br />
-                                <img src={pointerBlue} className='pointerBlue' />
-                            </div>
-                            <div className="col 12s 6m">
-                                <h6>{f.destination}</h6> <br />
-                                <span>{f.arrivalTime}</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                (<FlightTemplate flight={f} onClick={this.onClickHandle} key={f.id} />)
             )
         }) : (<p>None Found</p>)
 

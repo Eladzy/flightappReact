@@ -6,6 +6,7 @@ import signUpCustomer from './Components/signUpCustomer';
 import SignUpAirline from './Components/SignUpAirline';
 import SignUpMain from './Components/SignUpMain';
 import SignIn from './Components/SignIn';
+import FlightEditModal from './Components/FlightEditModal';
 import About from './Components/About';
 import logout from './Components/logout';
 import CustomerMenu from './Components/CustomerMenu';
@@ -17,8 +18,9 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './Components/privateRoute';
 import { userLoader } from './Actions/authActions';
 import { store } from './index';
-
+import 'moment-timezone';
 import './App.css';
+import privateRoute from './Components/privateRoute';
 
 
 
@@ -45,6 +47,7 @@ class App extends Component {
             <Route path='/SignUpMain' component={SignUpMain} />
             <Route path='/SignUpAirline' component={SignUpAirline} />
             <PrivateRoute path='/loggedInUserInterface' component={loggedInUserInterface} />
+            <privateRoute path='/FlightEditModal' component={FlightEditModal} />
             <PrivateRoute path='/CustomerMenu' component={CustomerMenu} />
             <PrivateRoute path='/AirlineMenu' component={AirlineMenu} />
             <PrivateRoute path='/logout' component={logout} />
