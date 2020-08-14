@@ -180,9 +180,9 @@ class AirlineMenu extends Component {
                     <td>{flight.Landing_Time}</td>
                     <td><Modal
                         header='Modal Header'
-                        trigger={<button className='white'><i className="material-icons">edit</i></button>}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                        <FlightEditModal countries={this.props.countries} flight={flight} />
+                        trigger={<button className='white'><i className="material-icons">edit</i></button>}
+                        modalOptions={{ dismissible: true }}  >
+                        <FlightEditModal countries={this.props.countries} user={user} flight={flight} />
                     </Modal></td>
                     <td><button className='white'><i className="material-icons">backspace</i></button></td>
                 </tr>

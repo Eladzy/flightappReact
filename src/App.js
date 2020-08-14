@@ -20,7 +20,7 @@ import { userLoader } from './Actions/authActions';
 import { store } from './index';
 import 'moment-timezone';
 import './App.css';
-import privateRoute from './Components/privateRoute';
+
 
 
 

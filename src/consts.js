@@ -15,3 +15,4 @@ export const airlineFlightsUrl = "api/airline/getflights";
 export const customeCancelTicketUrl = "api/customer/cancelticket";
 export const airlinePwdChange = "api/airline/changemypassword";
 export const submitFlightUrl = "api/airline/createflight";
+export const modifyFlightUrl ="api/airline/updateflight";

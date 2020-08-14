@@ -22,8 +22,7 @@ class Navbar extends Component {
             <li><NavLink to='/logout' >Sign out</NavLink></li>
         </div>
         const guestLinks = (<ul className="right hide-on-med-and-down ulNav">
-            <li><NavLink to='/signUpCustomer'>Signup</NavLink></li>
-            <li><NavLink to='/signUpMain'>SignupM</NavLink></li>
+            <li><NavLink to='/signUpMain'>Signup</NavLink></li>
             <li><NavLink to='/SignIn'>Sign in</NavLink></li>
         </ul>)
         const guestLinksM = (<div>

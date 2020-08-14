@@ -4,7 +4,6 @@ import { mainUrl, getFlightByIdUrl, customerFlightsUrl, airlineFlightsUrl } from
 export const FETCH_ALL_FLIGHTS = 'FETCH_ALL_FLIGHTS';
 export const SEARCH_FLIGHTS = 'SEARCH_FLIGHTS';
 export const VIEW_FLIGHT = 'VIEW_FLIGHT';
-export const TARGET_FLIGHT = 'TARGET_FLIGHT';
 export const LOAD_MY_FLIGHTS = 'LOAD_MY_FLIGHTS';
 export const GET_MY_FLIGHTS = 'GET_MY_FLIGHTS';
 
@@ -85,12 +84,3 @@ export const getCompanyFlights = () => (dispatch, getState) => {
 
 }
 
-export const targetFlight = (id) => {
-    return (dispatch) => {
-        dispatch({
-            type: TARGET_FLIGHT,
-            payload: id
-        });
-    }
-
-}

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { loginUser, userLoader } from '../Actions/authActions';
-import PropTypes from 'prop-types';
 class SignIn extends Component {
 
     constructor(props) {
@@ -19,7 +18,7 @@ class SignIn extends Component {
     //     loginUser: PropTypes.func.isRequired,
     //     isAuthenticated: PropTypes.bool
     // };
-   
+
     onSubmit(e) {
         e.preventDefault();
         let body = []
@@ -50,11 +49,11 @@ class SignIn extends Component {
                     <h5 className="grey-text-darken-3">Sign In</h5>
                     <div className="input-field">
                         <label htmlFor="username">User Name</label>
-                        <input type="text" id="username" name='username' onChange={this.changeHandle} value={username} />
+                        <input type="text" id="username" name='username' onChange={this.changeHandle} value={username} required />
                     </div>
                     <div className="input-field">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name='password' onChange={this.changeHandle} value={password} />
+                        <input type="password" id="password" name='password' onChange={this.changeHandle} value={password} required />
                     </div>
                     <div className="input-field">
                         <button className='btn blue darken-4 z-depth-2'>Log in</button>
