@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkUsernameUrl, customerPwdChangeUrl, customeCancelTicketUrl } from '../consts';
+import { mainUrl, customerDetailsUrl, updateCustomerUrl, checkCustomerUsernameUrl, customerPwdChangeUrl, customeCancelTicketUrl } from '../consts';
 import { tokenConfig } from './configs';
 export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const UPDATE_MY_DETAILS = 'UPDATE_MY_DETAILS';
@@ -28,18 +28,11 @@ export const updateMyDetails = (body = []) => (dispatch, getState) => {
 }
 
 
-export function userNameAvailableCheck(username) {
+export async function userNameAvailableCheck(username) {
 
-    axios.get(mainUrl + checkUsernameUrl, { params: { username: username } })
-        .then(resp => { return Boolean([resp.data]); }).catch(err => (console.log(err)))
-    // try {
-    //     const response = await axios.get(mainUrl + checkUsernameUrl, { params: { username: username } }).data;
-    //     return Boolean([response]);
+    return await axios.get(mainUrl + checkCustomerUsernameUrl, { params: { username: username } })
+        .then(resp => { return resp.data; }).catch(err => (console.log(err)))
 
-    // }
-    // catch (err) {
-    //     console.log(err);
-    // }
 }
 export const changeCustomerPassword = (passwords = []) => (dispatch, getState) => {
     const response = axios.put(mainUrl + customerPwdChangeUrl, passwords, tokenConfig(getState)).data;

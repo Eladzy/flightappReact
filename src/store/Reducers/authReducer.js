@@ -56,6 +56,13 @@ const authReducer = (state = initState, action) => {
                 user: null
             };
         case LOGIN_FAIL:
+            return {
+                ...state,
+                isAuthenticated: null,
+                isLoading: false,
+                user: null,
+                error: 'was erorr'
+            }
         case LOGOUT_SUCCESS:
             localStorage.removeItem('token');
             return {

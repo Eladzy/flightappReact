@@ -14,10 +14,7 @@ class SignIn extends Component {
         this.changeHandle = this.changeHandle.bind(this)
     }
 
-    // static propTypes = {
-    //     loginUser: PropTypes.func.isRequired,
-    //     isAuthenticated: PropTypes.bool
-    // };
+
 
     onSubmit(e) {
         e.preventDefault();

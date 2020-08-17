@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { registerCustomer, userLoader } from '../Actions/authActions';
-import { userNameAvailableCheck } from '../Actions/customerActions';
+import { isUsernameAvailable } from '../Actions/functions'
 import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -27,7 +27,6 @@ class signUpCustomer extends Component {
         }
         this.changeHandle = this.changeHandle.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.userNameAvailableCheck = userNameAvailableCheck.bind(this)
 
     }
     formValidate = () => {
@@ -46,7 +45,8 @@ class signUpCustomer extends Component {
         })
 
     }
-    changeHandle = (e) => {
+    changeHandle = async (e) => {
+        e.persist();
         this.setState({ [e.target.name]: e.target.value });
         let formErrors = this.state.formErrors;
         let pattern;
@@ -56,9 +56,7 @@ class signUpCustomer extends Component {
 
                 formErrors['username'] = '';
                 let isAvailable = new Boolean;
-                isAvailable = userNameAvailableCheck(e.target.value);
-                //setTimeout(3000)
-                console.log(isAvailable);
+                isAvailable = await isUsernameAvailable(e.target.value);
                 if (pattern.test(String(e.target.value))) {
                     if (isAvailable === false) {
                         formErrors['username'] = 'Username already in use';

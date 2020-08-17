@@ -1,9 +1,23 @@
 import React from 'react';
-const Home=()=>{
-return(
-<div className="container">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, dolorem ipsam, ad eligendi vitae repellat numquam quas dicta doloremque velit porro quisquam possimus? Debitis cupiditate similique nihil et at quisquam!</p>
-</div>
-);
+import { Carousel } from 'react-materialize'
+import seatsC from '../img/seatsC.jpg'
+const Home = () => {
+    return (
+
+        <Carousel 
+            carouselId="Carousel-2"
+            images={[
+                seatsC,
+                'img\seatsC.jpg',
+                '../img\sunsetC.jpg',
+                'https://picsum.photos/250/250?image=0',
+            ]}
+           
+            options={{
+                fullWidth: true,
+                indicators: true
+            }} />
+
+    );
 }
 export default Home;

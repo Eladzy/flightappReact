@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { registerAirline } from '../Actions/authActions';
-import { bindActionCreators } from 'redux';
+import { isUsernameAvailable } from '../Actions/functions';
 import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 import { getCountries } from '../Actions/countriesActions';
@@ -46,14 +46,20 @@ class SignUpAirline extends Component {
 
     }
 
-    changeHandle = (e) => {
+    changeHandle = async (e) => {
+        e.persist();
         this.setState({ [e.target.name]: e.target.value })
         let formErrors = this.state.formErrors;
         let pattern;
         switch (e.target.name) {
             case 'username':
                 pattern = /^([a-zA-z])([a-zA-z0-9_]){2,12}$/;
+                let isAvailable = new Boolean;
+                isAvailable = await isUsernameAvailable(e.target.value);
                 formErrors['username'] = '';
+                if (!isAvailable) {
+                    formErrors['username'] = 'Username already in use';
+                }
                 if (!pattern.test(String(e.target.value))) {
                     formErrors['username'] = 'Username must be at least 4 and up to 10 characters without special characters';
                 }

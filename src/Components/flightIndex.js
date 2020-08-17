@@ -4,6 +4,8 @@ import { getAllFlights, viewFlight } from '../Actions/flightActions';
 import is from '../img/is.png';
 import { bindActionCreators } from 'redux';
 
+import countryCodes from '../data.json'
+
 class flightIndex extends Component {
 
     onClickHandle = (id) => {
@@ -17,13 +19,16 @@ class flightIndex extends Component {
     }
     render() {
 
+
+
         const { flights } = this.props.flight;
         const flightList = flights.length ? (flights.map(flight => {
+            const countryCode = countryCodes[flight.destination]
             return (
                 <div className="col s12 m4" >
                     <div className="card medium  z-depth-4" key={flight.id}>
                         <div className="card-image hoverable activator sticky-action">
-                            <img className="activator" src={is} />
+                            <img className="activator" src={`https://www.countryflags.io/${countryCode}/flat/64.png`} />
                         </div>
                         <div className="card-content">
                             <span className="card-title activator grey-text text-darken-4">{flight.destination}</span>
