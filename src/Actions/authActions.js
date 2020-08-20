@@ -2,6 +2,7 @@ import { returnErrors, clearErrors } from './errorActions';
 import { mainUrl, authUrl, getVerfiedUserInfoUrl, registerCustomerUrl, registerAirlineUrl } from '../consts';
 import { tokenConfig } from './configs'
 import axios from 'axios';
+import M from 'materialize-css';
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
@@ -22,6 +23,7 @@ export const loginUser = (body = []) => {
                     payload: resp.data
                 });
             }).catch(err => {
+                M.toast({ html: 'Invalid username or password', classes: 'red accent-4' });
                 dispatch(returnErrors(err.message, 'err.response.status'));
                 (dispatch)({
                     type: LOGIN_FAIL
@@ -116,9 +118,10 @@ export const userLoader = () => (dispatch, getState) => {
 
 
 export const logOutUser = () => {
-    return async (dispatch) => {
+    return (dispatch) => {
         dispatch({
             type: LOGOUT_SUCCESS,
+
 
         })
 

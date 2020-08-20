@@ -41,11 +41,15 @@ const authReducer = (state = initState, action) => {
             localStorage.setItem('token', action.payload[0])
             return {
                 ...state,
-                user: action.payload,
+                token: localStorage.getItem('token'),
                 isLoading: false,
                 isAuthenticated: true,
+                user: {
+                    username: action.payload[1],
+                    roles: action.payload[2]
+                },
             };
-        case AUTH_ERROR:
+        //    case AUTH_ERROR:
 
         case REGISTER_FAIL:
             localStorage.removeItem('token');
@@ -67,6 +71,7 @@ const authReducer = (state = initState, action) => {
             localStorage.removeItem('token');
             return {
                 ...state,
+                token: null,
                 isAuthenticated: null,
                 isLoading: false,
                 user: null
