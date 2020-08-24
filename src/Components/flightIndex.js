@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllFlights, viewFlight } from '../Actions/flightActions';
-import is from '../img/is.png';
+import moment from 'moment';
 import { bindActionCreators } from 'redux';
 
 import countryCodes from '../data.json'
@@ -36,7 +36,7 @@ class flightIndex extends Component {
                         </div>
                         <div className="card-reveal">
                             <span className="card-title grey-text text-darken-4">{flight.destination}<i className="material-icons right">X</i></span>
-                            <p  >Takes off at {flight.departureTime} from {flight.origin} and arrives at {flight.arrivalTime}</p>
+                            <p  >Takes off at {moment(flight.departureTime).format('lll')} from {flight.origin} and arrives at {moment(flight.arrivalTime).format('lll')}</p>
                         </div>
                     </div>
                     <div className="card-action" style={{ marginBottom: "50px" }}>

@@ -5,7 +5,7 @@ import { getCompanyFlights } from '../Actions/flightActions';
 import { getAirlineDetails, changeAirlinePassword, createNewFlight } from '../Actions/airlinesActions';
 import { getCountries } from '../Actions/countriesActions';
 import { Collapsible, CollapsibleItem, Icon, Select, DatePicker, TimePicker, DatePickerOptions, Modal, Button } from 'react-materialize';
-import Moment from 'react-moment';
+import moment from 'moment';
 
 class AirlineMenu extends Component {
     constructor(props) {
@@ -175,9 +175,9 @@ class AirlineMenu extends Component {
                     <td>{flight.Id}</td>
                     <td>{user.name}</td>
                     <td>{this.getCountry(flight.Destination_Country_Code)}</td>
-                    <td>{flight.Departure_Time}</td>
+                    <td>{moment(flight.Departure_Time).format('lll')}</td>
                     <td>{this.getCountry(flight.Origin_Country_Code)}</td>
-                    <td>{flight.Landing_Time}</td>
+                    <td>{moment(flight.Landing_Time).format('lll')}</td>
                     <td><Modal
                         header='Modal Header'
                         trigger={<button className='white'><i className="material-icons">edit</i></button>}
@@ -549,4 +549,3 @@ const mapDispatchToProps = (dispatch) => {
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AirlineMenu);
-// <td><button className='white'><i className="material-icons">edit</i></button></td>

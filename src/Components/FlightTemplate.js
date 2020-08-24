@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import pointerBlue from '../img/pointerBlueT.png';
 import airplaneBlueT from '../img/airplaneBlueT.png';
-import moment from 'react-moment';
+import moment from 'moment';
 
 class FlightTemplate extends Component {
     render() {
@@ -25,13 +25,13 @@ class FlightTemplate extends Component {
                         </tr>
                         <tr>
                             <td>
-                                <span>{flight.departureTime}</span>
+                                <span>{moment(flight.departureTime).format('lll')}</span>
                             </td>
                             <td >
                                 <img src={pointerBlue} className='pointerBlue' />
                             </td>
                             <td>
-                                <span>{flight.arrivalTime}</span>
+                                <span>{moment(flight.arrivalTime).format('lll')}</span>
                             </td>
                         </tr>
                     </tbody>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getMyFlights } from '../Actions/flightActions';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
 import { getCustomerDetails, updateMyDetails, changeCustomerPassword, cancelTicket } from '../Actions/customerActions';
+import moment from 'moment';
 
 export class CustomerMenu extends Component {
     constructor(props) {
@@ -120,7 +121,6 @@ export class CustomerMenu extends Component {
         this.props.updateMyDetails(body);
 
         this.props.getCustomerDetails(this.state.user.id);
-        // setTimeout(15000);///fixx
         this.setState({ state: this.state });//fixx
 
 
@@ -153,9 +153,9 @@ export class CustomerMenu extends Component {
                     <td>{flight.id}</td>
                     <td>{flight.airlineName}</td>
                     <td>{flight.origin}</td>
-                    <td>{flight.departureTime}</td>
+                    <td>{moment(flight.departureTime).format('lll')}</td>
                     <td>{flight.destination}</td>
-                    <td>{flight.arrivalTime}</td>
+                    <td>{moment(flight.arrivalTime).format('lll')}</td>
                     <td><button className='white' onClick={() => this.cancelTicketHandle(flight.id)}><i className="material-icons">backspace</i></button></td>
                 </tr>
             )
