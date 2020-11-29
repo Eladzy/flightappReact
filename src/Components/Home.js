@@ -3,7 +3,7 @@ import { Carousel } from 'react-materialize'
 import seatsC from '../img/seatsC.jpg'
 const Home = () => {
     return (
-
+        
         <Carousel 
             carouselId="Carousel-2"
             images={[
