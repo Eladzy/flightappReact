@@ -91,6 +91,12 @@ class SignUpAirline extends Component {
                 if (!pattern.test(String(e.target.value))) {
                     formErrors['country'] = 'Must choose country';
                 }
+            case 'email':
+                pattern = /\S+@\S+\.\S+/;
+                formErrors['email'] = '';
+                if (!pattern.test(String(e.target.value))) {
+                    formErrors['email'] = 'Bad email format';
+                }
             default:
                 break;
         }
@@ -168,7 +174,7 @@ class SignUpAirline extends Component {
                         <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="email">Email</label>
                             <input type="email" className='validate inputForm' id="email" name='email' onChange={this.changeHandle} value={email} required />
-                            <span className="helper-text" data-error="Wrong email format" ></span>
+                            <span className="helper-text" style={{ color: 'red' }} >{this.state.formErrors.email}</span>
                         </div>
                         <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="country">Country</label>

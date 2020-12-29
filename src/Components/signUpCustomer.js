@@ -107,7 +107,12 @@ class signUpCustomer extends Component {
                     formErrors['creditcard'] = '16 digits are required';
                 }
                 break;
-
+            case 'email':
+                pattern = /\S+@\S+\.\S+/;
+                formErrors['email'] = '';
+                if (!pattern.test(String(e.target.value))) {
+                    formErrors['email'] = 'Bad email format';
+                }
             default:
                 break;
         }
@@ -193,7 +198,7 @@ class signUpCustomer extends Component {
                         <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="email">Email</label>
                             <input type="email" className='validate' id="email" name='email' onChange={this.changeHandle} value={email} required />
-                            <span className="helper-text" data-error="Wrong email format" ></span>
+                            <span className="helper-text" style={{ color: 'red' }} >{this.state.formErrors.email}</span>
                         </div>
                         <div className="input-field col 12s 6m inputForm">
                             <label htmlFor="cemail">Confirm Email</label>

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import M from 'materialize-css';
+import { returnErrors, clearErrors } from './errorActions';
 import { airlineDetailsUrl, mainUrl, airlinePwdChange, submitFlightUrl, modifyFlightUrl } from '../consts';
 import { tokenConfig } from './configs';
 export const GET_USER_DETAILS = 'GET_USER_DETAILS';
@@ -7,6 +9,8 @@ export const REGISETR_PENDING = 'REGISTER_PENDING';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const CREATE_NEW_FLIGHT = ' CREATE_NEW_FLIGHT';
 export const MODIFY_FLIGHT = 'MODIFY_FLIGHT';
+
+
 
 export const getAirlines = () => {
     return (dispatch) => {
@@ -44,7 +48,10 @@ export const createNewFlight = (flight = {}) => (dispatch, getState) => {
                 type: CREATE_NEW_FLIGHT,
                 payload: resp.data
             })
-        }).catch(err => { console.log(err) });
+        }).catch(err => {
+            M.toast({ html: 'Action failed', classes: 'red accent-4' });
+            dispatch(returnErrors(err.message, 'err.response.status'));
+        });
 }
 
 export const ModifyFlight = (flight = {}) => (dispatch, getState) => {
