@@ -1,6 +1,7 @@
 import React from 'react';
 import { Carousel } from 'react-materialize'
 import seatsC from '../img/seatsC.jpg'
+import sunsetC from '../img/sunsetC.jpg'
 const Home = () => {
     return (
 
@@ -8,9 +9,7 @@ const Home = () => {
             carouselId="Carousel-2"
             images={[
                 seatsC,
-                'img\seatsC.jpg',
-                '../img\sunsetC.jpg',
-
+                sunsetC
             ]}
 
             options={{
