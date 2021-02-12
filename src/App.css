@@ -20,13 +20,13 @@
    left: -15%;
 }
 .ticket-table{
-  align-items: center;
+  align-items: left;
   padding: 30%;
 }
 .pointerBlue {
   
-  height: 20% ;
-   width: 50% ;
+  
+   width: 100% ;
 }
 
 .ticket-table td{
@@ -34,7 +34,7 @@
 }
 
 .ticket-table tr{
-  width: 30%;
+  width: 20%;
 }
 
 .flightCard {
